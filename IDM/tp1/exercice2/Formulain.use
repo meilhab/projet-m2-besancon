@@ -9,6 +9,7 @@ enum Couleur {rouge, vert, bleu}
 ----------
 -- classes
 ----------
+
 class Hotel
 attributes
     adresse : String

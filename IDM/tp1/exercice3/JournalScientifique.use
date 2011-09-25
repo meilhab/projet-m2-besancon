@@ -1,0 +1,92 @@
+------------------------------------
+-- Exercice 3 : Journal scientifique
+------------------------------------
+model JournalScientifique
+
+enum Gender {research, application}
+
+----------
+-- classes
+----------
+class Journal
+attributes
+    name : String
+    issueNumber : Integer
+end
+
+class Issue
+attributes
+    number : Integer
+    specialIssue : Boolean
+    title : String
+    pageNumber : Integer
+end
+
+class Paper
+attributes
+    title : String
+    beginPage : Integer
+    endPage : Integer
+    type : Gender
+end
+
+class Reviewer
+attributes
+    id : String
+    name : String
+end
+
+class Author
+attributes
+    id : String
+    name : String
+end
+
+---------------
+-- associations
+---------------
+
+association journalIssue between
+    Journal[1] role journal
+    Issue[0..*] role issue
+end
+
+association journalReviewer between
+    Journal[0..*] role journal
+    Reviewer[0..*] role reviewer
+end
+
+association journalAuthor between
+    Journal[0..*] role journal
+    Author[1..*] role author
+end
+
+association issuePaperSubmit between
+    Issue[1] role issueOfSubmission
+    Paper[0..*] role submittedPaper
+end
+
+association issuePaperPublication between
+    Issue[1] role issueOfPublication
+    Paper[0..*] role publishedPaper
+end
+
+association paperReviewer between
+    Paper[0..*] role reviewedPaper
+    Reviewer[0..3] role reviewer
+end
+
+association paperAuthor between
+    Paper[0..*] role paper
+    Author[1..*] role author
+end
+
+
+--------------
+-- contraintes
+--------------
+
+constraints
+
+-- 1
+
