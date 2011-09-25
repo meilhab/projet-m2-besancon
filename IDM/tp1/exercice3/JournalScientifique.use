@@ -12,6 +12,11 @@ class Journal
 attributes
     name : String
     issueNumber : Integer
+operations
+    getPapers() : Set(String)
+    getIssues(i : Integer) : Set(String)
+    getResearchPaper() : Integer
+
 end
 
 class Issue
@@ -89,4 +94,40 @@ end
 constraints
 
 -- 1
+context Journal::getPapers() : Set(String)
+    post : result = self.issue.publishedPaper->asSet()
 
+-- 2
+context Journal::getIssues(i : Integer) : Set(String)
+    post : result = self.issue->select(iss : Issue | iss.number >= i)->asSet()
+
+-- 3
+context Journal::getResearchPaper() : Integer
+    post : result = self.issue.publishedPaper->collect(type = Gender::research)->size()
+
+-- 4 a revoir
+context Issue inv :
+    if self.specialIssue = false then
+        title = ''
+    else
+        title <> ''
+    endif
+
+-- 5
+context Issue inv :
+    self.pageNumber = self.publishedPaper->iterate(p : Paper; sum : Integer = 0 |
+        sum + (p.endPage - p.beginPage + 1))
+
+-- 6 a revoir
+context Paper inv :
+    self.issueOfSubmission->isEmpty() and self.issueOfPublication->notEmpty() 
+    or
+    self.issueOfPublication->isEmpty() and self.issueOfSubmission->notEmpty() 
+
+-- 7
+context Paper inv :
+    self.reviewer->size() <= 3 and self.reviewer->forAll(r : Reviewer | self.author->forAll(a : Author | a <> r))
+
+-- 8 a revoir
+context Issue inv :
+    self.publishedPaper->forAll(p : Paper | p.reviewer->size() = 3)
