@@ -81,16 +81,16 @@ constraints
 
 -- 1
 context Chambre inv :
-    etage <> 13
+    self.etage <> 13
+
+context SalleDeBain inv :
+    self.etage <> 13
 
 -- 2
 context Chambre inv :
-    if self.client->exists(p : Personne | p.age < 4) then
-        self.client->select(p : Personne | p.age < 4)->size() = 1 and 
-        self.nbDeLits + 1 >= self.client->size()
-    else
-        self.nbDeLits >= self.client->size()
-    endif
+    self.client->exists(p : Personne | p.age < 4) and self.nbDeLits + 1 = self.client->size()
+    or
+    self.nbDeLits >= self.client->size()
 
 -- 3
 context Hotel inv :
@@ -99,19 +99,23 @@ context Hotel inv :
 -- 4
 context Hotel inv :
     Sequence{self.etageMin..self.etageMax}->excluding(13)->forAll(i : Integer |
-        self.chambre->select(c : Chambre | c.etage = i)->size() > 0)
+        self.chambre->select(c : Chambre | c.etage = i)->notEmpty())
 
 -- 5
 context Chambre::repeindre(c : Couleur)
-    pre : self.client->size() = 0
+    pre : self.client->isEmpty()
     post : self.prix = self.prix@pre * 1.1
 
 -- 6
 context SalleDeBain::utiliser(p : Personne)
-    pre : self.chambre.client->includes(p) or
-        p.chambre.etage->includes(self.etage)
+    pre : if self.chambre->notEmpty() then
+            self.chambre.client->includes(p)
+          else
+            p.chambre.etage->includes(self.etage)
+          endif
+    post : nbUtilisateurs = nbUtilisateurs@pre + 1
 
 -- 7
 context Hotel::calculerLoyer() : Real
-    post : result = self.chambre->select(c : Chambre | c.client->size() > 0)->collect(prix)->sum()
+    post : result = self.chambre->select(c : Chambre | c.client->notEmpty()).prix->sum()
 
