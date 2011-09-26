@@ -50,8 +50,8 @@ end
 ---------------
 
 association dirige between
-    Personne[1]
-    Hotel[1]
+    Personne[1] role directeur
+    Hotel[0..1] role etablissement
 end
 
 association heberge between
