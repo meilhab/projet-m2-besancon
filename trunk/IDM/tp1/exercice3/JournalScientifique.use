@@ -67,12 +67,12 @@ association journalAuthor between
 end
 
 association issuePaperSubmit between
-    Issue[1] role issueOfSubmission
+    Issue[0..1] role issueOfSubmission
     Paper[0..*] role submittedPaper
 end
 
 association issuePaperPublication between
-    Issue[1] role issueOfPublication
+    Issue[0..1] role issueOfPublication
     Paper[0..*] role publishedPaper
 end
 

@@ -3,7 +3,8 @@
 !create F1 : Hotel
 !set F1.adresse := '1 rue du moulin 25000 Besançon'
 !set F1.etageMin := 1
-!set F1.etageMax := 14
+-- modification : ajout d'un étage sans chambre
+!set F1.etageMax := 15
 
 !create P1 : Personne
 !set P1.nom := 'P1'
@@ -90,7 +91,6 @@
 !set Ch12.numero := 121
 !set Ch12.nbDeLits := 2
 !set Ch12.prix := 100
--- modification : chambre etage 13
 !create Ch13 : Chambre 
 !set Ch13.etage := 13
 !set Ch13.numero := 131
@@ -101,6 +101,11 @@
 !set Ch14.numero := 142
 !set Ch14.nbDeLits := 2
 !set Ch14.prix := 100
+!create Ch15 : Chambre
+!set Ch15.etage := 20
+!set Ch15.numero := 201
+!set Ch15.nbDeLits := 2
+!set Ch15.prix := 100
 
 !create SDB1 : SalleDeBain
 !set SDB1.etage := 1
@@ -137,8 +142,11 @@
 !insert(F1, Ch10) into contient
 !insert(F1, Ch11) into contient
 !insert(F1, Ch12) into contient
+-- modification : chambre etage 13
 !insert(F1, Ch13) into contient
 !insert(F1, Ch14) into contient
+-- modification : ajout d'une chambre a un étage qui n'existe pas
+!insert(F1, Ch15) into contient
 
 !insert(Ch1, SDB1) into possede
 !insert(Ch2, SDB2) into possede
