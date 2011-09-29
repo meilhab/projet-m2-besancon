@@ -118,7 +118,7 @@ context Issue inv :
     self.pageNumber = self.publishedPaper->iterate(p : Paper; sum : Integer = 0 |
         sum + (p.endPage - p.beginPage + 1))
 
--- 6 a revoir
+-- 6
 context Paper inv :
     self.issueOfSubmission->isEmpty() and self.issueOfPublication->notEmpty() 
     or

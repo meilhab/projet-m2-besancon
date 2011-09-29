@@ -123,8 +123,9 @@
 !set SDB4.etage := 4
 !set SDB4.nbUtilisateurs := 0
 !set SDB4.numero := 41
+-- modification : salle de bain etage 13
 !create SDB5 : SalleDeBain
-!set SDB5.etage := 5
+!set SDB5.etage := 13
 !set SDB5.nbUtilisateurs := 0
 !set SDB5.numero := 51
 
