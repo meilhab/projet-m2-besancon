@@ -152,4 +152,5 @@
 !insert (P6, A5) into paperAuthor
 !insert (P7, A6) into paperAuthor
 !insert (P8, A1) into paperAuthor
+!insert (P8, A5) into paperAuthor
 

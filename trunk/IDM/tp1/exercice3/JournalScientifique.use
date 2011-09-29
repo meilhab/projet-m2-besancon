@@ -105,7 +105,7 @@ context Journal::getIssues(i : Integer) : Set(String)
 context Journal::getResearchPaper() : Integer
     post : result = self.issue.publishedPaper->collect(type = Gender::research)->size()
 
--- 4 a revoir
+-- 4 
 context Issue inv :
     if self.specialIssue = false then
         title = ''
@@ -126,8 +126,10 @@ context Paper inv :
 
 -- 7
 context Paper inv :
-    self.reviewer->size() <= 3 and self.reviewer->forAll(r : Reviewer | self.author->forAll(a : Author | a <> r))
+    self.reviewer->size() <= 3 and self.reviewer->forAll(r : Reviewer | 
+        self.author->forAll(a : Author | 
+            a.id <> r.id))
 
--- 8 a revoir
+-- 8 
 context Issue inv :
     self.publishedPaper->forAll(p : Paper | p.reviewer->size() = 3)
