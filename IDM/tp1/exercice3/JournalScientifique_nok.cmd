@@ -9,11 +9,13 @@
 !set I1.specialIssue := true
 !set I1.title := 'edition1'
 !set I1.pageNumber := 3
+-- modification : numero non special possedant un titre
+-- modification : nombre de page incorrect : plus que necessaire
 !create I2 : Issue
 !set I2.number := 2
 !set I2.specialIssue := false
-!set I2.title := ''
-!set I2.pageNumber := 2
+!set I2.title := 'nonSpecial titre'
+!set I2.pageNumber := 5
 !create I3 : Issue
 !set I3.number := 3
 !set I3.specialIssue := false
@@ -126,6 +128,9 @@
 !insert (I1, P4) into issuePaperPublication 
 !insert (I2, P6) into issuePaperPublication 
 !insert (I3, P8) into issuePaperPublication 
+-- modification : une tache double : publiee et soumise a la fois
+-- l'article est de ce fait verifie 2 fois : donc on peut considerer par 6 personnes
+!insert (I2, P7) into issuePaperPublication
 
 !insert (P1, R1) into paperReviewer
 !insert (P2, R2) into paperReviewer
@@ -144,6 +149,7 @@
 !insert (P8, R3) into paperReviewer
 !insert (P8, R4) into paperReviewer
 
+
 !insert (P1, A6) into paperAuthor
 !insert (P2, A1) into paperAuthor
 !insert (P3, A2) into paperAuthor
@@ -152,4 +158,6 @@
 !insert (P6, A5) into paperAuthor
 !insert (P7, A6) into paperAuthor
 !insert (P8, A1) into paperAuthor
+-- modification : un auteur est aussi relecteur
+!insert (P8, A4) into paperAuthor
 
