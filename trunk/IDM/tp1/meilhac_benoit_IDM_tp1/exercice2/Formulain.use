@@ -1,0 +1,122 @@
+-------------------------------
+-- Exercice 2 : Hotel Formulain
+-------------------------------
+model Formulain
+
+enum SEXE {masculin, feminin}
+enum Couleur {rouge, vert, bleu}
+
+----------
+-- classes
+----------
+
+class Hotel
+attributes
+    adresse : String
+    etageMin : Integer
+    etageMax : Integer
+operations
+    calculerLoyer() : Real
+end
+
+class Chambre
+attributes
+    etage : Integer
+    numero : Integer
+    nbDeLits : Integer
+    prix : Real
+operations
+    repeindre(c : Couleur)
+end
+
+class Personne
+attributes
+    nom : String
+    age : Integer
+    sexe : SEXE
+end
+
+class SalleDeBain
+attributes
+    etage : Integer
+    nbUtilisateurs : Integer
+    numero : Integer
+operations
+    utiliser(p : Personne)
+end
+
+---------------
+-- associations
+---------------
+
+association dirige between
+    Personne[1] role directeur
+    Hotel[0..1] role etablissement
+end
+
+association heberge between
+    Hotel[0..1] role residence
+    Personne[*] role hote
+end
+
+association loue between
+    Personne[*] role client
+    Chambre[*]
+end
+
+association possede between
+    Chambre[0..1]
+    SalleDeBain[0..1]
+end
+
+aggregation contient between
+    Hotel[1]
+    Chambre[1..*]
+end
+
+--------------
+-- contraintes
+--------------
+
+constraints
+
+-- 1
+context Chambre inv :
+    self.etage <> 13
+
+context SalleDeBain inv :
+    self.etage <> 13
+
+-- 2
+context Chambre inv :
+    self.client->exists(p : Personne | p.age < 4) and self.nbDeLits + 1 = self.client->size()
+    or
+    self.nbDeLits >= self.client->size()
+
+-- 3
+context Hotel inv :
+    self.chambre->forAll(c : Chambre | c.etage >= self.etageMin and c.etage <= self.etageMax)
+
+-- 4
+context Hotel inv :
+    Sequence{self.etageMin..self.etageMax}->excluding(13)->forAll(i : Integer |
+        self.chambre->select(c : Chambre | c.etage = i)->notEmpty())
+
+-- 5
+context Chambre::repeindre(c : Couleur)
+    pre : self.client->isEmpty()
+    post : self.prix = self.prix@pre * 1.1
+
+-- 6
+context SalleDeBain::utiliser(p : Personne)
+    pre : if self.chambre->notEmpty() then
+            self.chambre.client->includes(p)
+          else
+            p.chambre.etage->includes(self.etage)
+          endif
+    post : nbUtilisateurs = nbUtilisateurs@pre + 1
+
+-- 7
+context Hotel::calculerLoyer() : Real
+    post : result = self.chambre->select(c : Chambre | c.client->notEmpty()).prix->sum()
+
