@@ -1,0 +1,135 @@
+------------------------------------
+-- Exercice 3 : Journal scientifique
+------------------------------------
+model JournalScientifique
+
+enum Gender {research, application}
+
+----------
+-- classes
+----------
+class Journal
+attributes
+    name : String
+    issueNumber : Integer
+operations
+    getPapers() : Set(String)
+    getIssues(i : Integer) : Set(String)
+    getResearchPaper() : Integer
+
+end
+
+class Issue
+attributes
+    number : Integer
+    specialIssue : Boolean
+    title : String
+    pageNumber : Integer
+end
+
+class Paper
+attributes
+    title : String
+    beginPage : Integer
+    endPage : Integer
+    type : Gender
+end
+
+class Reviewer
+attributes
+    id : String
+    name : String
+end
+
+class Author
+attributes
+    id : String
+    name : String
+end
+
+---------------
+-- associations
+---------------
+
+association journalIssue between
+    Journal[1] role journal
+    Issue[0..*] role issue
+end
+
+association journalReviewer between
+    Journal[0..*] role journal
+    Reviewer[0..*] role reviewer
+end
+
+association journalAuthor between
+    Journal[0..*] role journal
+    Author[1..*] role author
+end
+
+association issuePaperSubmit between
+    Issue[0..1] role issueOfSubmission
+    Paper[0..*] role submittedPaper
+end
+
+association issuePaperPublication between
+    Issue[0..1] role issueOfPublication
+    Paper[0..*] role publishedPaper
+end
+
+association paperReviewer between
+    Paper[0..*] role reviewedPaper
+    Reviewer[0..3] role reviewer
+end
+
+association paperAuthor between
+    Paper[0..*] role paper
+    Author[1..*] role author
+end
+
+
+--------------
+-- contraintes
+--------------
+
+constraints
+
+-- 1
+context Journal::getPapers() : Set(String)
+    post : result = self.issue.publishedPaper->asSet()
+
+-- 2
+context Journal::getIssues(i : Integer) : Set(String)
+    post : result = self.issue->select(iss : Issue | iss.number >= i)->asSet()
+
+-- 3
+context Journal::getResearchPaper() : Integer
+    post : result = self.issue.publishedPaper->collect(type = Gender::research)->size()
+
+-- 4 
+context Issue inv :
+    if self.specialIssue = false then
+        title = ''
+    else
+        title <> ''
+    endif
+
+-- 5
+context Issue inv :
+    self.pageNumber = self.publishedPaper->iterate(p : Paper; sum : Integer = 0 |
+        sum + (p.endPage - p.beginPage + 1))
+
+-- 6
+context Paper inv :
+    self.issueOfSubmission->isEmpty() and self.issueOfPublication->notEmpty() 
+    or
+    self.issueOfPublication->isEmpty() and self.issueOfSubmission->notEmpty() 
+
+-- 7
+context Paper inv :
+    self.reviewer->size() <= 3 and self.reviewer->forAll(r : Reviewer | 
+        self.author->forAll(a : Author | 
+            a.id <> r.id))
+
+-- 8 
+context Issue inv :
+    self.publishedPaper->forAll(p : Paper | p.reviewer->size() = 3)
