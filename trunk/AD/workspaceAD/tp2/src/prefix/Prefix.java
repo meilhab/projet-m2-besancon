@@ -23,7 +23,7 @@ public class Prefix {
 			// put your code here
 			try {
 				int pref = 0;
-				for(int i=ith; i<length; i++){
+				for(int i=ith*length; i<(ith+1)*length; i++){
 					pref += array[i];
 					array[i] = pref;
 				}
@@ -37,7 +37,7 @@ public class Prefix {
 				
 				barrier.await();
 				
-				for(int i=ith; i<length; i++){
+				for(int i=ith*length; i<(ith+1)*length; i++){
 					array[i] += somme;
 				}
 				
