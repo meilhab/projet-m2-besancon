@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" output="build" path="src"/>
+	<classpathentry kind="var" path="JRE_LIB" rootpath="JRE_SRCROOT" sourcepath="JRE_SRC"/>
+	<classpathentry kind="lib" path="/afs/deptinfo-st.univ-fcomte.fr/users/bmeilhac/M2/projet-m2-besancon/SECO/tp1/externals/asm.jar"/>
+	<classpathentry kind="lib" path="/afs/deptinfo-st.univ-fcomte.fr/users/bmeilhac/M2/projet-m2-besancon/SECO/tp1/externals/fractal.jar"/>
+	<classpathentry kind="lib" path="/afs/deptinfo-st.univ-fcomte.fr/users/bmeilhac/M2/projet-m2-besancon/SECO/tp1/externals/julia-asm.jar"/>
+	<classpathentry kind="lib" path="/afs/deptinfo-st.univ-fcomte.fr/users/bmeilhac/M2/projet-m2-besancon/SECO/tp1/externals/julia-mixins.jar"/>
+	<classpathentry kind="lib" path="/afs/deptinfo-st.univ-fcomte.fr/users/bmeilhac/M2/projet-m2-besancon/SECO/tp1/externals/julia-runtime.jar"/>
+	<classpathentry kind="lib" path="/afs/deptinfo-st.univ-fcomte.fr/users/bmeilhac/M2/projet-m2-besancon/SECO/tp1/externals/fractal-adl.jar"/>
+	<classpathentry kind="lib" path="/afs/deptinfo-st.univ-fcomte.fr/users/bmeilhac/M2/projet-m2-besancon/SECO/tp1/externals/ow_deployment_scheduling.jar"/>
+	<classpathentry kind="lib" path="/afs/deptinfo-st.univ-fcomte.fr/users/bmeilhac/M2/projet-m2-besancon/SECO/tp1/externals/dtdparser.jar"/>
+	<classpathentry kind="con" path="/afs/deptinfo-st.univ-fcomte.fr/users/bmeilhac/M2/projet-m2-besancon/SECO/tp1/exo3/build"/>
+	<classpathentry kind="con" path="/afs/deptinfo-st.univ-fcomte.fr/users/bmeilhac/M2/projet-m2-besancon/SECO/tp1/exo3/src"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

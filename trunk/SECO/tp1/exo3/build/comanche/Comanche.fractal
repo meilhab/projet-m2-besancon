@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE definition PUBLIC "-//objectweb.org//DTD Fractal ADL 2.0//EN" "classpath://org/objectweb/fractal/adl/xml/basic.dtd">
+
+<definition name="comanche.Comanche">
+	<interface name="r" role="server" signature="java.lang.Runnable" />
+	<component name="Receiver">
+		<interface name="r" role="server" signature="java.lang.Runnable" />
+		<interface name="rh" role="client" signature="comanche.RequestHandler" />
+		<interface name="s" role="client" signature="comanche.Scheduler" />
+		<content class="comanche.RequestReceiver" />
+		<controller desc="primitive" />
+	</component>
+	<component name="Analyser">
+		<interface name="a" role="server" signature="comanche.RequestHandler" />
+		<interface name="l" role="client" signature="comanche.Logger" />
+		<interface name="rh" role="client" signature="comanche.RequestHandler" />
+		<content class="comanche.RequestAnalyzer" />
+		<controller desc="primitive" />
+	</component>
+	<component name="Scheduler">
+		<interface name="s" role="server" signature="comanche.Scheduler" />
+		<content class="comanche.MultiThreadScheduler" />
+		<controller desc="primitive" />
+	</component>
+	<component name="Logger">
+		<interface name="l" role="server" signature="comanche.Logger" />
+		<content class="comanche.BasicLogger" />
+		<controller desc="primitive" />
+	</component>
+	<component name="FileHandler">
+		<interface name="rh" role="server" signature="comanche.RequestHandler" />
+		<content class="comanche.FileRequestHandler" />
+		<controller desc="primitive" />
+	</component>
+	<binding client="this.r" server="Receiver.r" />
+	<binding client="Receiver.rh" server="Analyser.a" />
+	<binding client="Receiver.s" server="Scheduler.s" />
+	<binding client="Analyser.l" server="Logger.l" />
+	<binding client="Analyser.rh" server="FileHandler.rh" />
+</definition>

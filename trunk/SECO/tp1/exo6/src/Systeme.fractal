@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE definition PUBLIC "-//objectweb.org//DTD Fractal ADL 2.0//EN" "classpath://org/objectweb/fractal/adl/xml/basic.dtd">
+
+<definition name="Systeme">
+	<interface name="u" role="server" signature="java.lang.Runnable" />
+
+	<component name="User">
+		<interface name="u" role="server" signature="java.lang.Runnable" />
+		<interface name="i" role="client" signature="interfaces.RequestImpression" />
+		<interface name="n" role="client" signature="interfaces.RequestNumerisation" />
+		<content class="systeme.User" />
+		<controller desc="primitive" />
+	</component>
+
+	<component name="Photocopieur">
+		<interface name="i" role="server" signature="interfaces.RequestImpression" />
+		<interface name="n" role="server" signature="interfaces.RequestNumerisation" />
+		<interface name="cn" role="client" signature="interfaces.RequestCartoucheN" />
+		<interface name="cc" role="client" signature="interfaces.RequestCartoucheC" />
+		<interface name="in" role="client" signature="interfaces.RequestInput" />
+		<interface name="d" role="client" signature="interfaces.RequestDoc" />
+		<interface name="a" role="client" signature="interfaces.RequestAlim" />
+
+		<component name="Impression">
+			<interface name="i" role="server" signature="interfaces.RequestImpression" />
+			<interface name="cn" role="client" signature="interfaces.RequestCartoucheN" />
+			<interface name="cc" role="client" signature="interfaces.RequestCartoucheC" />
+			<interface name="a" role="client" signature="interfaces.RequestAlim" />
+			<interface name="n" role="client" signature="interfaces.RequestNumerisation" />
+			<content class="systeme.Impression" />
+			<controller desc="primitive" />
+		</component>
+
+		<component name="Numerisation">
+			<interface name="ni" role="server" signature="interfaces.RequestNumerisation" />
+			<interface name="nu" role="server" signature="interfaces.RequestNumerisation" />
+			<interface name="in" role="client" signature="interfaces.RequestInput" />
+			<interface name="d" role="client" signature="interfaces.RequestDoc" />
+			<interface name="a" role="client" signature="interfaces.RequestAlim" />
+			<content class="systeme.Numerisation" />
+			<controller desc="primitive" />
+		</component>
+
+		<binding client="this.i" server="Impression.i" />
+		<binding client="this.n" server="Numerisation.nu" />
+		<binding client="Impression.cn" server="this.cn" />
+		<binding client="Impression.cc" server="this.cc" />
+		<binding client="Impression.a" server="this.a" />
+		<binding client="Impression.n" server="Numerisation.ni" />
+		<binding client="Numerisation.in" server="this.in" />
+		<binding client="Numerisation.d" server="this.d" />
+		<binding client="Numerisation.a" server="this.a" />
+		<controller desc="composite" />
+	</component>
+
+	<component name="Environnement">
+		<interface name="cn" role="server" signature="interfaces.RequestCartoucheN" />
+		<interface name="cc" role="server" signature="interfaces.RequestCartoucheC" />
+		<interface name="in" role="server" signature="interfaces.RequestInput" />
+		<interface name="d" role="server" signature="interfaces.RequestDoc" />
+		<interface name="a" role="server" signature="interfaces.RequestAlim" />
+
+		<component name="Cartouche">
+			<interface name="cn" role="server" signature="interfaces.RequestCartoucheN" />
+			<interface name="cc" role="server" signature="interfaces.RequestCartoucheC" />
+			<content class="systeme.Cartouche" />
+			<controller desc="primitive" />
+		</component>
+
+		<component name="Input">
+			<interface name="in" role="server" signature="interfaces.RequestInput" />
+			<content class="systeme.Input" />
+			<controller desc="primitive" />
+		</component>
+
+		<component name="Document">
+			<interface name="d" role="server" signature="interfaces.RequestDoc" />
+			<content class="systeme.Document" />
+			<controller desc="primitive" />
+		</component>
+
+		<component name="Alimentation">
+			<interface name="a" role="server" signature="interfaces.RequestAlim" />
+			<content class="systeme.Alimentation" />
+			<controller desc="primitive" />
+		</component>
+
+		<binding client="this.cn" server="Cartouche.cn" />
+		<binding client="this.cc" server="Cartouche.cc" />
+		<binding client="this.in" server="Input.in" />
+		<binding client="this.d" server="Document.d" />
+		<binding client="this.a" server="Alimentation.a" />
+		<controller desc="composite" />
+	</component>
+	
+	<binding client="this.u" server="User.u" />
+	<binding client="User.i" server="Photocopieur.i" />
+	<binding client="User.n" server="Photocopieur.n" />
+	<binding client="Photocopieur.cn" server="Environnement.cn" />
+	<binding client="Photocopieur.cc" server="Environnement.cc" />
+	<binding client="Photocopieur.in" server="Environnement.in" />
+	<binding client="Photocopieur.d" server="Environnement.d" />
+	<binding client="Photocopieur.a" server="Environnement.a" />
+	<controller desc="composite" />
+</definition>
