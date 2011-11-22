@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" output="build" path="src"/>
+	<classpathentry kind="var" path="JRE_LIB" rootpath="JRE_SRCROOT" sourcepath="JRE_SRC"/>
+	<classpathentry kind="lib" path="/afs/deptinfo-st.univ-fcomte.fr/users/bmeilhac/M2/projet-m2-besancon/SECO/tp1/externals/asm.jar"/>
+	<classpathentry kind="lib" path="/afs/deptinfo-st.univ-fcomte.fr/users/bmeilhac/M2/projet-m2-besancon/SECO/tp1/externals/fractal.jar"/>
+	<classpathentry kind="lib" path="/afs/deptinfo-st.univ-fcomte.fr/users/bmeilhac/M2/projet-m2-besancon/SECO/tp1/externals/julia-asm.jar"/>
+	<classpathentry kind="lib" path="/afs/deptinfo-st.univ-fcomte.fr/users/bmeilhac/M2/projet-m2-besancon/SECO/tp1/externals/julia-mixins.jar"/>
+	<classpathentry kind="lib" path="/afs/deptinfo-st.univ-fcomte.fr/users/bmeilhac/M2/projet-m2-besancon/SECO/tp1/externals/julia-runtime.jar"/>
+	<classpathentry kind="lib" path="/afs/deptinfo-st.univ-fcomte.fr/users/bmeilhac/M2/projet-m2-besancon/SECO/tp1/externals/fractal-adl.jar"/>
+	<classpathentry kind="lib" path="/afs/deptinfo-st.univ-fcomte.fr/users/bmeilhac/M2/projet-m2-besancon/SECO/tp1/externals/ow_deployment_scheduling.jar"/>
+	<classpathentry kind="lib" path="/afs/deptinfo-st.univ-fcomte.fr/users/bmeilhac/M2/projet-m2-besancon/SECO/tp1/externals/dtdparser.jar"/>
+	<classpathentry kind="con" path="/afs/deptinfo-st.univ-fcomte.fr/users/bmeilhac/M2/projet-m2-besancon/SECO/tp1/externals/ow_util_explorer.jar"/>
+	<classpathentry kind="con" path="/afs/deptinfo-st.univ-fcomte.fr/users/bmeilhac/M2/projet-m2-besancon/SECO/tp1/externals/ow_util_trace.jar"/>
+	<classpathentry kind="con" path="/afs/deptinfo-st.univ-fcomte.fr/users/bmeilhac/M2/projet-m2-besancon/SECO/tp1/externals/junit.jar"/>
+	<classpathentry kind="con" path="/afs/deptinfo-st.univ-fcomte.fr/users/bmeilhac/M2/projet-m2-besancon/SECO/tp1/externals/log4j-1.2.8.jar"/>
+	<classpathentry kind="con" path="/afs/deptinfo-st.univ-fcomte.fr/users/bmeilhac/M2/projet-m2-besancon/SECO/tp1/externals/apollon-runtime.jar"/>
+	<classpathentry kind="con" path="/afs/deptinfo-st.univ-fcomte.fr/users/bmeilhac/M2/projet-m2-besancon/SECO/tp1/externals/ow_util_cmdline.jar"/>
+	<classpathentry kind="con" path="/afs/deptinfo-st.univ-fcomte.fr/users/bmeilhac/M2/projet-m2-besancon/SECO/tp1/externals/ow_util_misc.jar"/>
+	<classpathentry kind="con" path="/afs/deptinfo-st.univ-fcomte.fr/users/bmeilhac/M2/projet-m2-besancon/SECO/tp1/externals/xerces.jar"/>
+	<classpathentry kind="lib" path="/afs/deptinfo-st.univ-fcomte.fr/users/bmeilhac/M2/projet-m2-besancon/SECO/tp1/externals/fractal-explorer.jar"/>
+	<classpathentry kind="con" path="/afs/deptinfo-st.univ-fcomte.fr/users/bmeilhac/M2/projet-m2-besancon/SECO/tp1/externals/ow_monolog.jar"/>
+	<classpathentry kind="con" path="/afs/deptinfo-st.univ-fcomte.fr/users/bmeilhac/M2/projet-m2-besancon/SECO/tp1/externals/jgraph.jar"/>
+	<classpathentry kind="con" path="/afs/deptinfo-st.univ-fcomte.fr/users/bmeilhac/M2/projet-m2-besancon/SECO/tp1/externals/dream-explorer.jar"/>
+	<classpathentry kind="con" path="/afs/deptinfo-st.univ-fcomte.fr/users/bmeilhac/M2/projet-m2-besancon/SECO/tp1/exo4/build"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

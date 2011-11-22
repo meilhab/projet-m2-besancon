@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns="KaosGoalModel">
+  <Goal explanation="Elevator called"  xmi:id="g0">
+    	<alternatives xmi:type="Alternative" xmi:idref="alt0"/>
+    	<objectiveConflict xmi:type="Objective" xmi:idref="r3"/>
+  </Goal>
+  <Alternative explanation=""  xmi:id="alt0">
+  		<father xmi:type="Goal" xmi:idref="g0"/>
+    	<refinements xmi:type="Objective" xmi:idref="r0"/>
+    	<refinements xmi:type="Objective" xmi:idref="r1"/>
+    	<refinements xmi:type="Objective" xmi:idref="r2"/>
+    	<expectation xmi:type="Expectation" xmi:idref="e0"/>
+  </Alternative>
+  <Requirement explanation="Button command detected" xmi:id="r0">
+  	<agent xmi:type="Agent" xmi:idref="a0"/>
+  </Requirement>
+  <Requirement explanation="Passengers informed of their call status" xmi:id="r1">
+  	<alternatives xmi:type="Alternative" xmi:idref="alt1"/>
+  	<agent xmi:type="Agent" xmi:idref="a0"/>
+  </Requirement>
+  <Alternative explanation=""  xmi:id="alt1">
+  		<father xmi:type="Requirement" xmi:idref="r1"/>
+    	<refinements xmi:type="Objective" xmi:idref="r3"/>
+    	<refinements xmi:type="Objective" xmi:idref="r4"/>
+  </Alternative>
+  <Requirement explanation="Button Based Interface provided" xmi:id="r2">
+  	<agent xmi:type="Agent" xmi:idref="a1"/>
+  </Requirement>
+  <Requirement explanation="All Button lights off until an elevator gets called" xmi:id="r3">
+  </Requirement>
+  <Requirement explanation="Selected button's light on until requested lift arrives" xmi:id="r4">
+  </Requirement>
+  <Expectation explanation="Button depressed"  xmi:id="e0">
+  	<agent xmi:type="Agent" xmi:idref="a2"/>
+  </Expectation>
+  <Agent explanation="Elevator Controller" xmi:id="a0">
+  	<requirement xmi:type="Requirement" xmi:idref="r0"/>
+  	<requirement xmi:type="Requirement" xmi:idref="r1"/>
+  </Agent>
+  <Agent explanation="Elevator Company" xmi:id="a1">
+    <requirement xmi:type="Requirement" xmi:idref="r2"/>
+  </Agent>
+  <Agent explanation="Passenger" xmi:id="a2">
+    <expectation xmi:type="Expectation" xmi:idref="e0"/>
+  </Agent>
+</xmi:XMI>

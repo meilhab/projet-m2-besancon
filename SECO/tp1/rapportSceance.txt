@@ -1,0 +1,31 @@
+Scéance 1
+exo1 :
+    Serveur : modification de la méthode print() :
+        -> retourne un string :
+            --> "done" si le string est non null ou vide;
+            --> "ERREUR" si le string est null ou vide.
+    Client : modification de la méthode main() :
+        -> récupération de l'appel à la méthode print() du serveur
+        -> affichage du résultat
+
+exo2 : 
+    Création fichier MonServeur.java
+
+Scéance 2
+exo3 :
+    implémentation du fichier Comanche.fractal conforme à la figure 2
+
+exo4 :
+    creation classe HttpRequestHandler.java implémentant RequestHandler.java
+    modification Comanche.fractal :
+        -> ajout d'un sous composant de handler : HttpHandler
+        -> connexion de l'interface avec le dispatcher
+        -> on remplace FileRequestHandler par le HttpRequestHandler
+    modification Server.java :
+        -> remplace le FileRequestHandler par HttpRequestHandler
+
+exo5 :
+    intégration Comanche.fractal
+    modification RequestAnalyser : si /reconf alors on ajoute un élément au dispatcher et on retire le FileRequestHandler
+
+
