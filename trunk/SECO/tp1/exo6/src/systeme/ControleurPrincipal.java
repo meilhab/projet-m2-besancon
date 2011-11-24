@@ -8,7 +8,7 @@ import org.objectweb.fractal.api.control.BindingController;
 import org.objectweb.fractal.api.control.IllegalBindingException;
 import org.objectweb.fractal.api.control.IllegalLifeCycleException;
 
-public class User implements Runnable, BindingController {
+public class ControleurPrincipal implements Runnable, BindingController {
 	private RequestImpression impression;
 	private RequestNumerisation numerisation;
 
