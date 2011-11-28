@@ -40,9 +40,9 @@
 			<controller desc="primitive" />
 		</component>
 
-		<component name="Alimentation">
+		<component name="AlimentationImpression">
 			<interface name="a" role="server" signature="interfaces.RequestAlim" />
-			<content class="systeme.Alimentation" />
+			<content class="systeme.AlimentationImpression" />
 			<controller desc="primitive" />
 		</component>
 
@@ -57,14 +57,14 @@
 		<binding client="ControleurImpression.f" server="Feuille.f" />
 		<binding client="ControleurImpression.cn" server="Cartouche.cn" />
 		<binding client="ControleurImpression.cc" server="Cartouche.cc" />
-		<binding client="ControleurImpression.a" server="Alimentation.a" />
+		<binding client="ControleurImpression.a" server="AlimentationImpression.a" />
 		<binding client="ControleurImpression.e" server="EnvoiImpression.e" />
 		<controller desc="composite" />
 	</component>
 
 	<component name="ModuleNumerisation">
 		<interface name="n" role="server" signature="interfaces.RequestNumerisation" />
-		<interface name="i" role="server" signature="interfaces.RequestImpression" />
+		<interface name="i" role="client" signature="interfaces.RequestImpression" />
 
 		<component name="ControleurNumerisation">
 			<interface name="n" role="server" signature="interfaces.RequestNumerisation" />
@@ -82,9 +82,9 @@
 			<controller desc="primitive" />
 		</component>
 
-		<component name="Alimentation">
+		<component name="AlimentationNumerisation">
 			<interface name="a" role="server" signature="interfaces.RequestAlim" />
-			<content class="systeme.Alimentation" />
+			<content class="systeme.AlimentationNumerisation" />
 			<controller desc="primitive" />
 		</component>
 
@@ -98,7 +98,7 @@
 		<binding client="this.n" server="ControleurNumerisation.n" />
 		<binding client="ControleurNumerisation.i" server="this.i" />
 		<binding client="ControleurNumerisation.d" server="Document.d" />
-		<binding client="ControleurNumerisation.a" server="Alimentation.a" />
+		<binding client="ControleurNumerisation.a" server="AlimentationNumerisation.a" />
 		<binding client="ControleurNumerisation.e" server="EnvoiNumerisation.e" />
 		<controller desc="composite" />
 	</component>

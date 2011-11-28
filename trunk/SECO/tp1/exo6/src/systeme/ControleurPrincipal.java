@@ -50,8 +50,10 @@ public class ControleurPrincipal implements Runnable, BindingController {
 
 	@Override
 	public void run() {
-		System.out.println("Lancement de l'impression");
-		impression.impression();
+//		System.out.println("Lancement de l'impression");
+//		impression.impression("ahahahhaha", 15, true);
+		System.out.println("Lancement de la numérisation");
+		numerisation.numerisation();
 	}
 
 }

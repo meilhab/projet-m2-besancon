@@ -2,15 +2,15 @@ package systeme;
 
 import interfaces.RequestAlim;
 
-public class Alimentation implements RequestAlim {
+public class AlimentationNumerisation implements RequestAlim {
 	private boolean alimentee = false;
-	
+
 	@Override
 	public boolean etatAlimentation() {
 		return alimentee;
 	}
-	
-	public void changerEtatImprimante(){
+
+	public void changerEtatImprimante() {
 		alimentee = !alimentee;
 	}
 
