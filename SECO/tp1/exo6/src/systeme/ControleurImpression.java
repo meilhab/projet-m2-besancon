@@ -14,18 +14,19 @@ import interfaces.RequestEnvoiImpression;
 import interfaces.RequestFeuille;
 import interfaces.RequestImpression;
 
-public class ControleurImpression implements RequestImpression, BindingController {
-	private RequestEnvoiImpression envoiImpression;
+public class ControleurImpression implements RequestImpression,
+		BindingController {
 	private RequestFeuille feuille;
 	private RequestCartoucheN cartoucheN;
 	private RequestCartoucheC cartoucheC;
 	private RequestAlim alimentation;
+	private RequestEnvoiImpression envoiImpression;
 
 	@Override
 	public void bindFc(String arg0, Object arg1)
 			throws NoSuchInterfaceException, IllegalBindingException,
 			IllegalLifeCycleException {
-		if(arg0.equals("f")){
+		if (arg0.equals("f")) {
 			feuille = (RequestFeuille) arg1;
 		} else if (arg0.equals("cn")) {
 			cartoucheN = (RequestCartoucheN) arg1;
@@ -40,12 +41,12 @@ public class ControleurImpression implements RequestImpression, BindingControlle
 
 	@Override
 	public String[] listFc() {
-		return new String[] { "f" , "cn", "cc", "a" , "e" };
+		return new String[] { "f", "cn", "cc", "a", "e" };
 	}
 
 	@Override
 	public Object lookupFc(String arg0) throws NoSuchInterfaceException {
-		if(arg0.equals("f")){
+		if (arg0.equals("f")) {
 			return feuille;
 		} else if (arg0.equals("cn")) {
 			return cartoucheN;
@@ -62,7 +63,7 @@ public class ControleurImpression implements RequestImpression, BindingControlle
 	@Override
 	public void unbindFc(String arg0) throws NoSuchInterfaceException,
 			IllegalBindingException, IllegalLifeCycleException {
-		if(arg0.equals("f")){
+		if (arg0.equals("f")) {
 			feuille = null;
 		} else if (arg0.equals("cn")) {
 			cartoucheN = null;
@@ -76,67 +77,141 @@ public class ControleurImpression implements RequestImpression, BindingControlle
 	}
 
 	@Override
-	public void impression() {
-		System.out.println("----------------------------------------------------");
-		System.out.println("Controleur Impression :: Vérification des composants");
-		System.out.println("----------------------------------------------------");
+	public void impression(String document, int nombre, boolean enCouleur) {
+		System.out
+				.println("----------------------------------------------------");
+		System.out
+				.println("Controleur Impression :: Vérification des composants");
+		System.out
+				.println("----------------------------------------------------");
 
-		boolean enCouleur = true;
+		boolean termineImpression = false;
+		int nombreImpressionsCycle = 0;
 
-		if (!gestionAlimentation()) {
-			System.out.println("\tImprimer en noir et blanc seulement (o/n)?");
-			if (!RecuperationClavier.resultatSaisie("o", "n")) {
-				System.out.println("Controleur Impression :: impression annulée");
+		while (!termineImpression) {
+
+			System.out.println();
+			System.out.println("----------------------------------------------------");
+			System.out.println("Nombre de feuilles restantes à imprimer : " + nombre);
+			System.out.println("----------------------------------------------------");
+			
+			// contrôle des composants
+			if (!gestionAlimentation()) {
+				System.out
+						.println("Controleur Impression :: impression annulée");
 				return;
 			}
-			enCouleur = false;
-		}
-		if (!gestionCartoucheC()) {
-			System.out.println("Controleur Impression :: impression annulée");
-			return;
-		}
-		if (!gestionCartoucheN()) {
-			System.out.println("Controleur Impression :: impression annulée");
-			return;
-		}
+			System.out.println();
+			if (enCouleur && !gestionCartoucheC()) {
+				System.out
+						.println("Controleur Impression :: impression annulée");
+			}
+			System.out.println();
+			if (!enCouleur && !gestionCartoucheN()) {
+				System.out
+						.println("Controleur Impression :: impression annulée");
+				return;
+			}
+			System.out.println();
+			if (!gestionFeuille()) {
+				System.out
+						.println("Controleur Impression :: impression annulée");
+				return;
+			}
+			System.out.println();
 
-		System.out.println("Controleur Impression :: impression en cours...");
-		if(enCouleur){
-			cartoucheC.impressionCouleur();
+			// récupération du nombre de feuilles maximum imprimables pour ce
+			// cycle
+			if (enCouleur) {
+				nombreImpressionsCycle = cartoucheC.getNiveauEncreCouleur();
+			} else {
+				nombreImpressionsCycle = cartoucheN.getNiveauEncreNoire();
+			}
+
+			if (feuille.getNombreFeuille() < nombreImpressionsCycle) {
+				nombreImpressionsCycle = feuille.getNombreFeuille();
+			}
+
+			if (nombre > nombreImpressionsCycle) {
+				nombre -= nombreImpressionsCycle;
+			} else {
+				nombreImpressionsCycle = nombre;
+				termineImpression = true;
+			}
+
+			// une fois le total des actions vérifiées, on lance le processus :
+			// retire des feuilles et de l'encre
+
+			System.out
+					.println("Controleur Impression :: impression en cours de " + nombreImpressionsCycle + " feuilles...");
+			if (enCouleur) {
+				cartoucheC.impressionCouleur(nombreImpressionsCycle);
+			} else {
+				cartoucheN.impressionNoire(nombreImpressionsCycle);
+			}
+			feuille.impressionFeuille(nombreImpressionsCycle);
+			envoiImpression.envoiImpression(document, nombreImpressionsCycle);
+
 		}
-		cartoucheN.impressionNoire();
-		
-		// numerisation
 	}
 
 	private boolean gestionAlimentation() {
 		System.out.println("Controleur Impression :: Alimentation");
 		if (!alimentation.etatAlimentation()) {
 			System.out.println("\tImprimante éteinte : allumer (o/n)?");
-			return !RecuperationClavier.resultatSaisie("o", "n");
+			if (!RecuperationClavier.resultatSaisie("o", "n")) {
+				return false;
+			}
+			alimentation.changerEtatImprimante();
 		}
 		return true;
 	}
 
 	private boolean gestionCartoucheC() {
 		System.out.println("Controleur Impression :: Cartouche couleur");
-		System.out.println("Niveau d'encre couleur : "
+		System.out.println("\tNiveau d'encre couleur : "
 				+ cartoucheC.getNiveauEncreCouleur());
 		if (!cartoucheC.etatCartoucheC()) {
-			System.out.println("\tCartouche couleur vide : recharger (o/n)?");
-			return !RecuperationClavier.resultatSaisie("o", "n");
+			System.out
+					.println("\tCartouche couleur :: niveau encre vide : recharger (o/n)?");
+			if (!RecuperationClavier.resultatSaisie("o", "n")) {
+				return false;
+			}
+			System.out
+					.println("\tCartouche couleur :: rechargement de la cartouche");
+			cartoucheC.rechargementEncreCouleur();
 		}
 		return true;
 	}
 
 	private boolean gestionCartoucheN() {
 		System.out.println("Controleur Impression :: Cartouche noire");
-		System.out.println("Niveau d'encre noire : "
+		System.out.println("\tNiveau d'encre noire : "
 				+ cartoucheN.getNiveauEncreNoire());
 		if (!cartoucheN.etatCartoucheN()) {
-			System.out.println("\tCartouche noire vide : recharger (o/n)?");
+			System.out
+					.println("\tCartouche noire :: niveau encre vide : recharger (o/n)?");
+			if (!RecuperationClavier.resultatSaisie("o", "n")) {
+				return false;
+			}
+			System.out
+					.println("\tCartouche noire :: rechargement de la cartouche");
+			cartoucheN.rechargementEncreNoire();
+		}
+		return true;
+	}
 
-			return RecuperationClavier.resultatSaisie("o", "n");
+	private boolean gestionFeuille() {
+		System.out.println("Controleur Impression :: Bac de feuilles");
+		System.out.println("\tNombre de feuilles disponibles : "
+				+ feuille.getNombreFeuille());
+		if (!feuille.etatFeuille()) {
+			System.out.println("\tBac de feuilles :: vide : recharger (o/n)?");
+			if (!RecuperationClavier.resultatSaisie("o", "n")) {
+				return false;
+			}
+			System.out.println("\tBac de feuilles :: rechargement du bac");
+			feuille.rechargementBacFeuille();
 		}
 		return true;
 	}

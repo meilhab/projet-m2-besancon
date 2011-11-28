@@ -15,4 +15,8 @@ public class RecuperationClavier {
 		
 		return false;
 	}
+	
+	public static String cheminSaisie(){
+		return Clavier.lireString();
+	}
 }

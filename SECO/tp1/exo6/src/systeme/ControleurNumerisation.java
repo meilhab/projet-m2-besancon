@@ -5,18 +5,21 @@ import org.objectweb.fractal.api.control.BindingController;
 import org.objectweb.fractal.api.control.IllegalBindingException;
 import org.objectweb.fractal.api.control.IllegalLifeCycleException;
 
+import outils.RecuperationClavier;
+
 import interfaces.RequestAlim;
 import interfaces.RequestDoc;
 import interfaces.RequestEnvoiNumerisation;
 import interfaces.RequestImpression;
 import interfaces.RequestNumerisation;
 
-public class ControleurNumerisation implements RequestNumerisation, BindingController {
+public class ControleurNumerisation implements RequestNumerisation,
+		BindingController {
 	private RequestImpression impression;
 	private RequestDoc document;
 	private RequestAlim alimentation;
 	private RequestEnvoiNumerisation envoiNumerisation;
-	
+
 	@Override
 	public void bindFc(String arg0, Object arg1)
 			throws NoSuchInterfaceException, IllegalBindingException,
@@ -45,7 +48,7 @@ public class ControleurNumerisation implements RequestNumerisation, BindingContr
 			return document;
 		} else if (arg0.equals("a")) {
 			return alimentation;
-		} else if (arg0.equals("e")){
+		} else if (arg0.equals("e")) {
 			return envoiNumerisation;
 		}
 		return null;
@@ -60,15 +63,50 @@ public class ControleurNumerisation implements RequestNumerisation, BindingContr
 			document = null;
 		} else if (arg0.equals("a")) {
 			alimentation = null;
-		} else if(arg0.equals("e")){
+		} else if (arg0.equals("e")) {
 			envoiNumerisation = null;
 		}
 	}
 
 	@Override
 	public void numerisation() {
-		// TODO Auto-generated method stub
+		System.out
+				.println("------------------------------------------------------");
+		System.out
+				.println("Controleur Numérisation :: Vérification des composants");
+		System.out
+				.println("------------------------------------------------------");
+		
+		System.out.println();
+		// contrôle des composants
+		if (!gestionAlimentation()) {
+			System.out
+					.println("Controleur Numérisation :: numérisation annulée");
+			return;
+		}
+		System.out.println();
+		
+		// récupération du document
+		String doc = document.numeriserDocument();
+		
+		System.out.println("Controleur Numérisation :: récupération du document");
+		System.out.println(doc);
+		System.out.println();
+		
+		envoiNumerisation.envoiNumerisation(doc);
 		
 	}
 
+	private boolean gestionAlimentation() {
+		System.out.println("Controleur Numérisation :: Alimentation");
+		if (!alimentation.etatAlimentation()) {
+			System.out.println("\tNumériseur éteint : allumer (o/n)?");
+			if (!RecuperationClavier.resultatSaisie("o", "n")) {
+				return false;
+			}
+			alimentation.changerEtatImprimante();
+		}
+		return true;
+	}
+	
 }
