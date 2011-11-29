@@ -91,34 +91,25 @@ public class ControleurImpression implements RequestImpression,
 		while (!termineImpression) {
 
 			System.out.println();
-			System.out.println("----------------------------------------------------");
-			System.out.println("Nombre de feuilles restantes à imprimer : " + nombre);
-			System.out.println("----------------------------------------------------");
-			
+			System.out
+					.println("----------------------------------------------------");
+			System.out.println("Nombre de feuilles restantes à imprimer : "
+					+ nombre);
+			System.out
+					.println("----------------------------------------------------");
+
 			// contrôle des composants
-			if (!gestionAlimentation()) {
+			if (!gestionGeneraleImpression(enCouleur)) {
 				System.out
 						.println("Controleur Impression :: impression annulée");
 				return;
 			}
 			System.out.println();
-			if (enCouleur && !gestionCartoucheC()) {
-				System.out
-						.println("Controleur Impression :: impression annulée");
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
 			}
-			System.out.println();
-			if (!enCouleur && !gestionCartoucheN()) {
-				System.out
-						.println("Controleur Impression :: impression annulée");
-				return;
-			}
-			System.out.println();
-			if (!gestionFeuille()) {
-				System.out
-						.println("Controleur Impression :: impression annulée");
-				return;
-			}
-			System.out.println();
 
 			// récupération du nombre de feuilles maximum imprimables pour ce
 			// cycle
@@ -141,9 +132,9 @@ public class ControleurImpression implements RequestImpression,
 
 			// une fois le total des actions vérifiées, on lance le processus :
 			// retire des feuilles et de l'encre
-
 			System.out
-					.println("Controleur Impression :: impression en cours de " + nombreImpressionsCycle + " feuilles...");
+					.println("Controleur Impression :: impression en cours de "
+							+ nombreImpressionsCycle + " feuilles...");
 			if (enCouleur) {
 				cartoucheC.impressionCouleur(nombreImpressionsCycle);
 			} else {
@@ -153,6 +144,24 @@ public class ControleurImpression implements RequestImpression,
 			envoiImpression.envoiImpression(document, nombreImpressionsCycle);
 
 		}
+	}
+
+	private boolean gestionGeneraleImpression(boolean enCouleur) {
+		if (!gestionAlimentation()) {
+			return false;
+		}
+		System.out.println();
+		if (enCouleur && !gestionCartoucheC()) {
+			return false;
+		}
+		if (!enCouleur && !gestionCartoucheN()) {
+			return false;
+		}
+		System.out.println();
+		if (!gestionFeuille()) {
+			return false;
+		}
+		return true;
 	}
 
 	private boolean gestionAlimentation() {

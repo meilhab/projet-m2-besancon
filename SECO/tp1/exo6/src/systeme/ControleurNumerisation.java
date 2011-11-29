@@ -69,7 +69,7 @@ public class ControleurNumerisation implements RequestNumerisation,
 	}
 
 	@Override
-	public void numerisation() {
+	public void numerisation(boolean impression, int nbPage, boolean enCouleur) {
 		System.out
 				.println("------------------------------------------------------");
 		System.out
@@ -94,6 +94,14 @@ public class ControleurNumerisation implements RequestNumerisation,
 		System.out.println();
 		
 		envoiNumerisation.envoiNumerisation(doc);
+		System.out.println();
+		
+		if(impression){
+			System.out.println("Controleur Numérisation :: impression demandée");
+			System.out.println("----------------------------------------------");
+			System.out.println();
+			this.impression.impression(doc, nbPage, enCouleur);
+		}
 		
 	}
 
