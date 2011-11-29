@@ -8,6 +8,8 @@ import org.objectweb.fractal.api.control.BindingController;
 import org.objectweb.fractal.api.control.IllegalBindingException;
 import org.objectweb.fractal.api.control.IllegalLifeCycleException;
 
+import outils.RecuperationClavier;
+
 public class ControleurPrincipal implements Runnable, BindingController {
 	private RequestImpression impression;
 	private RequestNumerisation numerisation;
@@ -50,10 +52,64 @@ public class ControleurPrincipal implements Runnable, BindingController {
 
 	@Override
 	public void run() {
-//		System.out.println("Lancement de l'impression");
-//		impression.impression("ahahahhaha", 15, true);
-		System.out.println("Lancement de la numérisation");
-		numerisation.numerisation();
+		boolean continuer = false;
+		boolean choix = true; // true = numérisation, false = impression
+		int nombrePage = 1;
+		boolean enCouleur = true;
+		boolean impression = false;
+		String chemin = "";
+		
+		System.out.println();
+		System.out.println("------------------------------------");
+		System.out.println("Système de gestion d'un photocopieur");
+		System.out.println("------------------------------------");
+		System.out.println();
+		
+		do {
+			System.out.println("Choix du programme (n : numérisation / i : impression)");
+			choix = RecuperationClavier.resultatSaisie("n", "i");
+			System.out.println();
+			
+			if(choix){
+				System.out.println("Numérisation :: impression du résultat (o/n)");
+				impression = RecuperationClavier.resultatSaisie("o", "n");
+				System.out.println();
+				
+				if(impression){
+					System.out.println("Numérisation : Impression :: nombre de copies");
+					nombrePage = RecuperationClavier.entierSaisie();
+					System.out.println();
+					System.out.println("Numérisation : Impression :: impression couleur (o/n) ");
+					enCouleur = RecuperationClavier.resultatSaisie("o", "n");
+					System.out.println();
+					numerisation.numerisation(impression, nombrePage, enCouleur);
+					
+				} else {
+					numerisation.numerisation(false, 0, false);
+				}
+			} else {
+				System.out.println("Impression :: chemin vers le document à imprimer");
+				chemin = RecuperationClavier.cheminSaisie();
+				System.out.println();
+				System.out.println("Impression :: nombre de copies");
+				nombrePage = RecuperationClavier.entierSaisie();
+				System.out.println();
+				System.out.println("Impression :: impression couleur (o/n)");
+				enCouleur = RecuperationClavier.resultatSaisie("o", "n");
+				System.out.println();
+				this.impression.impression(RecuperationClavier.recuperationFichier(chemin), nombrePage, enCouleur);
+			}
+			
+			System.out.println();
+			System.out.println("Effectuer une nouvelle tâche (o/n)");
+			continuer = RecuperationClavier.resultatSaisie("o", "n");
+		}while(continuer);
+		
+		System.out.println();
+		System.out.println("---------------------------------------------------------");
+		System.out.println("Fin d'utilisation du système de gestion d'un photocopieur");
+		System.out.println("---------------------------------------------------------");
+		System.out.println();
 	}
 
 }

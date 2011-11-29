@@ -16,13 +16,13 @@
 		<interface name="i" role="server" signature="interfaces.RequestImpression" />
 
 		<component name="ControleurImpression">
-			<interface name="i" role="server" signature="interfaces.RequestImpression" />
+			<interface name="i" role="server"
+				signature="interfaces.RequestImpression" />
 			<interface name="cn" role="client" signature="interfaces.RequestCartoucheN" />
 			<interface name="cc" role="client" signature="interfaces.RequestCartoucheC" />
 			<interface name="f" role="client" signature="interfaces.RequestFeuille" />
 			<interface name="a" role="client" signature="interfaces.RequestAlim" />
-			<interface name="e" role="client"
-				signature="interfaces.RequestEnvoiImpression" />
+			<interface name="e" role="client" signature="interfaces.RequestEnvoiImpression" />
 			<content class="systeme.ControleurImpression" />
 			<controller desc="primitive" />
 		</component>
@@ -71,7 +71,8 @@
 			<interface name="i" role="client" signature="interfaces.RequestImpression" />
 			<interface name="d" role="client" signature="interfaces.RequestDoc" />
 			<interface name="a" role="client" signature="interfaces.RequestAlim" />
-			<interface name="e" role="client" signature="interfaces.RequestEnvoiNumerisation" />
+			<interface name="e" role="client"
+				signature="interfaces.RequestEnvoiNumerisation" />
 			<content class="systeme.ControleurNumerisation" />
 			<controller desc="primitive" />
 		</component>
