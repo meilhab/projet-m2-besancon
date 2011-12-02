@@ -13,6 +13,11 @@ import interfaces.RequestEnvoiNumerisation;
 import interfaces.RequestImpression;
 import interfaces.RequestNumerisation;
 
+/**
+ * Composant représentant le contrôleur gérant la numérisation
+ * 
+ * @author Benoit Meilhac
+ */
 public class ControleurNumerisation implements RequestNumerisation,
 		BindingController {
 	private RequestImpression impression;
@@ -105,6 +110,12 @@ public class ControleurNumerisation implements RequestNumerisation,
 		
 	}
 
+	/**
+	 * Vérifie que l'alimentation est disponible, demande à l'utilisateur si
+	 * elle ne l'est pas
+	 * 
+	 * @return état de l'imprimante
+	 */
 	private boolean gestionAlimentation() {
 		System.out.println("Controleur Numérisation :: Alimentation");
 		if (!alimentation.etatAlimentation()) {

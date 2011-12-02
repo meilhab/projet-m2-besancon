@@ -3,6 +3,11 @@ package systeme;
 import interfaces.RequestCartoucheC;
 import interfaces.RequestCartoucheN;
 
+/**
+ * Composant représentant les cartouches d'encre à la fois couleur et noire
+ * 
+ * @author Benoit Meilhac
+ */
 public class Cartouche implements RequestCartoucheN, RequestCartoucheC {
 	private int niveauEncreCouleur = 0;
 	private int niveauEncreNoire = 0;
@@ -25,18 +30,22 @@ public class Cartouche implements RequestCartoucheN, RequestCartoucheC {
 		return false;
 	}
 
+	@Override
 	public int getNiveauEncreCouleur() {
 		return niveauEncreCouleur;
 	}
 
+	@Override
 	public int getNiveauEncreNoire() {
 		return niveauEncreNoire;
 	}
 
+	@Override
 	public void rechargementEncreCouleur() {
 		niveauEncreCouleur = NIVEAUMAXCARTOUCHECOULEUR;
 	}
 
+	@Override
 	public void rechargementEncreNoire() {
 		niveauEncreNoire = NIVEAUMAXCARTOUCHENOIRE;
 	}

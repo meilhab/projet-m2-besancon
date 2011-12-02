@@ -2,6 +2,11 @@ package systeme;
 
 import interfaces.RequestEnvoiNumerisation;
 
+/**
+ * Composant représentant la sortie voulue pour une numérisation
+ * 
+ * @author Benoit Meilhac
+ */
 public class EnvoiNumerisation implements RequestEnvoiNumerisation {
 
 	@Override
