@@ -4,6 +4,11 @@ import outils.RecuperationClavier;
 
 import interfaces.RequestDoc;
 
+/**
+ * Composant représentant le document à numériser
+ * 
+ * @author Benoit Meilhac
+ */
 public class Document implements RequestDoc {
 
 	@Override

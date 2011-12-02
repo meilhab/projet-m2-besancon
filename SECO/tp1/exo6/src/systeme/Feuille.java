@@ -2,6 +2,11 @@ package systeme;
 
 import interfaces.RequestFeuille;
 
+/**
+ * Composant représentant le bac de feuilles
+ * 
+ * @author Benoit Meilhac
+ */
 public class Feuille implements RequestFeuille {
 	private int nombreFeuille = 0;
 	public static final int CAPACITEMAXBACFEUILLE = 10;

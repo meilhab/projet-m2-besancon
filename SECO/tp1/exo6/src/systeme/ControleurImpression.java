@@ -14,6 +14,11 @@ import interfaces.RequestEnvoiImpression;
 import interfaces.RequestFeuille;
 import interfaces.RequestImpression;
 
+/**
+ * Composant représentant le contrôleur gérant l'impression
+ * 
+ * @author Benoit Meilhac
+ */
 public class ControleurImpression implements RequestImpression,
 		BindingController {
 	private RequestFeuille feuille;
@@ -146,6 +151,13 @@ public class ControleurImpression implements RequestImpression,
 		}
 	}
 
+	/**
+	 * Vérifie que les composants nécessaires à un impression sont disponibles
+	 * 
+	 * @param enCouleur
+	 *            précise si on contrôle une cartouche couleur ou noire
+	 * @return true si tous les composants sont opérationnels, false sinon
+	 */
 	private boolean gestionGeneraleImpression(boolean enCouleur) {
 		if (!gestionAlimentation()) {
 			return false;
@@ -164,6 +176,12 @@ public class ControleurImpression implements RequestImpression,
 		return true;
 	}
 
+	/**
+	 * Vérifie que l'alimentation est disponible, demande à l'utilisateur si
+	 * elle ne l'est pas
+	 * 
+	 * @return état de l'imprimante
+	 */
 	private boolean gestionAlimentation() {
 		System.out.println("Controleur Impression :: Alimentation");
 		if (!alimentation.etatAlimentation()) {
@@ -176,6 +194,12 @@ public class ControleurImpression implements RequestImpression,
 		return true;
 	}
 
+	/**
+	 * Vérifie que la cartouche couleur est rempli, demande à l'utilisateur si
+	 * elle ne l'est pas
+	 * 
+	 * @return état de la cartouche couleur
+	 */
 	private boolean gestionCartoucheC() {
 		System.out.println("Controleur Impression :: Cartouche couleur");
 		System.out.println("\tNiveau d'encre couleur : "
@@ -193,6 +217,12 @@ public class ControleurImpression implements RequestImpression,
 		return true;
 	}
 
+	/**
+	 * Vérifie que la cartouche noire est rempli, demande à l'utilisateur si
+	 * elle ne l'est pas
+	 * 
+	 * @return état de la cartouche noire
+	 */
 	private boolean gestionCartoucheN() {
 		System.out.println("Controleur Impression :: Cartouche noire");
 		System.out.println("\tNiveau d'encre noire : "
@@ -210,6 +240,12 @@ public class ControleurImpression implements RequestImpression,
 		return true;
 	}
 
+	/**
+	 * Vérifie que le bac de feuilles est rempli, demande à l'utilisateur si il
+	 * ne l'est pas
+	 * 
+	 * @return état du bac de feuilles
+	 */
 	private boolean gestionFeuille() {
 		System.out.println("Controleur Impression :: Bac de feuilles");
 		System.out.println("\tNombre de feuilles disponibles : "

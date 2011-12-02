@@ -2,6 +2,11 @@ package systeme;
 
 import interfaces.RequestEnvoiImpression;
 
+/**
+ * Composant représentant la sortie voulue pour une impression
+ * 
+ * @author Benoit Meilhac
+ */
 public class EnvoiImpression implements RequestEnvoiImpression {
 
 	@Override

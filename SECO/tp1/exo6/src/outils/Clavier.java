@@ -5,6 +5,10 @@ import java.io.InputStreamReader;
 import java.io.IOException;
 import java.util.StringTokenizer;
 
+/**
+ * Classe récupérée permettant de traiter les entrées clavier en fonction du
+ * type d'information que l'on veut
+ */
 public final class Clavier {
 
 	private static BufferedReader bufIn = null;
