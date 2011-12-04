@@ -27,6 +27,7 @@ public class ServerImpl implements Service, ServiceAttributes {
 
 	private int count = 0;
 
+	// modification : retour erreur si vide ou null, sinon retour done
 	public String print(final String msg) {
 		new Exception() {
 			public String toString() {
@@ -39,11 +40,10 @@ public class ServerImpl implements Service, ServiceAttributes {
 				System.err.println(header + msg);
 			}
 			System.err.println("Server: print done.");
+		} else {
+			return new String("ERREUR : chaîne vide.");
 		}
-		else {
-			return new String( "ERREUR : chaîne vide.");
-		}
-		
+
 		return new String("done");
 	}
 

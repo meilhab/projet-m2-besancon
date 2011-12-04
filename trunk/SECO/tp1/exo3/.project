@@ -14,11 +14,4 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>build</name>
-			<type>2</type>
-			<location>/afs/deptinfo-st.univ-fcomte.fr/users/bmeilhac/M2/projet-m2-besancon/SECO/tp1/exo3/build</location>
-		</link>
-	</linkedResources>
 </projectDescription>

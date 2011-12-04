@@ -28,6 +28,7 @@ public class ClientImpl implements Main, BindingController {
 	private Service service;
 
 	public void main(final String[] args) {
+		// modification : récupération et affichage de la demande
 		String demande = service.print("");
 		System.err.println("Client : resultat de la demande -> " + demande);
 	}

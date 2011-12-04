@@ -21,11 +21,6 @@
 			<location>/afs/deptinfo-st.univ-fcomte.fr/users/bmeilhac/M2/projet-m2-besancon/SECO/tp1/externals/apollon-runtime.jar</location>
 		</link>
 		<link>
-			<name>build</name>
-			<type>2</type>
-			<location>/afs/deptinfo-st.univ-fcomte.fr/users/bmeilhac/M2/projet-m2-besancon/SECO/tp1/exo4/build</location>
-		</link>
-		<link>
 			<name>dream-explorer.jar</name>
 			<type>2</type>
 			<location>/afs/deptinfo-st.univ-fcomte.fr/users/bmeilhac/M2/projet-m2-besancon/SECO/tp1/externals/dream-explorer.jar</location>
