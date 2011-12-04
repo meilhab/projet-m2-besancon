@@ -18,7 +18,7 @@ public class Document implements RequestDoc {
 		System.out.println("\tDocument :: Récupération du document en cours...");
 		System.out.println();
 		try {
-			Thread.sleep(1000);
+			Thread.sleep(3000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}

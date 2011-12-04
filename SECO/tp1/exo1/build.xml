@@ -16,7 +16,7 @@
  ! Contact: sebastien.chassande@inrialpes.fr
 -->
 
-<project name="Exo1" default="compile">
+<project name="exo1" default="compile">
 
   <!-- directory definition -->
 
