@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+  <xsd:import namespace="http://www.w3.org/XML/1998/namespace"
+              schemaLocation="xml.xsd"/>
+
+  <xsd:redefine schemaLocation="sf-2.xsd">
+    <xsd:complexType name="book-type">
+        <xsd:complexContent>
+            <xsd:extension base="book-type">
+                <xsd:sequence>
+                    <xsd:group ref="prices-quantity" />
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="inproceedings-type">
+    <xsd:complexContent>
+            <xsd:extension base="inproceedings-type">
+                <xsd:sequence>
+                    <xsd:group ref="prices-quantity" />
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+  </xsd:complexType>
+  </xsd:redefine>
+
+<xsd:element name="order">
+    <xsd:complexType>
+        <xsd:sequence>
+            <xsd:element ref="sf-2" />
+            <xsd:element ref="personal-details" />
+        </xsd:sequence>
+    </xsd:complexType>
+</xsd:element>
+
+<xsd:element name="personal-details">
+    <xsd:complexType>
+        <xsd:sequence>
+            <xsd:element ref="personname" />
+            <xsd:element name="address" type="address-elements" />
+            <xsd:element name="payment-info">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="credit-card">
+                            <xsd:complexType>
+                                <xsd:sequence>
+                                    <xsd:element name="cc-nb">
+                                        <xsd:simpleType>
+                                            <xsd:restriction base="xsd:string">
+                                                <xsd:pattern value="(\d{4} ){3}\d{4}" />
+                                            </xsd:restriction>
+                                        </xsd:simpleType>
+                                    </xsd:element>
+                                    <xsd:element name="cc-issuer" type="xsd:string" />
+                                    <xsd:element name="cc-expiration-date">
+                                        <xsd:simpleType>
+                                            <xsd:restriction base="xsd:token">
+                                                <xsd:pattern value="([0][1-9]|[1][0-2])/\d\d" />
+                                            </xsd:restriction>
+                                        </xsd:simpleType>
+                                    </xsd:element>
+                                </xsd:sequence>
+                                <xsd:attribute name="limit" type="xsd:integer" />
+                                <xsd:attribute name="currency" type="xsd:string" />
+                            </xsd:complexType>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+</xsd:element>
+
+    <xsd:complexType name="address-elements">
+                    <xsd:sequence>
+                        <xsd:element name="street" type="xsd:string" />
+                        <xsd:element name="nb" type="xsd:integer" />
+                        <xsd:element name="town" type="xsd:string" />
+                        <xsd:element name="zipcode">
+                            <xsd:simpleType>
+                                <xsd:restriction base="xsd:token">
+                                    <xsd:pattern value="\d{5}" />
+                                </xsd:restriction>
+                            </xsd:simpleType>
+                        </xsd:element>
+                        <xsd:element name="country" type="xsd:string" />
+                    </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:group name="prices-quantity">
+        <xsd:sequence>
+            <xsd:element name="prices">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="euro">
+                            <xsd:complexType>
+                                <xsd:attribute name="price" type="xsd:integer"/>
+                           </xsd:complexType>
+                        </xsd:element>
+                        <xsd:element name="gbp">
+                            <xsd:complexType>
+                                <xsd:attribute name="price" type="xsd:integer"/>
+                            </xsd:complexType>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="quantity" minOccurs="0">
+                <xsd:complexType>
+                    <xsd:attribute name="value" type="xsd:integer" default="0"/>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:group>
+</xsd:schema>

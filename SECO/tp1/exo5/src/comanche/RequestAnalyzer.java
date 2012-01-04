@@ -47,7 +47,7 @@ public class RequestAnalyzer implements RequestHandler, BindingController {
 			r.url = rq.substring(5, rq.indexOf(' ', 4));
 			
 			// redirection dynamique
-			if( r.url.startsWith("/reconf")){
+			if( r.url.startsWith("reconf")){
 				l.log("changement page par défaut");
 				((RequestDispatcher) rh).bindFc("h1", new HttpRequestHandler());
 				((RequestDispatcher) rh).unbindFc("h0");
