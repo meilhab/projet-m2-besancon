@@ -11,18 +11,107 @@
 \subsection{Pr\'esentation}
 
 Le terme Yuukou vient du japonais \textit{Yuukou} et signifie \textbf{validit\'e, disponibilit\'e, efficacit\'e}. 
-C'est un syst\`eme permettant la r\'ecup\'eration des informations depuis les serveurs LDAP de l'universit\'e afin de comprendre et construire l'infrastructure des ressources et ainsi de voir sa facilit\'e d'utilisation. L'architecture du syst\`eme utilise un processus d'apprentissage simple pour d\'eduire et maintenir la structure \`a jour avec un minimum de r\'eglages initiaux.
-Yuukou a \'et\'e cr\'e\'e pour montrer l'utilisation des salles informatique et conserver un historique des informations.
+C'est un syst\`eme permettant la r\'ecup\'eration des informations depuis les serveurs LDAP$^*$ de l'universit\'e afin de comprendre et construire l'infrastructure des ressources et ainsi de voir sa facilit\'e d'utilisation. 
+L'architecture du syst\`eme utilise un processus d'apprentissage simple pour d\'eduire et maintenir la structure \`a jour avec un minimum de r\'eglages initiaux.
+\textit{Yuukou} a \'et\'e cr\'e\'e pour montrer l'utilisation des salles informatique et conserver un historique des informations.
 
 \subsection{Fonctionnement}
 
-\subsection{Vue sur le logiciel}
+Le but principal de \textit{Yuukou} est d'afficher le plus l'occupation des salles informatiques et ce, le plus proche possible d'un syst\'eme fonctionnant en temps r\'eel.
+Pour ce faire, l'application a \'et\'e divis\'ee en deux parties  comme le montre la figure~\ref{yuukouFonctionnement}.
+
+\clearpage
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[scale=0.75]{yuukouFonctionnement.jpg}
+	\caption{Architecture de \textit{Yuukou}}
+	\label{yuukouFonctionnement}
+
+\end{figure}
+
+\subsubsection{Premi\`ere partie}
+
+La premi\`ere partie est un programme \'ecrit en Perl$^*$ qui r\'ecup\`ere les informations de connexion des utilisateurs depuis un serveur LDAP$^*$ et qui se charge de construire, modifier ou mettre \`a jour l'architecture r\'eseau de l'universit\'e tout en stockant les informations dans une base de donn\'ees relationnelle de type MySQL.
+
+Le \textit{robot} de \textit{Yuukou} offre deux fonctionnalites : il permet de mettre \`a jour les donn\'ees de connexion via le serveur LDAP$^*$ toutes les cinq minutes environ pour une utilisation normale, et de mettre \`a jour le statut des ressources (ordinateurs) toutes les demi-heures l\`a aussi pour une utilisation normale.
+
+\subsubsection{Deuxi\`eme partie}
+
+La seconde partie est un ensemble de pages Web \'ecrites en PHP$^*$ et h\'eberg\'ees sur un serveur Web permettant de pr\'esenter les donn\'ees collect\'ees \`a l'utilisateur final.
+Ces pages sont de deux types : les pages publiques et les pages priv\'ees.
+
+Les pages publiques sont accessibles par tous les utilisateurs de l'universit\'e le d\'esirant.
+Les pages priv\'ees, quant \`a elles, ne sont accessibles qu'aux administrateurs.
+
+\subsubsection{Les pages publiques}
+
+\noindent Les pages publiques permettent l'affichage des pages suivantes :
+\begin{itemize}
+	\item une page contenant tous les campus et salles informatique actuellement utilis\'ees;
+	\item une page par campus avec les salles informatique actuellement utilis\'ees;
+	\item une page par campus et d\'epartement avec les salles informatique actuellement utilis\'ees.
+
+\end{itemize}
+
+ TODO verifier orthographe nombre de ressources totalES ?
+
+Les pages publiques offrent une vision g\'en\'erale de chaque salle : le nombre de ressources totales, disponibles, occup\'ees par un utilisateur et dans un \'etat inconnu.
+Il est \`a noter que chacunes des pr\'ec\'edentes pages peut \^etre affich\'ees sur un \'ecran plasma pr\'esent dans les diff\'erents b\^atiments de l'universit\'e.
+La figure~\ref{yuukouPublic} donne un exemple de page publique.
+
+\subsubsection{Les pages priv\'ees}
+
+\noindent Les pages priv\'ees permettent l'affichage des pages suivantes :
+\begin{itemize}
+	\item une page d'identification via LDAP$^*$ pour l'administrateur;
+	\item toutes les pages publiques mais b\'en\'eficiant de fonctionnalit\'es suppl\'ementaires :
+	\begin{itemize}
+		\item liste des ressources \'eteintes;
+		\item une fen\^etre permettant d'avoir des informations sur un utilisateur actuellement connect\'e \`a une ressource (identifiant, nom, photo, heure de connexion et dur\'ee de la session);
+		\item possibilit\'e d'ajouter des commentaires sur les utilisateurs;
+		\item liens vers les statistiques des salles informatique.
+
+	\end{itemize}
+
+\end{itemize}
+
+La figure~\ref{yuukouAdmin} donne un exemple des fonctionnalit\'es suppl\'ementaires auxquelles un administrateur \`a acc\`es.
+
+\clearpage
+
+\subsubsection{Vue sur le produit}
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[scale=0.75]{yuukouPublic.jpg}
+	\caption{Exemple de page publique de \textit{Yuukou} rep\'esentant un campus et l'utilisation des salles informatique d'un d\'epartement}
+	\label{yuukouPublic}
+
+\end{figure}
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[scale=0.75]{yuukouAdmin.jpg}
+	\caption{Exemple de page priv\'ee de \textit{Yuukou} montrant entre autre les donn\'ees d'un utilisateur}
+	\label{yuukouAdmin}
+
+\end{figure}
 
 \subsection{Changement vers \textit{Yuukou II}}
 
-current infrastructure
+L'universit\'e souhaite reprendre le principe du projet \textit{Yuukou}, cependant elle est confront\'ee \`a diff\'erents probl\`emes.
+Le premier \'etant que les personnes qui ont d\'evelopp\'ees le projet ont quitt\'e l'universit\'e. 
+Ce qui signifierait, pour la personne ou l'\'equipe en charge d'\'eventuellement reprendre le projet, de prendre du temps pour se former \`a Perl, comprendre tout ce qui a \'et\'e d\'ej\`a r\'ealis\'e et ensuite seulement commencer \`a d\'evelopper.
+Actuellement de nombreux projets sont en cours et il n'est pas possible pour une \'equipe de passer du temps sur l'existant.
 
-change infrastructure
+Le deuxi\`eme probl\`eme est les changements important, du point de vue infrastructure, qui sont en train d'\^etre mis en place.
+En effet, l'universit\'e qui utilisait eDirectory$^*$ de Novell pour g\'erer ses annuaires LDAP$^*$ a commenc\'e \`a migrer toutes ses donn\'ees vers le syst\`eme Active Directory$^*$ de Microsoft qui est cens\'e \^etre plus efficace. Ce changement rendrait \textit{Yuukou} obsol\`ete.
+
+Le dernier point est la volont\'e de donner acc\`es aux informations sur les salles pas seulement en utilisant un navigateur Internet, mais aussi et surtout en utilisant un smartphone (IPhone ou Android par exemple) ou une tablette (IPad par exemple).
+De ce fait, un \'etudiant aurait \`a tout moment les informations sur les salles via son smartphone ou sa tablette, si tent\'e qu'il est l'un ou l'autre.
+
+C'est en consid\'erant tous ces points qu'il a \'et\'e d\'ecid\'e d'abandonner le projet \textit{Yuukou} afin de pouvoir mettre en place \textit{Yuukou II} qui r\'epondrait aux attentes de l'universit\'e.
 
 \section{Le projet \textit{Yuukou II}}
 
