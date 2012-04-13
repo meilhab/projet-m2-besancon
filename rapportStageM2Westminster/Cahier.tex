@@ -1,3 +1,34 @@
-\chapter{Cahier des charges}<++>
+\chapter{Cahier des charges}
+
+Diff\'erents acteurs de l'universit\'e int\'eress\'es dans le projet \YuukouII{} ont commenc\'e \`a fixer une liste des fonctionnalit\'es qu'ils aimeraient voir avec l'application finale.
+
+\subsubsection{Concernant les ressources}
+\begin{itemize}
+	\item Mac et Windows;
+	\item conna\^itre l'\`etat de la ressource, \'eventuellement la d\'emarrer \`a distance (WOL\protect\footnote{Wake On Lan}$^*$);
+	\item inclure une surveillance partielle du mat\'eriel et des logiciels;
+	\item utilisation des services de Active Directory$^*$.
+
+\end{itemize}
+
+\subsubsection{Concernant les donn\'ees r\'ecup\'er\'ees}
+\begin{itemize}
+	\item mettre au point un formalisme avec les diff\'erents autres services de l'universit\'e concernant les informations sur les salles, campus et d\'epartements;
+	\item stocker les informations dans une base de donn\'ees SQL\protect\footnote{Structured Query Language}$^*$;
+	\item mettre en place des outils pour g\'en\'erer des statistiques \`a partir des donn\'ees stock\'ees (utilisation d'une salle, nombre de connexion par jour dans un mois pour un salle, \ldots).
+
+\end{itemize}
+
+\subsubsection{Concernant les donn\'ees retourn\'ees}
+\begin{itemize}
+	\item g\'en\'eration de flux RSS\protect\footnote{Rich Site Summary}$^*$ pour retourner des informations;
+	\item l'affichage doit \^etre en temps r\'eel et doit aussi permettre d'avoir un vue globale dans le temps : utilisation des emplois du temps pour savoir quelle salle est libre \`a quel moment.
+
+\end{itemize}
+
+Cette liste n'est pas compl\`ete du fait qu'elle ne prend pas en compte la partie ``affichage'' des r\'esultats du fait que le projet ne consiste qu'\`a la r\'ecup\'eration, au traitement et au retour de donn\'ees.
+
+L'id\'ee initiale \'etait de d\'evelopper un projet pilote qui permettrait d'avoir une vue sur ce qu'il est possible de faire et de la fa\c{c}on de le faire.
+Ce projet consisterait en la cr\'eation d'un service Web (la notion sera expliqu\'ee dans le) %METTRE REF ICI
 
 \clearpage
