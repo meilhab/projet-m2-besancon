@@ -1,4 +1,6 @@
-\chapter{Cahier des charges}
+\chapter{D\'ecouverte du projet}
+
+\section{R\'eflexions de l'\'equipe technique}
 
 Diff\'erents acteurs de l'universit\'e int\'eress\'es dans le projet \YuukouII{} ont commenc\'e \`a fixer une liste des fonctionnalit\'es qu'ils aimeraient voir avec l'application finale.
 
@@ -29,6 +31,53 @@ Diff\'erents acteurs de l'universit\'e int\'eress\'es dans le projet \YuukouII{}
 Cette liste n'est pas compl\`ete du fait qu'elle ne prend pas en compte la partie ``affichage'' des r\'esultats du fait que le projet ne consiste qu'\`a la r\'ecup\'eration, au traitement et au retour de donn\'ees.
 
 L'id\'ee initiale \'etait de d\'evelopper un projet pilote qui permettrait d'avoir une vue sur ce qu'il est possible de faire et de la fa\c{c}on de le faire.
-Ce projet consisterait en la cr\'eation d'un service Web (la notion sera expliqu\'ee dans le) %METTRE REF ICI
+Il serait ensuite repris par les \'equipes de l'universit\'e pour \^etre termin\'e.
+Ce projet consisterait en la cr\'eation d'un service Web$^*$ (la notion sera expliqu\'ee plus en d\'etail en) %METTRE REF ICI
+\'ecrit en C\# et utilisant le framework$^*$ .Net de Microsoft.
+Le service Web devrait offrir un maximum de fonctionnalit\'es et devra \^etre exploit\'e par une application mobile pour smartphone et par un site web pouvant \^etre projet\'e sur les \'ecrans plasma \`a l'entr\'e de chaque site.
+
+Cependant, apr\`es r\'eflexion avec M. Thierry DELAITRE, la structure, les objectifs et le projet en g\'en\'eral ont \'et\'e revu.
+Dans l'id\'ee initiale, pour conna\^itre l'\'etat d'une ressource, il aurait fallu interroger Active Directory$^*$. 
+De plus, n'est connu que l'\'etat si un utilisateur est connect\'e.
+Il faudrait des traitements suppl\'ementaires pour pouvoir fixer pr\'ecisement l'\'etat d'une ressource, avec un ping par exemple.
+
+\section{Premi\`eres approches}
+
+ TODO : eventuellement changer le titre
+
+Une solution simple, rapide et fonctionnelle avait d\'ej\`a \'et\'e mise en place afin de ``monitorer'', surveiller le fonctionnement des diff\'erentes ressources de certaines salles dans l'universit\'e.
+Nagios est une application permettant la surveillance syst\`eme et r\'eseau.
+Il permet de conna\^itre l'\'etat d'une machine ainsi que d'autres informations comme le syst\`eme d'exploitation utilis\'e, la version de Java install\'ee, la charge du processeur, \ldots
+
+En partant de ce logiciel, le projet consiste en la r\'ecup\'eration des donn\'ees de Nagios, leur traitement et le d\'eveloppement des fonctionnalit\'es permettant \`a une application ext\'erieure de pouvoir afficher les informations.
+
+\noindent Les objectifs principaux deviennent les suivants :
+\begin{itemize}
+	\item cr\'eation d'un service Web en utilisant l'API\protect\footnote{Application Programming Interface}$^*$ Java JAX-WS\protect\footnote{Java API for XML Web Services};
+	\item mise en place d'une m\'ethode de communication avec Nagios;
+	\item cr\'eation de la base de donn\'ees permettant l'archivage;
+	\item mise en place d'un cycle permettant de traiter les informations r\'ecup\'er\'ees;
+	\item d\'efinition de fonctions utiles pour une application cliente;
+	\item choix d'une structure de retour des informations pour une application cliente;
+	\item faire un lien avec l'emploi du temps des diff\'erentes salles sous surveillance;
+
+\end{itemize}
+
+
+\section{Contraintes techniques}
+
+La volont\'e de M. DELAITRE est d'utiliser des logiciels libre, tout en me laissant un maximum de libert\'e dans les autres choix.
+
+Durant le stage, un ordinateur m'a \'et\'e fourni avec libre choix sur le syst\`eme d'exploitation.
+De ce fait j'ai opt\'e pour un Linux Mint 11 nomm\'e \textit{Katya}, que j'ai l'habitude d'utiliser.
+
+ TODO : demander version linux serveur
+
+Un autre ordinateur, lui aussi contenant une version de linux, a \'et\'e mis \`a ma disposition en tant que serveur distant h\'ebergeant le service Web ainsi que les diff\'erents les outils n\'ecessaires \`a son fonctionnement.
+Le serveur distant contient le logiciel Nagios, le serveur Web permettant de faire fonctionner la derni\`ere version stable du service Web ainsi que le syst\`eme de gestion de base de donn\'ee (SGBD).
+
+Les tests \'etant en premier lieu r\'ealis\'es en local sur la machine de d\'eveloppement et ensuite, quand le fonctionnement \'etait garanti, l'application \'etait d\'eploy\'e sur le serveur distant
+
+
 
 \clearpage
