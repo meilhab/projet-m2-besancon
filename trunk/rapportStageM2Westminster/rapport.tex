@@ -1,31 +1,42 @@
-\documentclass[11pt, a4paper, latin1, frenchb]{report}
-\usepackage {babel}
+\documentclass[11pt, a4paper]{report}
 
-% Pour pouvoir utiliser 
-%\usepackage{ucs}
+\usepackage[frenchb]{babel}
 \usepackage[T1]{fontenc}
 \usepackage[latin1]{inputenc}
-\usepackage {lmodern}
+%\usepackage{ucs}
+\usepackage{lmodern}
 \usepackage{extensions/picins} %image avec texte a ct
 \usepackage{url} % Pour avoir de belles url
-\usepackage {geometry}
+\usepackage{geometry}
 %\usepackage{slashbox} %backslash dans tableau
 %\usepackage[table]{xcolor} %couleur tableau
 \usepackage{colortbl,hhline}
 \usepackage{color}
-\usepackage {listings} % Pour mettre du code source
-\usepackage{lscape} %Pour pouvoir passer en paysage
+\usepackage{listings} % Pour mettre du code source
+%\usepackage{lscape} %Pour pouvoir passer en paysage
 %\usepackage {multicol} %Pour pouvoir faire plusieurs colonnes
 %\usepackage{eurosym} %symbole euro
 \usepackage{graphicx}
 \usepackage{makeidx} %Pour crer un index
-%\usepackage {setspace} %Pour l'interligne de 1.5
+%\usepackage{setspace} %Pour l'interligne de 1.5
 %\usepackage{shorttoc} %Pour crer un sommaire
 %\usepackage{caption}
 %\usepackage[font=scriptsize, format=hang]{subcaption}
 %\usepackage[babel=true]{csquotes}
 %\usepackage[toc,page]{appendix}
+\usepackage{fancyhdr} % Pour les entetes de page
 \usepackage{extensions/subfig}
+\usepackage[
+	pdftex,					% Paramtrage de la navigation
+	bookmarks = true,						% Signets
+	bookmarksnumbered = true,				% Signets numrots
+	pdfpagemode = UseOutlines,						% None, UseThumbs, UseOutlines, Fullscreen
+	pdfstartview = Fit,					% FitH, FitV, FitR, FitB, FitBH, FitBV, Fit
+	pdfpagelayout = SinglePage,				% SinglePage, OneColumn, TwoColumnLeft, TwoColumnRight
+	colorlinks = false,					% Liens en couleur
+	urlcolor = black,						% Couleur des liens externes
+	pdfborder = {0 0 0}					% Style de bordure : ici, rien
+	]{hyperref}
 
 
 \setlength{\topmargin}{-6mm}
@@ -46,29 +57,19 @@
 %\renewcommand{\appendixtocname}{Annexes}
 %\renewcommand{\appendixpagename}{Annexes}
 
-\usepackage[pdftex,					% Paramtrage de la navigation
-bookmarks = true,						% Signets
-bookmarksnumbered = true,				% Signets numrots
-pdfpagemode = UseOutlines,						% None, UseThumbs, UseOutlines, Fullscreen
-pdfstartview = Fit,					% FitH, FitV, FitR, FitB, FitBH, FitBV, Fit
-pdfpagelayout = SinglePage,				% SinglePage, OneColumn, TwoColumnLeft, TwoColumnRight
-colorlinks = false,					% Liens en couleur
-urlcolor = black,						% Couleur des liens externes
-pdfborder = {0 0 0}					% Style de bordure : ici, rien
-]{hyperref}
 
 
 \hypersetup{
 	unicode=false,          % non-Latin characters in Acrobat's bookmarks
-		pdftoolbar=true,        % show Acrobat's toolbar?
-		pdfmenubar=true,        % show Acrobat's menu?
-		pdffitwindow=true,     % window fit to page when opened
-		pdftitle={Rapport de stage},    % title
-		pdfauthor={Meilhac Benoît},     % author
-		pdfsubject={Yuukou II},   % subject of the document
-		pdfcreator={Meilhac Benoit},   % creator of the document
-		pdfproducer={Texlive (pdflatex)}, % producer of the document
-		pdfnewwindow=true,      % links in new window
+	pdftoolbar=true,        % show Acrobat's toolbar?
+	pdfmenubar=true,        % show Acrobat's menu?
+	pdffitwindow=true,     % window fit to page when opened
+	pdftitle={Rapport de stage},    % title
+	pdfauthor={Meilhac Benoît},     % author
+	pdfsubject={Yuukou II},   % subject of the document
+	pdfcreator={Meilhac Benoit},   % creator of the document
+	pdfproducer={Texlive (pdflatex)}, % producer of the document
+	pdfnewwindow=true,      % links in new window
 }
 
 
@@ -84,42 +85,40 @@ pdfborder = {0 0 0}					% Style de bordure : ici, rien
 %\geometry{a4paper, top=2.5cm, bottom=3.5cm, left=1.5cm, right=1.5cm, marginparwidth=1.2cm}
 \geometry{a4paper}
 
-% Pour les entetes de page
-\usepackage{fancyhdr}
-
 
 \parskip=5pt %% distance entre les (paragraphe)
-	\sloppy %% respecter toujours la marge de droite 
+\sloppy %% respecter toujours la marge de droite 
 
-	% Pour les pénalités :
-	\interfootnotelinepenalty=150 %note de bas de page
-	\widowpenalty=150 %% veuves et orphelines
-	\clubpenalty=150 
+% Pour les pénalités :
+\interfootnotelinepenalty=150 %note de bas de page
+\widowpenalty=150 %% veuves et orphelines
+\clubpenalty=150 
 
-	%Pour la longueur de l'indentation des paragraphes
-	\setlength{\parindent}{15mm}
+%Pour la longueur de l'indentation des paragraphes
+\setlength{\parindent}{15mm}
 
-	%%%% debut macro pour enlever le nom chapitre %%%%
-	\makeatletter
+%%%% debut macro pour enlever le nom chapitre %%%%
+\makeatletter
 	\def\@makechapterhead#1{%
 		\vspace*{50\p@}%
 		{\parindent \z@ \raggedright \normalfont
 			\interlinepenalty\@M
-				\ifnum \c@secnumdepth >\m@ne
-				\Huge\bfseries \thechapter\quad
-				\fi
-				\Huge \bfseries #1\par\nobreak
-				\vskip 40\p@
+			\ifnum \c@secnumdepth >\m@ne
+			\Huge\bfseries \thechapter\quad
+			\fi
+			\Huge \bfseries #1\par\nobreak
+			\vskip 40\p@
 		}}
 
-\def\@makeschapterhead#1{%
-	\vspace*{50\p@}%
-	{\parindent \z@ \raggedright
-		\normalfont
+	\def\@makeschapterhead#1{%
+		\vspace*{50\p@}%
+		{\parindent \z@ \raggedright
+			\normalfont
 			\interlinepenalty\@M
 			\Huge \bfseries  #1\par\nobreak
 			\vskip 40\p@
-	}}
+		}
+	}
 \makeatother
 %%%% fin macro %%%%
 
