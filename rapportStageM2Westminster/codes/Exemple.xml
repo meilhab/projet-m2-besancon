@@ -1,0 +1,7 @@
+<Menu id="file" value="File">
+    <Popup>
+        <MenuItem value="New" onClick="Create()"/>
+        <MenuItem value="Open" onClick="Open()"/>
+        <MenuItem value="Close" onClick="Close()"/>
+    </Popup>
+</Menu>

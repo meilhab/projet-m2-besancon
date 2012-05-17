@@ -105,7 +105,7 @@ Il faut not\'e que seuls les Macintosh de New Cavendish sont sous surveillance, 
 De ce fait, le nombre de machines devrait augmenter par la suite.
 
 
-
+TODO REPRENDRE
 
 
 
@@ -133,13 +133,118 @@ Un de ses avantages est qu'il est particuli\`erement bien int\'egr\'e \`a NetBea
 
 \subsection{Le SGBD MySQL}
 
-\subsection{Data Access Object}
+\subsection{L'acc\`es aux donn\'ees des tables}
 
-Par soucis de performance, c'est-\`a-dire, limiter les acc\`es multiples \`a la base de donn\'ees mais aussi faciliter la manipulation des donn\'ees lors des traitements, le design pattern$^*$
-Un Data Access Object, ou objet d'acc\`es aux donn\'ees en fran\c{c}ais est un objet qui constitue une repr\'esentation en m\'emoire des donn\'ees d'une base de donn\'ees.
+Par soucis de performance, \cad, limiter les acc\`es multiples \`a la base de donn\'ees mais aussi faciliter la manipulation des donn\'ees lors des traitements, le design pattern$^*$ Data Access Object (DAO) a \'et\'e utilis\'e.
+Un Data Access Object, ou objet d'acc\`es aux donn\'ees en fran\c{c}ais, est un objet qui constitue une repr\'esentation en m\'emoire des donn\'ees d'une base de donn\'ees.
+En Java, un DAO est une classe repr\'esentant une table dont les attributs sont les champs de la table comme le montre la figure~\ref{figure:dao}.
+Des classes repr\'esentant des listes sont g\'en\'eralement d\'evelopp\'e pour contenir les DAO et simplifier l'acc\`es aux donn\'ees.
+
+Lorsqu'il sera n\'ecessaire d'effectuer des traitements r\'ep\'et\'es sur les donn\'ees d'une table, m\^eme si ces traitements ne portent pas sur la totali\'e de la table, il est pr\'ef\'erable de charger en m\'emoire la totalit\'e des \'el\'ements utiles avec, dans le cas id\'eal, une seule requ\^ete SQL$^*$.
+
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[scale=0.5]{dao.jpg}
+	\caption{Exemple de mappage d'une table avec sa classe DAO associ\'ee (\textit{source : Cyrille Herby})}
+	\label{figure:dao}
+
+\end{figure}
+
+Dans le cadre du projet, les chargements sont effectu\'es lorsqu'un client appelle une m\'ethode du service Web. 
+Les donn\'ees sont charg\'ees dans une liste, elles sont ensuite trait\'ees puis retourn\'ees au client.
+
 
 
 \subsection{Le format de retour : JSon}
+
+Le choix du type de retour est un choix important.
+En effet, il faut que les donn\'ees puissent \^etre rapidement transmises, r\'ecup\'er\'ees, trait\'ees et affich\'ees.
+L'objectif est un affichage instantan\'e des pages sur le navigateur Web ou l'application mobile.
+De ce fait, plusieurs possibilit\'es ont \'et\'e envisag\'ees.
+
+
+\subsubsection{{\og}\textit{Parsage}{\fg} d'un texte}
+
+La premi\`ere est de transmettre un document texte basique, celui-ci format\'e d'une certaine fa\c{c}on afin d'\^etre pars\'e ({\cad} parcourir un flux structur\'e d'informations pour en extraire les donn\'ees).
+Ce qui aurait comme avantage de pouvoir \^etre r\'ecup\'er\'e par un client utilisant n'importe quel langage.
+
+\noindent Voici un exemple de ligne pouvant \^etre parcourue pour en extraire les informations cl\'es :
+
+\lstdefinelanguage{plaintext}{
+	morekeywords={@}, 
+	keywordstyle=\color{blue}, 
+	captionpos=b
+}
+\lstset{
+	language=plaintext
+%	caption={Exemple de fichier facilement parsable}
+%	label=listing:exemplePlaintext	
+}
+\begin{lstlisting}[]
+info1 @ info2 @ info3 @ info4
+\end{lstlisting}
+
+Pour r\'ecup\'erer les informations de cet exemple, il suffit de parcourir le fichier en stockant les informations contenues entre les \textbf{@}.
+
+Cependant cette m\'ethode est assez contraignante et oblige \`a parcourir l'ensemble du fichier alors qu'un seul type d'information peut \^etre utile.
+Ce qui signifie une perte de temps plus ou moins significative en fonction de la taille du fichier re\c{c}u.
+
+\subsubsection{Objet Java s\'erialisable}
+
+Une autre m\'ethode pourrait \^etre de transmettre un objet Java dit s\'erialisable.
+C'est un m\'ecanisme fournit par Java permettant de consid\'erer un objet comme une s\'equence de bytes qui inclue les donn\'ees de l'objet, le type de l'objet et le type des donn\'ees.
+De cette mani\`ere, l'objet en question peut \^etre transmis \`a travers le r\'eseau vers une autre application Java pour le r\'ecup\'erer et le d\'es\'erialiser, ce qui repr\'esente la proc\'edure inverse de la s\'erialisation.
+
+\noindent Voici un exemple de classe Java s\'erialisable :
+
+\lstset{
+	language=Java
+%	caption={Exemple de classe Java s\'erialisable},
+%	label=listing:exempleJava
+}
+\lstinputlisting{codes/Exemple.java}
+
+L'objet contiendrait toutes les donn\'ees utiles et celles-ci seraient facilement accessibles.
+Le probl\`eme venant avec cette solution est que les objets doivent \^etre r\'ecup\'er\'es par une JVM\protect\footnote{Java Virtual Machine}$^*$.
+Ce qui peut s'av\'erer plus ou moins compliqu\'e voir impossible dans d'autres langages de programmation que Java.
+
+\subsubsection{XML\protect\footnote{eXtensible Markup Language}$^*$}
+
+XML$^*$ est un langage de balisage permettant de mettre en forme les documents qui a connu un grand succ\`es depuis sa cr\'eation.
+Il est utilis\'e pour g\'erer la configuration, le stockage des donn\'ees, l'\'echange d'information et bien d'autres fonctions encore.
+
+\noindent Voici un exemple de document XML$^*$ :
+
+\lstdefinelanguage{XML}{
+	showspaces=false,
+	morestring=[b]",
+	morestring=[s]{>}{<},
+	morecomment=[s]{<?}{?>},
+	stringstyle=\color{black},
+	identifierstyle=\color{darkblue},
+	keywordstyle=\color{cyan},
+	morekeywords={id,value,onClick},
+	captionpos=b
+}
+\lstset{
+	language=XML, 
+	showstringspaces=false
+%	caption={Exemple de document XML},
+%	label=listing:exempleXml
+}
+\lstinputlisting{codes/Exemple.xml}
+
+XML$^*$ offre une solution structur\'ee et tr\`es simple \`a comprendre pour l'envoi d'information par le r\'eseau, cependant dans les \'echanges d'informations entre client et serveur, il montre ses limites :
+\begin{itemze}
+	\item 
+
+\end{itemize}
+
+XML
+objet java serializable
+document texte specifique
+JSON
 
 \section{Communication avec Nagios}
 
