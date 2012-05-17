@@ -9,7 +9,7 @@
 \usepackage{url} % Pour avoir de belles url
 \usepackage{geometry}
 %\usepackage{slashbox} %backslash dans tableau
-%\usepackage[table]{xcolor} %couleur tableau
+\usepackage[table, usenames, dvipsnames]{xcolor} %couleurs
 \usepackage{colortbl,hhline}
 \usepackage{color}
 \usepackage{listings} % Pour mettre du code source
@@ -38,6 +38,18 @@
 	pdfborder = {0 0 0}					% Style de bordure : ici, rien
 	]{hyperref}
 
+\lstset{
+	numbers=left,
+	numberstyle=\footnotesize,
+%	numberstyle=Sepia,
+	stepnumber=2,
+	numbersep=5pt,
+	frame=shadowbox,
+	backgroundcolor=\color{grisclair},
+	rulesepcolor=\color{gris},
+	keywordstyle=\color{blue},
+	captionpos=b
+}
 
 \setlength{\topmargin}{-6mm}
 \setlength{\textheight}{230mm}
@@ -53,11 +65,10 @@
 
 \newcommand\Yuukou{\textit{Yuukou}}
 \newcommand\YuukouII{\textit{Yuukou II}}
+\newcommand\cad{c'est-\`a-dire}
 
 %\renewcommand{\appendixtocname}{Annexes}
 %\renewcommand{\appendixpagename}{Annexes}
-
-
 
 \hypersetup{
 	unicode=false,          % non-Latin characters in Acrobat's bookmarks
@@ -77,8 +88,12 @@
 \newcommand{\sommaire}{\shorttoc{Sommaire}{0}}
 \makeindex
 \definecolor{grisclair}{gray}{0.75}
+\definecolor{gris}{gray}{0.5}
 \definecolor{orange}{rgb}{1,0.5,0}
 \definecolor{vert}{rgb}{0,0.75,0}
+\definecolor{darkblue}{rgb}{0.0,0.0,0.6}
+\definecolor{cyan}{rgb}{0.0,0.6,0.6}
+
 
 
 % Pour les marges de la page
@@ -177,7 +192,6 @@
 
 \listoffigures
 \addcontentsline{toc}{chapter}{Table des figures}
-
 
 %\input{Resume}
 
