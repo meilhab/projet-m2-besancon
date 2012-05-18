@@ -116,6 +116,19 @@ TODO REPRENDRE
 
 \subsection{L'IDE NetBeans}
 
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[scale=0.25]{netbeansLogo.jpg}
+	\caption{Logo de NetBeans}
+
+\end{figure}
+
+NetBeans est un IDE\protect\footnote{Integrated Development Environment}$^*$ open source d\'evelopp\'e par Sun Microsystems permettant le d\'eveloppement en utilisant les langages de programmation tels que Java, JavaScript, PHP$^*$, C, C++, et autres.
+Il est \'ecrit en Java et fonctionne sous Windows, Mac OS, Linux, Solaris et d'autres plates-formes du moment qu'elles poss\`edent une JVM\protect\footnote{Java Virtual Machine}$^*$ compatible.
+
+NetBeans permet de d\'evelopper et d\'eployer rapidement des applications graphiques Swing, des Applets, des JSP/Servlets et des architectures J2EE\protect\footnote{Java Platform, Enterprise Edition}.
+Il poss\`ede toutes les fonctionnalit\'es recherch\'ees dans un IDE$^*$ moderne (coloration syntaxique, refactoring, d\'ebogueur, \ldots) et ajoute, dans le cas d'un d\'eveloppement d'un service Web comme pour ce projet, un support avec la derni\'ere version de GlassFish, permettant notamment de faire des \og{}deploy on save\fg{}, de d\'eployer les applications Web sur un serveur distant et de contr\^oler le serveur (suivre la sortie de logs, d\'emarrer, arr\^eter le serveur).
+Sa premi\`ere version date de 1996 et portait le nom Xelfi. Il est actuellement disponible sur son site Internet~\cite{biblio:siteNetbeans} en version 7.1.2.
 
 
 \subsection{Le serveur Web GlassFish}
@@ -130,6 +143,7 @@ TODO REPRENDRE
 GlassFish est un serveur d'application open source d\'evelopp\'e par Sun Microsystems pour les plates-formes Java EE\protect\footnote{Java Entreprise Edition} 5 et 6, et est maintenant maintenu par Oracle Corporation.
 Il dispose de nombreux outils pour faciliter le d\'eveloppement, le d\'eploiement et la maintenance d'application.
 Un de ses avantages est qu'il est particuli\`erement bien int\'egr\'e \`a NetBeans, ce qui permet un d\'eploiement tr\`es rapide des applications ainsi qu'une trace d'ex\'ecution lors du fonctionnement.
+GlassFish est disponible sur son site Internet~\cite{biblio:siteGlassfish} en version 3.1.2.
 
 \subsection{Le SGBD MySQL}
 
@@ -156,7 +170,8 @@ Les donn\'ees sont charg\'ees dans une liste, elles sont ensuite trait\'ees puis
 
 
 
-\subsection{Le format de retour : JSon}
+\subsection{Le format de retour}
+\label{section:formatRetour}
 
 Le choix du type de retour est un choix important.
 En effet, il faut que les donn\'ees puissent \^etre rapidement transmises, r\'ecup\'er\'ees, trait\'ees et affich\'ees.
@@ -173,7 +188,7 @@ Ce qui aurait comme avantage de pouvoir \^etre r\'ecup\'er\'e par un client util
 
 \lstdefinelanguage{plaintext}{
 	morekeywords={@}, 
-	keywordstyle=\color{blue}, 
+	keywordstyle=\color{darkblue}, 
 	captionpos=b
 }
 \lstset{
@@ -206,15 +221,15 @@ De cette mani\`ere, l'objet en question peut \^etre transmis \`a travers le r\'e
 \lstinputlisting{codes/Exemple.java}
 
 L'objet contiendrait toutes les donn\'ees utiles et celles-ci seraient facilement accessibles.
-Le probl\`eme venant avec cette solution est que les objets doivent \^etre r\'ecup\'er\'es par une JVM\protect\footnote{Java Virtual Machine}$^*$.
+Le probl\`eme venant avec cette solution est que les objets doivent \^etre r\'ecup\'er\'es par une JVM$^*$.
 Ce qui peut s'av\'erer plus ou moins compliqu\'e voir impossible dans d'autres langages de programmation que Java.
 
-\subsubsection{XML\protect\footnote{eXtensible Markup Language}$^*$}
+\subsubsection{XML}
 
-XML$^*$ est un langage de balisage permettant de mettre en forme les documents qui a connu un grand succ\`es depuis sa cr\'eation.
+eXtensible Markup Language ou XML est un langage de balisage g\'en\'erique permettant de mettre en forme les documents qui a connu un grand succ\`es depuis sa cr\'eation.
 Il est utilis\'e pour g\'erer la configuration, le stockage des donn\'ees, l'\'echange d'information et bien d'autres fonctions encore.
 
-\noindent Voici un exemple de document XML$^*$ :
+\noindent Voici un exemple de document XML :
 
 \lstdefinelanguage{XML}{
 	showspaces=false,
@@ -235,16 +250,97 @@ Il est utilis\'e pour g\'erer la configuration, le stockage des donn\'ees, l'\'e
 }
 \lstinputlisting{codes/Exemple.xml}
 
-XML$^*$ offre une solution structur\'ee et tr\`es simple \`a comprendre pour l'envoi d'information par le r\'eseau, cependant dans les \'echanges d'informations entre client et serveur, il montre ses limites :
-\begin{itemze}
-	\item 
+XML offre une solution structur\'ee et tr\`es simple \`a comprendre pour l'envoi d'information par le r\'eseau, cependant dans les \'echanges d'informations entre client et serveur, il montre ses limites :
+\begin{itemize}
+	\item le chargement et la manipulation deviennent vite compliqu\'es, la plupart du temps il est n\'ecessaire de parser le XML sous forme de DOM$^*$, puis de le parcourir, ce qui requiert l'appel de nombreuses fonctions, sans mentionner le fait que parser un document XML est parfois long;
+	\item la taille des fichiers \'echang\'es peut parfois \^etre cons\'equente du fait de la duplication des donn\'ees : par nature, le XML est lourd.
 
 \end{itemize}
 
-XML
-objet java serializable
-document texte specifique
-JSON
+\subsubsection{JSON}
+
+JavaScript Object Notation ou JSON est un format l\'eger d'\'echange de donn\'ees texte.
+Il utilise la notation des objets JavaScript pour transmettre de l'information structur\'ee.
+Il est aussi souvent utili\'e pour simplifier et all\'eger les acc\`es \`a des services Web depuis les navigateurs.
+
+Voici un exemple de fichier JSON reprenant le m\^eme arbre que le document XML exemple ci-dessus.
+\lstdefinelanguage{JSON}{
+	showspaces=false,
+	morestring=[b]", %pour les guillemets en bleu
+	morecomment=[s]{"?}{?"}, %contenu des guillemets en bleu
+	stringstyle=\color{darkblue},
+	captionpos=b
+}
+\lstset{
+	language=JSON, 
+	showstringspaces=false
+%	caption={Exemple de document JSON},
+%	label=listing:exempleXml
+}
+
+\lstinputlisting{codes/Exemple.json}
+
+
+
+
+\subsubsection{Choix du format}
+
+Le choix du format de retour des donn\'ees s'est port\'e sur l'utilisation de JSON.
+Le but du client, qui demande des informations au service Web, est de recevoir les donn\'ees le plus rapidement possible afin d'avoir \`a les afficher dans la foul\'ee.
+
+De ce fait, le parsage d'un texte contenant des balises \`a certains endroits s'av\`ere inadapt\'e, notamment pour r\'ecup\'erer un seul type d'information.
+
+L'envoi d'un objet s\'erialisable Java est, quant \`a lui trop restrictif. Le choix a don \'et\'e de choisir entre XML ou JSON.
+
+XML offre un format de donn\'ees verbeux et prend beaucoup d'espace. 
+De plus un document XML peut \^etre valid\'e via l'utilisation de DTD\protect\footnote{Document Type Definition}, document permettant de d\'ecrire un mod\`ele de document XML, ou de XSD\protect\footnote{XML Schema Definition}, langage de description de format de document XML permettant de d\'efinir la structure et le type de contenu d'un document XML.
+
+JSON offre un format de fichier plus simple que XML, facilement compr\'ehensible.
+Pour compl\'eter, les fichiers JSON, \`a arbre \'egal, seront toujours plus petit que l'\'equivalent XML et pr\'esenteront l'avantage d'\^etre plus rapidement pars\'es.
+
+Au final JSON permet une plus grande rapidit\'e dans les \'echanges avec un serveur ainsi que sur le temps de parsage des fichier, le tout avec une \'economie des ressources du fait de sa petit taille.
+Cependant, les donn\'ees ne peuvent pas \^etre v\'erifi\'ees dans un fichier JSON, il demande donc une certaine rigueur dans son \'ecriture du cot\'e serveur ainsi qu'une connaissance de sa structure du cot\'e client.
+
+\subsection{Compl\'ement d'information sur JSON}
+
+\subsubsection{Pr\'esentation}
+
+Une courte description de ce qu'est JSON a d\'ej\`a \'et\'e faite en~\ref{section:formatRetour}.
+Pour reprendre ce qui a d\'ej\`a \'et\'e dit, JSON est un format l\'eger d'\'echange de donn\'ees qui est apparu en 2002.
+Il est facile \`a \'ecrire et comprendre pour des humains.
+Il est bas\'e sur un sous-ensemble du langage de programmation JavaScript et est compl\`etement ind\'ependant de tout langage, tout en poss\`edant des conventions famili\`eres aux langages descendant du C (C++, C\#, Java, JavaScript, \ldots).
+Ces propri\'et\'es font de JSON un langage d'\'echange de donn\'ees id\'eal.
+
+Cependant, il ne supporte pas les espaces de noms au contraire d'XML.
+Pour la v\'erification des donn\'ees, les sch\'emas JSON ne sont pas tr\`es utilis\'es du fait qu'ils doivent \^etre ecrit \`a la main comme il n'existe aucun outil pour g\'en\'erer un sch\'ema \`a partir de donn\'ees JSON.
+Et concernant la s\'ecurit\'e, il existe la possibilit\'e o\`u des scripts malveillants pourraient \^etre dissimul\'es et ex\'ecut\'es.
+Il existe des fonctions pour tester les fichiers JSON mais celles-ci ne sont pas vraiment concluantes.
+La meilleure d\'efense est de conna\^itre \`a l'avance les points sensibles et de prendre les pr\'ecautions n\'ecessaires.
+
+\subsubsection{Structure}
+
+JSON se base sur deux structures de donn\'ees universelles dans pratiquement tous les langages de programmation modernes :
+\begin{itemize}
+	\item une collection de couples nom/valeur;
+	\item une liste de valeurs ordonn\'ees.
+
+\end{itemize}
+
+\vspace{0.25cm}
+
+\noindent Ces \'el\'ements repr\'esentent trois types de donn\'ees :
+\begin{itemize}
+	\item un \textit{objet} :\\Ensemble de couples nom/valeur non ordonn\'es. Un objet commence par \textsf{\{ (accolade gauche)} et se termine par \textsf{\} (accolade droite)}.
+	Chaque nom est suivi de \textsf{: (deux-points)} et les couples nom/valeur sont s\'epar\'es par \textsf{, (virgule)};
+	\item un \textit{tableau} :\\Collection de valeurs ordonn\'ees. Un tableau commence par \textsf{$[$ (crochet gauche)} et se termine par \textsf{$]$ (crochet droit)}.
+	Les valeurs sont s\'epar\'ees par \textsf{, (virgule)};
+	\item une \textit{valeur} :\\Soit une \textsf{cha\^ine de caract\`eres} entre guillemets, soit un \textsf{nombre}, soit \textsf{true} ou \textsf{false} ou \textsf{null}, soit un \textsf{objet}, soit un \textsf{tableau}.
+	Ces structures peuvent \^etre imbriqu\'ees;
+	\item une \textit{cha\^ine de caract\`eres} :\\Suite caract\'eres Unicode (z\'ero ou plus), entre guillemets, et utilisant les \'echappements avec antislash. 
+	Un caract\`eres est repr\'esent\'e par une cha\^ine d'un seul caract\`ere.
+
+\end{itemize}
+
 
 \section{Communication avec Nagios}
 

@@ -11,7 +11,7 @@ pdflatex: compilationSimple $(TEMPFILE).pdf
 	evince $(NAME).pdf
 
 bibtex: compilationBiblio $(TEMPFILE).pdf
-	mv $< ./
+	mv $(TEMPFILE).pdf ./
 	evince $(NAME).pdf
 
 compilationSimple: $(NAME).tex
