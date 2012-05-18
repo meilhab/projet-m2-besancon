@@ -1,0 +1,12 @@
+{ "Menu":
+    {   "id": "file",
+        "value": "File",
+        "Commands": {
+            "MenuItem": [
+                { "value": "New", "action": "CreateDoc"},
+                { "value": "Open", "action": "OpenDoc"},
+                { "value": "Close", "action": "CloseDoc"}
+            ]
+        }
+    }
+}
