@@ -1,0 +1,7 @@
+GET services
+Columns: plugin_output
+Filter: description = check_whoisloggedin
+Filter: plugin_output !~ ^No user
+Filter: plugin_output !~ ^Cannot
+Filter: plugin_output !~ ^\(
+

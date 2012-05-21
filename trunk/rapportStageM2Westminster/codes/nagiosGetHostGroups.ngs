@@ -1,0 +1,8 @@
+GET hostgroups
+Columns: name num_hosts members 
+Filter: name !~~ printer
+Filter: name !~~ server
+Filter: name !~~ all
+Filter: name !~~ ecs_sunrays
+And: 4
+
