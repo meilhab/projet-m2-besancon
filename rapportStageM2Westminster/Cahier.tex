@@ -5,6 +5,7 @@
 Diff\'erents acteurs de l'universit\'e int\'eress\'es dans le projet \YuukouII{} ont commenc\'e \`a fixer une liste des fonctionnalit\'es qu'ils aimeraient voir avec l'application finale.
 
 \subsubsection{Concernant les ressources}
+
 \begin{itemize}
 	\item Mac et Windows;
 	\item conna\^itre l'\`etat de la ressource, \'eventuellement la d\'emarrer \`a distance (WOL\protect\footnote{Wake On Lan}$^*$);
@@ -14,6 +15,7 @@ Diff\'erents acteurs de l'universit\'e int\'eress\'es dans le projet \YuukouII{}
 \end{itemize}
 
 \subsubsection{Concernant les donn\'ees r\'ecup\'er\'ees}
+
 \begin{itemize}
 	\item mettre au point un formalisme avec les diff\'erents autres services de l'universit\'e concernant les informations sur les salles, campus et d\'epartements;
 	\item stocker les informations dans une base de donn\'ees SQL\protect\footnote{Structured Query Language}$^*$;
@@ -22,11 +24,14 @@ Diff\'erents acteurs de l'universit\'e int\'eress\'es dans le projet \YuukouII{}
 \end{itemize}
 
 \subsubsection{Concernant les donn\'ees retourn\'ees}
+
 \begin{itemize}
 	\item g\'en\'eration de flux RSS\protect\footnote{Rich Site Summary}$^*$ pour retourner des informations;
 	\item l'affichage doit \^etre en temps r\'eel et doit aussi permettre d'avoir un vue globale dans le temps : utilisation des emplois du temps pour savoir quelle salle est libre \`a quel moment.
 
 \end{itemize}
+
+\vspace{0.20cm}
 
 Cette liste n'est pas compl\`ete du fait qu'elle ne prend pas en compte la partie \og{}affichage\fg{} des r\'esultats du fait que le projet ne consiste qu'\`a la r\'ecup\'eration, au traitement et au retour de donn\'ees.
 
@@ -51,6 +56,7 @@ Il permet de conna\^itre l'\'etat d'une machine ainsi que d'autres informations 
 En partant de ce logiciel, le projet consiste en la r\'ecup\'eration des donn\'ees de Nagios, leur traitement et le d\'eveloppement des fonctionnalit\'es permettant \`a une application ext\'erieure de pouvoir afficher les informations.
 
 \noindent Les objectifs principaux deviennent les suivants :
+
 \begin{itemize}
 	\item cr\'eation d'un service Web en utilisant l'API\protect\footnote{Application Programming Interface}$^*$ Java JAX-WS\protect\footnote{Java API for XML Web Services};
 	\item mise en place d'une m\'ethode de communication avec Nagios;

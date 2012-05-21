@@ -1,11 +1,10 @@
 \documentclass[11pt, a4paper]{report}
 
-\usepackage[frenchb]{babel}
+\usepackage[french]{babel}
 \usepackage[T1]{fontenc}
 \usepackage[latin1]{inputenc}
 %\usepackage{ucs}
 \usepackage{lmodern}
-\usepackage{extensions/picins} %image avec texte a ct
 \usepackage{url} % Pour avoir de belles url
 \usepackage{geometry}
 %\usepackage{slashbox} %backslash dans tableau
@@ -23,9 +22,11 @@
 %\usepackage{caption}
 %\usepackage[font=scriptsize, format=hang]{subcaption}
 %\usepackage[babel=true]{csquotes}
-%\usepackage[toc,page]{appendix}
-\usepackage{fancyhdr} % Pour les entetes de page
+\usepackage{extensions/picins} %image avec texte a ct
+\usepackage[toc,page]{extensions/appendix}
 \usepackage{extensions/subfig}
+\usepackage{extensions/capt-of}
+\usepackage{fancyhdr} % Pour les entetes de page
 \usepackage[
 	pdftex,					% Paramtrage de la navigation
 	bookmarks = true,						% Signets
@@ -36,18 +37,50 @@
 	colorlinks = false,					% Liens en couleur
 	urlcolor = black,						% Couleur des liens externes
 	pdfborder = {0 0 0}					% Style de bordure : ici, rien
-	]{hyperref}
+]{hyperref}
 
 \lstset{
 	numbers=left,
 	numberstyle=\footnotesize,
-%	numberstyle=Sepia,
 	stepnumber=2,
 	numbersep=5pt,
 	frame=shadowbox,
 	backgroundcolor=\color{grisclair},
 	rulesepcolor=\color{gris},
-	keywordstyle=\color{blue},
+	keywordstyle=\color{darkblue},
+	captionpos=b,
+	showstringspaces=false
+}
+
+\lstdefinelanguage{LQL}{
+	showspaces=false,
+	identifierstyle=\color{black},
+	captionpos=b
+}
+
+\lstdefinelanguage{JSON}{
+	showspaces=false,
+	morestring=[b]", %pour les guillemets en bleu
+	morecomment=[s]{"?}{?"}, %contenu des guillemets en bleu
+	stringstyle=\color{darkblue},
+	captionpos=b
+}
+
+\lstdefinelanguage{XML}{
+	showspaces=false,
+	morestring=[b]",
+	morestring=[s]{>}{<},
+	morecomment=[s]{<?}{?>},
+	stringstyle=\color{black},
+	identifierstyle=\color{darkblue},
+	keywordstyle=\color{cyan},
+	morekeywords={id,value,onClick},
+	captionpos=b
+}
+
+\lstdefinelanguage{plaintext}{
+	morekeywords={@}, 
+	keywordstyle=\color{darkblue}, 
 	captionpos=b
 }
 
@@ -67,8 +100,8 @@
 \newcommand\YuukouII{\textit{Yuukou II}}
 \newcommand\cad{c'est-\`a-dire}
 
-%\renewcommand{\appendixtocname}{Annexes}
-%\renewcommand{\appendixpagename}{Annexes}
+\renewcommand{\appendixtocname}{Annexes}
+\renewcommand{\appendixpagename}{Annexes}
 
 \hypersetup{
 	unicode=false,          % non-Latin characters in Acrobat's bookmarks
@@ -188,7 +221,7 @@
 
 \input{Glossaire}
 
-%\input{Annexes}
+\input{Annexes}
 
 \listoffigures
 \addcontentsline{toc}{chapter}{Table des figures}

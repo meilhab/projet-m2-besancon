@@ -29,11 +29,12 @@ Basiquement Nagios sert \`a surveiller les ressources auxquelles il lui est perm
 De ce fait, il doit garder des traces des informations qu'il r\'ecup\`ere.
 Ces informations sont stock\'ees dans un fichier.
 C'est pourquoi un plugin existe sp\'ecialement pour acc\'eder aux informations contenu dans ce fichier. 
-Le plugin \textit{MK Livestatus} permet \`a l'aide d'un langage de requ\^etes qui lui est propre, de r\'ecup\'erer les informations que garde Nagios.
+Le module \textit{MK Livestatus} permet \`a l'aide d'un langage de requ\^etes qui lui est propre, de r\'ecup\'erer les informations que garde Nagios.
 
 Le service Web doit permettre, dans un premier temps, de r\'ecup\'erer toutes les informations utiles pour un archivage des donn\'ees.
 Elles sont stock\'ees dans une base de donn\'ees MySQL.
 \noindent Ces informations sont :
+
 \begin{itemize}
 	\item les donn\'ees r\'ecup\'er\'ees via le plugin \textit{MK Livestatus}, la r\'ecup\'eration doit \^etre faite \`a intervalles r\'eguliers;
 	\item les diff\'erents emplois du temps de toutes les salles que Nagios surveille, la r\'ecup\'eration doit \^etre faite une fois par jour;
@@ -82,12 +83,15 @@ Maintenant connu sous le nom de Nagios XI, Nagios est un logiciel libre sous la 
 \subsubsection{Fonctionnement}
 
 \noindent L'architecture de base de Nagios est tr\'es simple, elle comporte :
+
 \begin{itemize}
 	\item un ordonnanceur pour g\'erer les v\'erification ainsi que les actions \`a prendre sur les diff\'erents incidents;
 	\item une partie graphique : visible \`a travers un simple serveur Web;
 	\item des sondes : greffons (ou \textit{plugins} en anglais) dans Nagios, ce sont de petits scripts permettant d'effectuer diverses v\'erifications.
 
 \end{itemize}
+
+\vspace{0.20cm}
 
 Basiquement, Nagios est un moteur d'ordonnancement de v\'erifications diverses et vari\'ees dont les v\'erifications sont effectu\'ees via des greffons.
 Ces v\'erifications peuvent \^etre la charge d'utilisation du CPU\protect\footnote{Central Processing Unit ou processeur en fran\c{c}ais}, l'espace disque utilis\'e ou encore qui est connect\'e actuellement.
@@ -127,8 +131,8 @@ NetBeans est un IDE\protect\footnote{Integrated Development Environment}$^*$ ope
 Il est \'ecrit en Java et fonctionne sous Windows, Mac OS, Linux, Solaris et d'autres plates-formes du moment qu'elles poss\`edent une JVM\protect\footnote{Java Virtual Machine}$^*$ compatible.
 
 NetBeans permet de d\'evelopper et d\'eployer rapidement des applications graphiques Swing, des Applets, des JSP/Servlets et des architectures J2EE\protect\footnote{Java Platform, Enterprise Edition}.
-Il poss\`ede toutes les fonctionnalit\'es recherch\'ees dans un IDE$^*$ moderne (coloration syntaxique, refactoring, d\'ebogueur, \ldots) et ajoute, dans le cas d'un d\'eveloppement d'un service Web comme pour ce projet, un support avec la derni\'ere version de GlassFish, permettant notamment de faire des \og{}deploy on save\fg{}, de d\'eployer les applications Web sur un serveur distant et de contr\^oler le serveur (suivre la sortie de logs, d\'emarrer, arr\^eter le serveur).
-Sa premi\`ere version date de 1996 et portait le nom Xelfi. Il est actuellement disponible sur son site Internet~\cite{biblio:siteNetbeans} en version 7.1.2.
+Il poss\`ede toutes les fonctionnalit\'es recherch\'ees dans un IDE$^*$ moderne (coloration syntaxique, refactoring, d\'ebogueur, \ldots) et ajoute, dans le cas d'un d\'eveloppement d'un service Web comme pour ce projet, un support avec la derni\'ere version de GlassFish, permettant notamment de faire des \og{}deploy on save\fg{}, de d\'eployer les applications Web sur un serveur distant et de contr\^oler le serveur (suivre la sortie de logs, d\'emarrer, arr\^eter le serveur). Il donne acc\`es \`a une gestion simple du serveur d'application GlassFish qui sera utilis\'e dans le projet.
+Sa premi\`ere version date de 1996 et portait le nom Xelfi. Il est actuellement disponible sur son site Internet\cite{biblio:siteNetbeans} en version 7.1.2.
 
 
 \subsection{Le serveur Web GlassFish}
@@ -143,7 +147,7 @@ Sa premi\`ere version date de 1996 et portait le nom Xelfi. Il est actuellement 
 GlassFish est un serveur d'application open source d\'evelopp\'e par Sun Microsystems pour les plates-formes Java EE\protect\footnote{Java Entreprise Edition} 5 et 6, et est maintenant maintenu par Oracle Corporation.
 Il dispose de nombreux outils pour faciliter le d\'eveloppement, le d\'eploiement et la maintenance d'application.
 Un de ses avantages est qu'il est particuli\`erement bien int\'egr\'e \`a NetBeans, ce qui permet un d\'eploiement tr\`es rapide des applications ainsi qu'une trace d'ex\'ecution lors du fonctionnement.
-GlassFish est disponible sur son site Internet~\cite{biblio:siteGlassfish} en version 3.1.2.
+GlassFish est disponible sur son site Internet\cite{biblio:siteGlassfish} en version 3.1.2.
 
 \subsection{Le SGBD MySQL}
 
@@ -155,7 +159,6 @@ En Java, un DAO est une classe repr\'esentant une table dont les attributs sont 
 Des classes repr\'esentant des listes sont g\'en\'eralement d\'evelopp\'e pour contenir les DAO et simplifier l'acc\`es aux donn\'ees.
 
 Lorsqu'il sera n\'ecessaire d'effectuer des traitements r\'ep\'et\'es sur les donn\'ees d'une table, m\^eme si ces traitements ne portent pas sur la totali\'e de la table, il est pr\'ef\'erable de charger en m\'emoire la totalit\'e des \'el\'ements utiles avec, dans le cas id\'eal, une seule requ\^ete SQL$^*$.
-
 
 \begin{figure}[!ht]
 	\centering
@@ -183,22 +186,13 @@ De ce fait, plusieurs possibilit\'es ont \'et\'e envisag\'ees.
 
 La premi\`ere est de transmettre un document texte basique, celui-ci format\'e d'une certaine fa\c{c}on afin d'\^etre pars\'e ({\cad} parcourir un flux structur\'e d'informations pour en extraire les donn\'ees).
 Ce qui aurait comme avantage de pouvoir \^etre r\'ecup\'er\'e par un client utilisant n'importe quel langage.
+La figure~\ref{code:plaintext} repr\'esente une exemple de fichier qu'il est facile de parser, il suffit de r\'ecup\'erer les informations se trouvant entre les arobases.
 
-\noindent Voici un exemple de ligne pouvant \^etre parcourue pour en extraire les informations cl\'es :
-
-\lstdefinelanguage{plaintext}{
-	morekeywords={@}, 
-	keywordstyle=\color{darkblue}, 
-	captionpos=b
-}
-\lstset{
-	language=plaintext
-%	caption={Exemple de fichier facilement parsable}
-%	label=listing:exemplePlaintext	
-}
-\begin{lstlisting}[]
+\begin{lstlisting}[language=plaintext]
 info1 @ info2 @ info3 @ info4
 \end{lstlisting}
+\captionof{figure}{Exemple de ligne pouvant \^etre facilement pars\'ee}
+\label{code:plaintext}
 
 Pour r\'ecup\'erer les informations de cet exemple, il suffit de parcourir le fichier en stockant les informations contenues entre les \textbf{@}.
 
@@ -212,12 +206,9 @@ C'est un m\'ecanisme fournit par Java permettant de consid\'erer un objet comme 
 De cette mani\`ere, l'objet en question peut \^etre transmis \`a travers le r\'eseau vers une autre application Java pour le r\'ecup\'erer et le d\'es\'erialiser, ce qui repr\'esente la proc\'edure inverse de la s\'erialisation.
 
 \noindent Voici un exemple de classe Java s\'erialisable :
+\vspace{0.20cm}
 
-\lstset{
-	language=Java
-%	caption={Exemple de classe Java s\'erialisable},
-%	label=listing:exempleJava
-}
+\lstset{language=Java}
 \lstinputlisting{codes/Exemple.java}
 
 L'objet contiendrait toutes les donn\'ees utiles et celles-ci seraient facilement accessibles.
@@ -230,27 +221,12 @@ eXtensible Markup Language ou XML est un langage de balisage g\'en\'erique perme
 Il est utilis\'e pour g\'erer la configuration, le stockage des donn\'ees, l'\'echange d'information et bien d'autres fonctions encore.
 
 \noindent Voici un exemple de document XML :
+\vspace{0.20cm}
 
-\lstdefinelanguage{XML}{
-	showspaces=false,
-	morestring=[b]",
-	morestring=[s]{>}{<},
-	morecomment=[s]{<?}{?>},
-	stringstyle=\color{black},
-	identifierstyle=\color{darkblue},
-	keywordstyle=\color{cyan},
-	morekeywords={id,value,onClick},
-	captionpos=b
-}
-\lstset{
-	language=XML, 
-	showstringspaces=false
-%	caption={Exemple de document XML},
-%	label=listing:exempleXml
-}
-\lstinputlisting{codes/Exemple.xml}
+\lstinputlisting[language=XML]{codes/Exemple.xml}
 
 XML offre une solution structur\'ee et tr\`es simple \`a comprendre pour l'envoi d'information par le r\'eseau, cependant dans les \'echanges d'informations entre client et serveur, il montre ses limites :
+
 \begin{itemize}
 	\item le chargement et la manipulation deviennent vite compliqu\'es, la plupart du temps il est n\'ecessaire de parser le XML sous forme de DOM$^*$, puis de le parcourir, ce qui requiert l'appel de nombreuses fonctions, sans mentionner le fait que parser un document XML est parfois long;
 	\item la taille des fichiers \'echang\'es peut parfois \^etre cons\'equente du fait de la duplication des donn\'ees : par nature, le XML est lourd.
@@ -264,33 +240,17 @@ Il utilise la notation des objets JavaScript pour transmettre de l'information s
 Il est aussi souvent utili\'e pour simplifier et all\'eger les acc\`es \`a des services Web depuis les navigateurs.
 
 Voici un exemple de fichier JSON reprenant le m\^eme arbre que le document XML exemple ci-dessus.
-\lstdefinelanguage{JSON}{
-	showspaces=false,
-	morestring=[b]", %pour les guillemets en bleu
-	morecomment=[s]{"?}{?"}, %contenu des guillemets en bleu
-	stringstyle=\color{darkblue},
-	captionpos=b
-}
-\lstset{
-	language=JSON, 
-	showstringspaces=false
-%	caption={Exemple de document JSON},
-%	label=listing:exempleXml
-}
 
-\lstinputlisting{codes/Exemple.json}
+\vspace{0.20cm}
 
-
-
+\lstinputlisting[language=JSON]{codes/Exemple.json}
 
 \subsubsection{Choix du format}
 
 Le choix du format de retour des donn\'ees s'est port\'e sur l'utilisation de JSON.
 Le but du client, qui demande des informations au service Web, est de recevoir les donn\'ees le plus rapidement possible afin d'avoir \`a les afficher dans la foul\'ee.
-
 De ce fait, le parsage d'un texte contenant des balises \`a certains endroits s'av\`ere inadapt\'e, notamment pour r\'ecup\'erer un seul type d'information.
-
-L'envoi d'un objet s\'erialisable Java est, quant \`a lui trop restrictif. Le choix a don \'et\'e de choisir entre XML ou JSON.
+L'envoi d'un objet s\'erialisable Java est, quant \`a lui trop restrictif. Le choix a donc \'et\'e de choisir entre XML ou JSON.
 
 XML offre un format de donn\'ees verbeux et prend beaucoup d'espace. 
 De plus un document XML peut \^etre valid\'e via l'utilisation de DTD\protect\footnote{Document Type Definition}, document permettant de d\'ecrire un mod\`ele de document XML, ou de XSD\protect\footnote{XML Schema Definition}, langage de description de format de document XML permettant de d\'efinir la structure et le type de contenu d'un document XML.
@@ -320,15 +280,17 @@ La meilleure d\'efense est de conna\^itre \`a l'avance les points sensibles et d
 \subsubsection{Structure}
 
 JSON se base sur deux structures de donn\'ees universelles dans pratiquement tous les langages de programmation modernes :
+
 \begin{itemize}
 	\item une collection de couples nom/valeur;
 	\item une liste de valeurs ordonn\'ees.
 
 \end{itemize}
 
-\vspace{0.25cm}
+\vspace{0.20cm}
 
 \noindent Ces \'el\'ements repr\'esentent trois types de donn\'ees :
+
 \begin{itemize}
 	\item un \textit{objet} :\\Ensemble de couples nom/valeur non ordonn\'es. Un objet commence par \textsf{\{ (accolade gauche)} et se termine par \textsf{\} (accolade droite)}.
 	Chaque nom est suivi de \textsf{: (deux-points)} et les couples nom/valeur sont s\'epar\'es par \textsf{, (virgule)};
@@ -344,11 +306,102 @@ JSON se base sur deux structures de donn\'ees universelles dans pratiquement tou
 
 \section{Communication avec Nagios}
 
-\subsection{Le plugin MK Livestatus}
+Nagios offre la surveillance d'un grand ensemble de machines dans l'universit\'e. 
+Cependant s'il n'y a aucune mani\`ere de r\'ecup\'erer ces informations, il n'aurait aucune utilit\'e dans le projet.
+Ainsi un module a \'et\'e d\'evelopp\'e, son but \'etant de pouvoir interroger Nagios et obtenir ses r\'eponses le plus rapidement et simplement possible.
+
+\subsection{Le module MKLivestatus}
+\label{section:moduleMKLivestatus}
+
+Le module MKLivestatus permet un acc\`es imm\'ediat au statut de Nagios ainsi qu'\`a ses donn\'ees de logs.
+Avant le module, une fa\c{c} classique de r\'ecup\'erer les informations importantes \'etait de parser le fichier \textsf{status.dat}, qui est cr\'e\'e automatique par Nagios \`a chacun de ses cycles.
+Ce fichier contient toutes les informations concernant les services et les machines que Nagios surveille.
+Parser ce fichier s'av\`ere d\'elicat, surtout pour extaire quelques informations.
+Il existe bien une mani\`ere alternative de r\'ecup\'erer ces informations avec le module NDO.
+Ce module est directement charg\'e dans le processus de Nagios et \`a chaque nouveau cycle, il envoit les mises \`a jour via une socket UNIX$^*$ \`a un processus auxiliaire qui se charge de mettre \`a jour une base de donn\'ees.
+
+Les avantages \'etant une mise \`a jour imm\'ediate de l'information et une simplicit\'e et rapidit\'e d'acc\`es aux bases de donn\'ees pour les applications.
+Mais d'un autre cot\'e, la mise en place de ce syst\^eme est complexe, elle n\'ecessite une administration humaine de la base de donn\'ees, la consommation CPU est significative juste pour garder la base \`a jour et son entretien r\'egulier peut bloquer Nagios pendant un moment (cela d\'epend de la taille de l'infrastructure).
+
+Le module MKLivestatus reprend le principe de NDO dans l'int\'egration directe dans le processus Nagios, cependant, la diff\'erence de taille est qu'il ouvre juste une socket de communication par laquelle les donn\'ees peuvent \^etre retrouv\'ee \`a la demande.
+La socket ouverte par d\'efaut par MKLivestatus est une socket UNIX$^*$, mais il est possible de configurer une socket Internet classique sur un port choisi et accessible seulement par certaines machines.
+Par cette socket, il est possible d'envoyer une requ\^ete vers une cible sp\'ecifique comme un service, une machine, un ensemble de machines, \ldots{}
+La r\'eponse est imm\'ediate et les donn\'ees renvoy\'ees ont \'et\'e directement lu dans les structures de donn\'ees internes de Nagios.
+
+\noindent MKLivestatus offre donc de nombreux avantages :
+
+\begin{itemize}
+	\item consommation CPU non mesurable, juste une petite consommation lors de l'ex\'ecution d'une requ\^ete;
+	\item pas d'ecritures sur le disque;
+	\item acc\`es aux donn\'ees beaucoup plus rapide qu'avec une parsage du fichier \textsf{status.dat} ou l'ex\'ecution de requ\^etes SQL$^*$.
+	\item pas de configuration, d'administration ou autre, tout est install\'e automatiquement.
+
+\end{itemize}
+
+\vspace{0.20cm}
+
+MKLivestatus est disponible sur le site Internet\cite{biblio:siteMklivestatus} de Mathias Kettner en version stable 1.1.12p7.
 
 \subsection{Requ\^etes pour Nagios}
 
+\subsubsection{\'Ecriture des requ\^etes avec LQL}
+
+LQL, Livestatus Query Language, prononc\'e \og Liquel\fg, est un langage sp\'ecialement con\c{c}u pour communiquer avec le module MKLivestatus via une socket.
+Il ressemble un peu au langage SQL$^*$.
+
+\noindent Chaque requ\^ete consiste en :
+
+\begin{itemize}
+	\item une commande commen\c{c}ant par le mot cl\'e \textsf{GET} suivit du nom de la \textit{table};
+	\item un nombre arbitraire de lignes d'en-t\^ete consistant en un mot cl\'e, un double-point et une liste d'arguments;
+	\item une ligne vide ou une fin de transmission (pour fermer la proc\'edure d'envoi sur la socket).
+
+\end{itemize}
+
+\vspace{0.20cm}
+
+Tous les mots cl\'es sont sensibles \`a la casse. 
+La version actuelle de Livestatus donne acc\`es \`a seize tables dont voici les principales :
+
+\begin{itemize}
+	\item \textbf{hosts} : les h\^otes surveill\'es par Nagios;
+	\item \textbf{services} : les services de Nagios, reli\'es avec toutes les donn\'ees de la table \textit{hosts};
+	\item \textbf{hostgroups} : les groupes d'h\^otes cr\'e\'es dans Nagios;
+	\item \textbf{servicegroups} : les groupes de services cr\'e\'es dans Nagios.
+
+\end{itemize}
+
+\vspace{0.20cm}
+
+Les requ\^etes peuvent aussi \^etre affin\'ees avec la s\'election de certaines colonnes, la cr\'eation de filtres sur les r\'esultats (tous les r\'esultats dont la valeur est \'egale \`a deux), compter des r\'esultats, faire des comparaisons avec des expressions r\'eguli\`eres, \ldots{}
+Au final, LQL s'av\`ere tr\`es flexible d'utilisation.
+
+Voici un exemple de requ\^ete permettant de r\'ecup\'erer tous les services avec leur \'etat actuel \`a 2 :
+\vspace{0.20cm}
+
+\lstinputlisting[language=LQL]{codes/nagiosExemple.ngs}
+
+Les scripts Nagios utilis\'es tout au long du stage sont disponibles en annexe~\ref{annexe:fichiersLQLNagios} de ce rapport.
+
+\subsubsection{Ex\'ecution des requ\^etes}
+
+Comme pour une base de donn\'ees SQL$^*$, toutes les tables poss\`edent un nombre de colonnes.
+Si une requ\^ete est pass\'ee sans param\^etres, toutes les colonnes seront retourn\'ees dans l'ordre alphab\'etique.
+
+Comme vu dans en~\ref{section:moduleMKLivestatus}, il existe deux mani\`eres d'acc\'eder \`a la socket de MKLivestatus.
+La premi\`ere m\'ethode est avec une socket UNIX$^*$. 
+Pour ce faire, MKLivestatus fournit pendant son installation un petit utilitaire appel\'e \textsf{unixcat} permettant de communiquer avec une socket UNIX$^*$.
+Sous forme d'une commande shell, cet utilitaire envoit toutes les donn\'ees lu par l'entr\'ee standard (stdin) \`a la socket et \'ecrit sur la sortie standard (stdout) tout ce qu'il re\c{c}oit de la socket.
+
+\noindent Voici un exemple d'ex\'ecution en utilisant la commande \textsf{unixcat} :
+
+\begin{lstlisting}[language=LQL]
+echo 'GET hosts' | unixcat /var/lib/nagios/rw/live
+\end{lstlisting}
+
 \subsection{R\'ecup\'eration des informations}
+
+\section{Gestion du poste de travail}
 
 \section{Gestion de la base de donn\'ees}
 

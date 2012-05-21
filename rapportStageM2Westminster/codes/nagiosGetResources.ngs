@@ -1,0 +1,4 @@
+GET services
+Columns: host_name host_address host_groups state plugin_output 
+Filter: description = check_whoisloggedin
+
