@@ -186,13 +186,15 @@ De ce fait, plusieurs possibilit\'es ont \'et\'e envisag\'ees.
 
 La premi\`ere est de transmettre un document texte basique, celui-ci format\'e d'une certaine fa\c{c}on afin d'\^etre pars\'e ({\cad} parcourir un flux structur\'e d'informations pour en extraire les donn\'ees).
 Ce qui aurait comme avantage de pouvoir \^etre r\'ecup\'er\'e par un client utilisant n'importe quel langage.
-La figure~\ref{code:plaintext} repr\'esente une exemple de fichier qu'il est facile de parser, il suffit de r\'ecup\'erer les informations se trouvant entre les arobases.
+La figure~\ref{code:exemplePlaintext} repr\'esente une exemple de fichier qu'il est facile de parser, il suffit de r\'ecup\'erer les informations se trouvant entre les arobases.
+
+\vspace{0.20cm}
 
 \begin{lstlisting}[language=plaintext]
 info1 @ info2 @ info3 @ info4
 \end{lstlisting}
 \captionof{figure}{Exemple de ligne pouvant \^etre facilement pars\'ee}
-\label{code:plaintext}
+\label{code:exemplePlaintext}
 
 Pour r\'ecup\'erer les informations de cet exemple, il suffit de parcourir le fichier en stockant les informations contenues entre les \textbf{@}.
 
@@ -204,12 +206,13 @@ Ce qui signifie une perte de temps plus ou moins significative en fonction de la
 Une autre m\'ethode pourrait \^etre de transmettre un objet Java dit s\'erialisable.
 C'est un m\'ecanisme fournit par Java permettant de consid\'erer un objet comme une s\'equence de bytes qui inclue les donn\'ees de l'objet, le type de l'objet et le type des donn\'ees.
 De cette mani\`ere, l'objet en question peut \^etre transmis \`a travers le r\'eseau vers une autre application Java pour le r\'ecup\'erer et le d\'es\'erialiser, ce qui repr\'esente la proc\'edure inverse de la s\'erialisation.
+La figure~\ref{code:exempleJava} donne un exemple de classe Java s\'erialisable qui pourrait \^etre transmise par le r\'eseau comme un flux de bytes.
 
-\noindent Voici un exemple de classe Java s\'erialisable :
 \vspace{0.20cm}
 
-\lstset{language=Java}
-\lstinputlisting{codes/Exemple.java}
+\lstinputlisting[language=Java]{codes/Exemple.java}
+\captionof{figure}{Exemple de classe Java s\'erialisable}
+\label{code:exempleJava}
 
 L'objet contiendrait toutes les donn\'ees utiles et celles-ci seraient facilement accessibles.
 Le probl\`eme venant avec cette solution est que les objets doivent \^etre r\'ecup\'er\'es par une JVM$^*$.
@@ -219,11 +222,13 @@ Ce qui peut s'av\'erer plus ou moins compliqu\'e voir impossible dans d'autres l
 
 eXtensible Markup Language ou XML est un langage de balisage g\'en\'erique permettant de mettre en forme les documents qui a connu un grand succ\`es depuis sa cr\'eation.
 Il est utilis\'e pour g\'erer la configuration, le stockage des donn\'ees, l'\'echange d'information et bien d'autres fonctions encore.
+La figure~\ref{code:exempleXML} donne un exemple de document XML pouvant \^etre facilement parser via un DOM$^*$.
 
-\noindent Voici un exemple de document XML :
 \vspace{0.20cm}
 
 \lstinputlisting[language=XML]{codes/Exemple.xml}
+\captionof{figure}{Exemple de document XML}
+\label{code:exempleXML}
 
 XML offre une solution structur\'ee et tr\`es simple \`a comprendre pour l'envoi d'information par le r\'eseau, cependant dans les \'echanges d'informations entre client et serveur, il montre ses limites :
 
@@ -238,12 +243,13 @@ XML offre une solution structur\'ee et tr\`es simple \`a comprendre pour l'envoi
 JavaScript Object Notation ou JSON est un format l\'eger d'\'echange de donn\'ees texte.
 Il utilise la notation des objets JavaScript pour transmettre de l'information structur\'ee.
 Il est aussi souvent utili\'e pour simplifier et all\'eger les acc\`es \`a des services Web depuis les navigateurs.
-
-Voici un exemple de fichier JSON reprenant le m\^eme arbre que le document XML exemple ci-dessus.
+La figure~\ref{code:exempleJSON} donne une exemple de fichier JSON reprenant le m\^eme arbre que le document XML de la figure~\ref{code:exempleXML}.
 
 \vspace{0.20cm}
 
 \lstinputlisting[language=JSON]{codes/Exemple.json}
+\captionof{figure}{Exemple de fichier JSON}
+\label{code:exempleJSON}
 
 \subsubsection{Choix du format}
 
@@ -302,7 +308,6 @@ JSON se base sur deux structures de donn\'ees universelles dans pratiquement tou
 	Un caract\`eres est repr\'esent\'e par une cha\^ine d'un seul caract\`ere.
 
 \end{itemize}
-
 
 \section{Communication avec Nagios}
 
@@ -375,11 +380,13 @@ La version actuelle de Livestatus donne acc\`es \`a seize tables dont voici les 
 
 Les requ\^etes peuvent aussi \^etre affin\'ees avec la s\'election de certaines colonnes, la cr\'eation de filtres sur les r\'esultats (tous les r\'esultats dont la valeur est \'egale \`a deux), compter des r\'esultats, faire des comparaisons avec des expressions r\'eguli\`eres, \ldots{}
 Au final, LQL s'av\`ere tr\`es flexible d'utilisation.
+La figure~\ref{code:exempleLQL} donne un exemple de requ\^ete permettant de r\'ecup\'erer tous les services avec leur \'etat actuel \`a 2.
 
-Voici un exemple de requ\^ete permettant de r\'ecup\'erer tous les services avec leur \'etat actuel \`a 2 :
 \vspace{0.20cm}
 
 \lstinputlisting[language=LQL]{codes/nagiosExemple.ngs}
+\captionof{figure}{Exemple de requ\^ete LQL}
+\label{code:exempleLQL}
 
 Les scripts Nagios utilis\'es tout au long du stage sont disponibles en annexe~\ref{annexe:fichiersLQLNagios} de ce rapport.
 
@@ -392,16 +399,85 @@ Comme vu dans en~\ref{section:moduleMKLivestatus}, il existe deux mani\`eres d'a
 La premi\`ere m\'ethode est avec une socket UNIX$^*$. 
 Pour ce faire, MKLivestatus fournit pendant son installation un petit utilitaire appel\'e \textsf{unixcat} permettant de communiquer avec une socket UNIX$^*$.
 Sous forme d'une commande shell, cet utilitaire envoit toutes les donn\'ees lu par l'entr\'ee standard (stdin) \`a la socket et \'ecrit sur la sortie standard (stdout) tout ce qu'il re\c{c}oit de la socket.
+Voici un exemple d'ex\'ecution en utilisant la commande \textsf{unixcat} : 
 
-\noindent Voici un exemple d'ex\'ecution en utilisant la commande \textsf{unixcat} :
+\begin{center}
+	\textsf{echo 'GET hosts' | unixcat /var/lib/nagios/rw/live}.
 
-\begin{lstlisting}[language=LQL]
-echo 'GET hosts' | unixcat /var/lib/nagios/rw/live
-\end{lstlisting}
+\end{center}
 
-\subsection{R\'ecup\'eration des informations}
+La seconde mani\`ere consiste en l'ouverture d'une socket Internet sur un port pr\'ed\'efini.
+Avec cela, il est possible d'acc\`eder depuis le r\'eseau de l'universit\'e au serveur h\'ebergeant Nagios.
+Il suffit ensuite d'envoyer via la commande UNIX \textsf{netcat}, qui permet d'ouvrir des sockets serveurs et clientes, un fichier contenant la requ\^ete LQL :
+
+\begin{center}
+	\textsf{cat requete | netcat yuukou-ws.wmin.ac.uk 6557}.
+
+\end{center}
+
+Dans le cadre du projet, l'utilisation d'une socket UNIX$^*$ en Java n\'ecessite l'installation de biblioth\`eques de type JNI\protect\footnote{Java Native Interface}.
+Ce sont en fait des biblioth\`eques qui permettent l'int\'egration du code \'ecrit en Java avec du code \'ecrit dans un autre langage tel le C ou le C++.
+Cette installation est plus ou moins complexe et n\'ecessite une certaine configuration du serveur, ainsi, il est plus simple d'ouvrir une socket Internet plut\^ot que d'essayer la configuration d'une socket UNIX$^*$ avec JNI.
+De plus, au point de vue rapidit\'e, l'avantage de MKLivestatus est d'\^etre directement int\'egr\'e dans Nagios, de ce fait, les requ\^etes sont trait\'ees imm\'ediatement.
+
+Le tableau~\ref{table:comparatifTemps} montre un comparitif des temps d'ex\'ecution mesur\'es avec la commande UNIX \textsf{time} pour 100 requ\^etes.
+La requ\^ete de la figure~\ref{annexe:nagiosGetResources} se trouvant en annexe~\ref{annexe:fichiersLQLNagios} de ce rapport a \'et\'e utilis\'ee pour effectuer ces tests.
+Chaque r\'eponse contient 1983 lignes.
+
+\begin{table}[!ht]
+	\centering
+	\begin{tabular}{|>{\columncolor{grisclair}}c|c|c|}
+		\hline
+		\rowcolor{grisclair} \textbf{time} & \textbf{unixcat} & \textbf{netcat}\\
+		\hline
+		R\'eel & 1m44.462s & 1m42.129s\\
+		\hline
+		Utilisateur & 0m0.372s & 0m0.432s\\
+		\hline
+		Syst\`eme & 0m0.268s & 0m0.404s\\
+		\hline
+
+	\end{tabular}
+
+	\caption{Comparatif des temps d'ex\'ecution entre la commande \textsf{netcat} et la commande \textsf{unixcat}}
+	\label{table:comparatifTemps}
+
+\end{table}
+
+Apr\`es 100 requ\^etes, il est visible qu'utiliser une socket UNIX$^*$, pour une ex\'ecution syst\`eme est presque deux fois plus rapide que l'utilisation d'une socket Internet.
+Cependant, l'application ne n\'ecessite pas l'ex\'ecution de nombreuses requ\^etes simultan\'ees.
+Une seule sera effectu\'ee \`a chaque cycle comme d\'ecrit en~\ref{section:cyclePrincipal}.
+De ce fait, l'utilisation d'une socket Internet convient dans la r\'ecup\'eration des informations de Nagios.
+
+\subsubsection{R\'ecup\'eration de l'information}
+
+Suite \`a l'ex\'ecution de la requ\^ete, l'information est retourn\'ee par Nagios, elle est ensuite pars\'ee en fonction du type de la requ\^ete et les informations sont trait\'ees.
+Nagios retourne les informations sous une forme bien sp\'ecifiques : 
+
+\begin{itemize}
+	\item une ligne correspond \`a une ligne de la table demand\'ee;
+	\item la ligne contient toutes les colonnes de la table ou seulement celles demand\'ees dans la requ\^ete.
+	Chaque colonne est s\'epar\'ee d'une autre par un \textsf{; (point-virgule)}.
+
+\end{itemize}
+
+\vspace{0.20cm}
+
+Des exemples de r\'eponses correspondant aux requ\^etes de l'annexe~\ref{annexe:fichiersLQLNagios} sont disponibles dans l'annexe~\ref{annexe:reponseLQLNagios}.
 
 \section{Gestion du poste de travail}
+
+Afin de d\'evelopper efficacement, une organisation du poste de travail mais plus g\'en\'eralement du projet en lui-m\^eme a \'et\'e choisie.
+Cette organisation comporte une machine de d\'eveloppement et deux serveurs.
+TODO : version de debian !!
+Le serveur principal h\'eberge le service Web dans une version stable ainsi que tous les outils n\'ecessaire \`a son fonctionnement comme le serveur de gestion de base de donn\'ees (SGBD) MySQL, une version de Java \`a jour, le serveur d'application GlassFish mais aussi Nagios.
+La faible consommation CPU de Nagios dans la surveillance des machines de l'universit\'e fait, qu'actuellement, il peut \^etre h\'eberg\'e sur le m\^eme serveur que le service Web.
+
+Le serveur dit {\og}secondaire{\fg} h\'eberge quant \`a lui l'application Web permettant de communiquer avec le service Web.
+Cette application fait r\'eguli\`erement appel au service Web pour obtenir les informations dont elle a besoin pour afficher correctement ses pages.
+
+La machine de d\'eveloppement poss\`ede un syst\`eme d'exploitation Linux Mint version 11 (\textit{Katya}), tous les outils n\'ecessaires au d\'eveloppement (comme Java, NetBeans, \ldots), mais aussi un serveur de gestion de base de donn\'ee (SGBD) MySQL et un serveur GlassFish, tous deux servant pour effectuer des tests avant d\'eploiement.
+
 
 \section{Gestion de la base de donn\'ees}
 
@@ -416,6 +492,7 @@ echo 'GET hosts' | unixcat /var/lib/nagios/rw/live
 \subsection{Mise en place}
 
 \subsection{Le cycle principal}
+\label{section:cyclePrincipal}
 
 \subsection{Les fonctionnalit\'es publiques}
 
