@@ -57,8 +57,6 @@ Les pages priv\'ees, quant \`a elles, ne sont accessibles qu'aux administrateurs
 
 \vspace{0.20cm}
 
- TODO verifier orthographe nombre de ressources totalES ?
-
 Les pages publiques offrent une vision g\'en\'erale de chaque salle : le nombre de ressources totales, disponibles, occup\'ees par un utilisateur et dans un \'etat inconnu.
 Il est \`a noter que chacunes des pr\'ec\'edentes pages peut \^etre affich\'ees sur un \'ecran plasma pr\'esent dans les diff\'erents b\^atiments de l'universit\'e.
 La figure~\ref{figure:yuukouPublic} donne un exemple de page publique.
@@ -117,11 +115,23 @@ Le premier \'etant que les personnes qui ont d\'evelopp\'ees le projet ont quitt
 Ce qui signifierait, pour la personne ou l'\'equipe en charge d'\'eventuellement reprendre le projet, de prendre du temps pour se former \`a Perl, comprendre tout ce qui a \'et\'e d\'ej\`a r\'ealis\'e et ensuite seulement commencer \`a d\'evelopper.
 Actuellement de nombreux projets sont en cours et il n'est pas possible pour une \'equipe de passer du temps sur l'existant.
 
-Le deuxi\`eme probl\`eme est les changements important, du point de vue infrastructure, qui sont en train d'\^etre mis en place.
+Un autre probl\`eme est les changements important, du point de vue infrastructure, qui sont en train d'\^etre mis en place.
 En effet, l'universit\'e qui utilisait eDirectory$^*$ de Novell pour g\'erer ses annuaires LDAP$^*$ a commenc\'e \`a migrer toutes ses donn\'ees vers le syst\`eme Active Directory$^*$ de Microsoft qui est cens\'e \^etre plus efficace. Ce changement rendrait \Yuukou{} obsol\`ete.
 
-Le dernier point est la volont\'e de donner acc\`es aux informations sur les salles pas seulement en utilisant un navigateur Internet, mais aussi et surtout en utilisant un smartphone (IPhone ou Android par exemple) ou une tablette (IPad par exemple).
+Point suivant, la volont\'e de donner acc\`es aux informations sur les salles pas seulement en utilisant un navigateur Internet, mais aussi et surtout en utilisant un smartphone (IPhone ou Android par exemple) ou une tablette (IPad par exemple), chose que l'ancien logiciel ne peut pas fournir.
 De ce fait, un \'etudiant aurait \`a tout moment les informations sur les salles via son smartphone ou sa tablette, si tent\'e qu'il est l'un ou l'autre.
+
+\noindent \`A ces pr\'ec\'edents probl\`emes, d'autres viennent s'ajouter :
+
+\begin{itemize}
+	\item les Macintosh ne sont pas pris en compte;
+	\item le logiciel est assez monolithique donc il deviendrait tr\`es difficile et complexe de vouloir l'\'etendre;
+	\item {\Yuukou} ne prend en compte que les donn\'ees en temps r\'eel et ne garde pas un historique;
+	\item son utilisation pr\^ete \`a confusion car il n'a aucun interfa\c{c}age avec l'emploi du temps, de ce fait, quand une salle est pr\'esent\'ee comme libre, il n'y a aucun moyen, avec le logiciel, de savoir si un cours s'y d\'eroule ou non.
+
+\end{itemize}
+
+\vspace{0.20cm}
 
 C'est en consid\'erant tous ces points qu'il a \'et\'e d\'ecid\'e d'abandonner le projet \Yuukou{} afin de pouvoir mettre en place \YuukouII{} qui r\'epondrait aux attentes de l'universit\'e.
 
