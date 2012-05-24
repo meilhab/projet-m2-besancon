@@ -3,8 +3,9 @@
 \section{Recherches}
 
 \subsection{Architecture du projet}
+\label{section:architectureProjet}
 
-Le premier travail a \'et\'e la r\'eflexion sur comment mettre en place une solution pouvant communiquer avec Nagios dont une description sera faite en~\ref{section:nagios}.
+Le premier travail a \'et\'e la r\'eflexion sur comment mettre en place une solution pouvant communiquer avec Nagios dont une description sera faite au \S~\ref{section:nagios}.
 Les figures~\ref{figure:architectureProjetServiceWeb} et~\ref{figure:architectureProjetAffichage} pr\'esentent le fruit des recherches qui ont \'et\'e faites sur la mise en place du projet \YuukouII.
 
 \begin{figure}[!ht]
@@ -28,7 +29,7 @@ Les figures~\ref{figure:architectureProjetServiceWeb} et~\ref{figure:architectur
 Basiquement Nagios sert \`a surveiller les ressources auxquelles il lui est permis d'acc\'eder.
 De ce fait, il doit garder des traces des informations qu'il r\'ecup\`ere.
 Ces informations sont stock\'ees dans un fichier.
-C'est pourquoi un plugin existe sp\'ecialement pour acc\'eder aux informations contenu dans ce fichier. 
+C'est pourquoi un module existe sp\'ecialement pour acc\'eder aux informations contenu dans ce fichier. 
 Le module \textit{MK Livestatus} permet \`a l'aide d'un langage de requ\^etes qui lui est propre, de r\'ecup\'erer les informations que garde Nagios.
 
 Le service Web doit permettre, dans un premier temps, de r\'ecup\'erer toutes les informations utiles pour un archivage des donn\'ees.
@@ -36,7 +37,7 @@ Elles sont stock\'ees dans une base de donn\'ees MySQL.
 \noindent Ces informations sont :
 
 \begin{itemize}
-	\item les donn\'ees r\'ecup\'er\'ees via le plugin \textit{MK Livestatus}, la r\'ecup\'eration doit \^etre faite \`a intervalles r\'eguliers;
+	\item les donn\'ees r\'ecup\'er\'ees via le module \textit{MK Livestatus}, la r\'ecup\'eration doit \^etre faite \`a intervalles r\'eguliers;
 	\item les diff\'erents emplois du temps de toutes les salles que Nagios surveille, la r\'ecup\'eration doit \^etre faite une fois par jour;
 	\item les donn\'ees sur un utilisateur inconnu (nom, pr\'enom, r\^ole : \'etudiant par exemple, photo) via un serveur LDAP.
 
@@ -49,9 +50,11 @@ La r\'eflexion doit ainsi se porter sur le contenu des diff\'erentes m\'ethodes 
 Le but \'etant un affichage le plus rapide possible des informations demand\'ees.
 
 L'utilisateur doit s'authentifier via un Servlet$^*$ qui communique avec LDAP$^*$ et qui donne un acc\`es \`a l'application.
-Le reste de la communication est s\'ecuris\'ee comme expliqu\'e dans le~\ref{section:securisation}.
+Le reste de la communication est s\'ecuris\'ee comme expliqu\'e dans le \S~\ref{section:securisation}.
 
-Le dernier point est le format des donn\'ees qui seront \'echang\'ees entre le service Web et l'application cliente.
+Le dernier point est de choisir un format pour les donn\'ees qui seront \'echang\'ees entre le service Web et l'application cliente.
+
+C'est sur cette partie que Yacine MAGHEZZI est intervenu durant son stage.
 
 \subsection{Nagios}
 \label{section:nagios}
@@ -78,7 +81,8 @@ Il est \'ecrit en C et est con\c{c}u pour un environnement Unix.
 Le projet a \'et\'e maintenu jusqu'en 2002 avant de changer de nom pour devenir Nagios en r\'eponse \`a une contestation judiciaire par les propri\'etaires d'une marque similaire.
 N.A.G.I.O.S. est l'acronyme r\'ecursif de \og{}\textit{Nagios Ain't Gonna Insist On Sainthood}\fg{} o\`u Sainthood est une r\'ef\'erence \`a \textit{NetSaint}.
 
-Maintenant connu sous le nom de Nagios XI, Nagios est un logiciel libre sous la licence GNU GPL V2. Il est disponible sous sa version 2011R2.4 datant du 24 avril 2012.
+Maintenant connu sous le nom de Nagios XI, Nagios est un logiciel libre sous la licence GNU GPL V2. 
+Il est actuellement disponible sur son site Internet\cite{biblio:siteNagios} en version 3.2.1.
 
 \subsubsection{Fonctionnement}
 
@@ -87,26 +91,30 @@ Maintenant connu sous le nom de Nagios XI, Nagios est un logiciel libre sous la 
 \begin{itemize}
 	\item un ordonnanceur pour g\'erer les v\'erification ainsi que les actions \`a prendre sur les diff\'erents incidents;
 	\item une partie graphique : visible \`a travers un simple serveur Web;
-	\item des sondes : greffons (ou \textit{plugins} en anglais) dans Nagios, ce sont de petits scripts permettant d'effectuer diverses v\'erifications.
+	\item des sondes : greffons (ou \textit{plugins} en anglais) dans Nagios, ce sont de petits \textit{scripts} permettant d'effectuer diverses v\'erifications.
 
 \end{itemize}
 
 \vspace{0.20cm}
 
-Basiquement, Nagios est un moteur d'ordonnancement de v\'erifications diverses et vari\'ees dont les v\'erifications sont effectu\'ees via des greffons.
-Ces v\'erifications peuvent \^etre la charge d'utilisation du CPU\protect\footnote{Central Processing Unit ou processeur en fran\c{c}ais}, l'espace disque utilis\'e ou encore qui est connect\'e actuellement.
+\`A la base, Nagios est un moteur d'ordonnancement de v\'erifications diverses et vari\'ees dont les v\'erifications sont effectu\'ees via des greffons.
+Ces v\'erifications peuvent \^etre la charge d'utilisation du CPU\protect\footnote{\textit{Central Processing Unit} ou processeur en fran\c{c}ais}, l'espace disque utilis\'e ou encore qui est connect\'e actuellement.
 Dans le cadre de la v\'erification de l'infrastructure, deux types de machines sont observ\'ees : les ordinateurs dot\'es de Windows et les ordinateurs dot\'es de Macintosh.
 
-Nagios \'etant install\'e et fonctionnel depuis un peu plus d'un an sur le site de New Cavendish, les greffons pour observ\'er les deux types de machines ont d\'ej\`a \'et\'e d\'evelopp\'es.
+Nagios \'etant install\'e et fonctionnel depuis un peu plus d'un an sur le site de New Cavendish, les greffons pour observer les deux types de machines ont d\'ej\`a \'et\'e d\'evelopp\'es.
 Pour les machines fonctionnant sous Windows, le greffon est en fait l'appel \`a la commande Unix \textit{Winexe} qui permet l'ex\'ecution de commandes \`a distance sur des machines Windows.
-Pour les machines fonctionnant sous Macintosh, le greffon effectue une connexion SSH\protect\footnote{SecureShell}, offrant une connexion s\'ecuris\'ee sur une machine distante pour ensuite ex\'ecuter la commande Unix \textit{who} permettant l'obtention de l'utilisateur connect\'e.
+Pour les machines fonctionnant sous Macintosh, le greffon effectue une connexion SSH\protect\footnote{\textit{SecureShell}}, offrant une connexion s\'ecuris\'ee sur une machine distante pour ensuite ex\'ecuter la commande Unix \textit{who} permettant l'obtention de l'utilisateur connect\'e.
 
 \subsubsection{\og{}Monitoring\fg{} \`a l'universit\'e}
 
 Initialement, Nagios surveillait juste les machines se situant sur le campus de New Cavendish, soit 31 salles PC seulement machines.
 Actuellement, ce sont 102 salles qui sont sous la surveillance de Nagios, soit 99 salles utilisant Windows soit 1920 PC, 3 salles utilisant des Macintosh soit 63 MAC, pour un total de 1983 machines \`a travers toute l'universit\'e : la grande majorit\'e des ordinateurs de l'universit\'e.
-Il faut noter que seuls les Macintosh de New Cavendish sont sous surveillance, les autres n\'ecessitant d'\^etre list\'es et des acc\`es diff\'erents. TODO VERIFIER
+Il faut noter que seuls les Macintosh de New Cavendish sont sous surveillance, les autres n\'ecessitant d'\^etre list\'es et des acc\`es diff\'erents.
 De ce fait, le nombre de machines devrait augmenter par la suite.
+
+\subsubsection{Vue sur la surveillance de Nagios}
+
+
 
 
 TODO REPRENDRE
@@ -132,13 +140,13 @@ Les services Web poss\`edent trois normes principales qui sont SOAP, WSDL et UDD
 
 \subsubsection{\'Echange de messages}
 
-Dans la grande majorit\'e des services Web, le protocole principal de communication est SOAP\protect\footnote{Simple Object Access Protocol}.
+Dans la grande majorit\'e des services Web, le protocole principal de communication est SOAP\protect\footnote{\textit{Simple Object Access Protocol}}.
 Il offre le transport d'objets s\'erialis\'es (objets repr\'esent\'es par un flux de bytes) et autres donn\'ees en XML, et l'appel de proc\'edures distantes.
 
 \subsubsection{Description d'un service Web}
 
-Un service Web est d\'ecrit par un document WSDL\protect\footnote{Web Services Description Language}.
-C'est langage de programmation bas\'e sur XML qui permet de d\'ecrire de fa\c{c}on pr\'ecise les d\'etails concernant le service Web :
+Un service Web est d\'ecrit par un document WSDL\protect\footnote{\textit{Web Services Description Language}}.
+C'est un langage de description bas\'e sur XML qui permet de donner de fa\c{c}on pr\'ecise les d\'etails concernant le service Web :
 
 \begin{itemize}
 	\item son protocole de communication utilis\'e;
@@ -155,7 +163,7 @@ C'est langage de programmation bas\'e sur XML qui permet de d\'ecrire de fa\c{c}
 \subsubsection{D\'ecouverte d'un service Web}
 
 Pour utiliser un service Web, il faut savoir s'il existe.
-UDDI\protect\footnote{Universal Description, Discovery and Integration Service} est une norme qui d\'efinit le m\'ecanisme pour d\'ecouvrir dynamiquement des services.
+UDDI\protect\footnote{\textit{Universal Description, Discovery and Integration Service}} est une norme qui d\'efinit le m\'ecanisme pour d\'ecouvrir dynamiquement des services Web.
 C'est en fait un annuaire de services permettant de localiser sur le r\'eseau le service Web demand\'e.
 \noindent Il comporte :
 
@@ -173,17 +181,55 @@ Le fonctionnement des services Web s'articule autour de trois acteurs principaux
 
 \begin{figure}[!ht]
 	\centering
-	\includegraphics[scale=0.75]{schemaServiceWeb.jpg}
+	\includegraphics[scale=0.35]{schemaServiceWeb.jpg}
 	\caption{Fonctionnement des services Web}
 	\label{figure:schemaServiceWeb}
 
 \end{figure}
 
+Les \'etapes impliquant la mise \`a disposition et l'utilisation (consommation) d'un service Web sont les suivantes :
 
+\begin{enumerate}
+	\item le service Web d\'ecrit son service en utilisant WSDL. 
+	Cette d\'efinition est publi\'ee dans l'annuaire UDDI;
+	\item le client envoit une ou plusieurs requ\^ete afin de localiser le service Web \`a l'annuaire et d\'eterminer comment communiquer avec ce service;
+	\item une partie du fichier WSDL fourni par le service Web est pass\'e au client. 
+	Le client peut maintenant savoir quelles requ\^etes et r\'eponses envoyer au service Web;
+	\item le client utilise le fichier WSDL pour envoyer une requ\^ete au service Web;
+	\item le service Web fournit la r\'eponse attendue au client.
 
-
+\end{enumerate}
 
 \subsection{L'API JAX-WS}
+
+Java API$^*$ for XML Web Services (JAX-WS) est une API Java permettant de simplifier la cr\'eation, le d\'eveloppement et le d\'eploiement de services Web clients et de services Web prestataires.
+Il fonctionne avec un syst\`eme d'annotations sp\'ecifique du code Java.
+JAX-WS fait partie de la plate-forme Java EE\protect\footnote{\textit{Java Platform, Entreprise Edition}} de Sun Microsystems.
+Anciennement appel\'ee JAX-RPC\protect\footnote{\textit{Java API for XML-based RPC}}, ce changement de nom intervient lors de l'abandon du style RPC\protect\footnote{\textit{Remote Procedure Call}}, des appels de proc\'edures distantes, pour des services Web de style document, avec une transmission de donn\'ees au format XML d\'efinies dans un sch\'ema XML.
+
+Toute la partie communication de JAX-WS est g\'er\'ee avec des messages de type SOAP \`a travers HTTP.
+L'API$^*$ permet de cacher toute la complexit\'e des messages, le d\'eveloppeur choisit simplement la mani\`ere d'impl\'ementer le service. 
+Pour cela, il existe deux m\'ethodes : top-down et bottom-up.
+
+La m\'ethode top-down permet de d\'evelopper un service Web en partant d'un fichier WSDL.
+Ce fichier doit contenir la compl\`ete description de tout le service Web, ensuite le code Java est g\'en\'er\'e automatiquement.
+Les classes doivent ensuite \^etre compl\'et\'ees avant d\'eploiement.
+
+La m\'ethode bottom-up permet quant \`a elle de d\'evelopper un service Web en partant du code Java.
+Le code Java est d'une part annot\'e, ensuite le fichier WSDL est automatiquement g\'en\'er\'e.
+Le service peut enfin \^etre d\'eploy\'e.
+
+C'est la m\'ethode bottom-up qui a \'et\'e employ\'ee dans le projet.
+Elle permet de ne se soucier que du code Java, le reste \'etant g\'er\'e automatiquement par NetBeans avec la construction du service Web et le d\'eploiement sur le serveur GlassFish.
+Le code~\ref{code:exempleJAXWS} donne un exemple d'annotations sur un code Java.
+
+\vspace{0.20cm}
+
+\lstinputlisting[language=Java]{codes/ExempleService.java}
+\captionof{figure}{Exemple de classe Java annot\'ee avec JAX-WS}
+\label{code:exempleJAXWS}
+
+JAX-WS est actuellement disponible sur son site Internet\cite{biblio:siteJAXWS} en version 2.2.6.
 
 \subsection{L'IDE NetBeans}
 
@@ -194,13 +240,14 @@ Le fonctionnement des services Web s'articule autour de trois acteurs principaux
 
 \end{figure}
 
-NetBeans est un IDE\protect\footnote{Integrated Development Environment}$^*$ open source d\'evelopp\'e par Sun Microsystems permettant le d\'eveloppement en utilisant les langages de programmation tels que Java, JavaScript, PHP$^*$, C, C++, et autres.
-Il est \'ecrit en Java et fonctionne sous Windows, Mac OS, Linux, Solaris et d'autres plates-formes du moment qu'elles poss\`edent une JVM\protect\footnote{Java Virtual Machine}$^*$ compatible.
+NetBeans est un IDE\protect\footnote{\textit{Integrated Development Environment}}$^*$ open source d\'evelopp\'e par Sun Microsystems permettant le d\'eveloppement en utilisant les langages de programmation tels que Java, JavaScript, PHP$^*$, C, C++, et autres.
+Il est \'ecrit en Java et fonctionne sous Windows, Mac OS, Linux, Solaris et d'autres plates-formes du moment qu'elles poss\`edent une JVM\protect\footnote{\textit{Java Virtual Machine}}$^*$ compatible.
 
-NetBeans permet de d\'evelopper et d\'eployer rapidement des applications graphiques Swing, des Applets, des JSP/Servlets et des architectures J2EE\protect\footnote{Java Platform, Enterprise Edition}.
-Il poss\`ede toutes les fonctionnalit\'es recherch\'ees dans un IDE$^*$ moderne (coloration syntaxique, refactoring, d\'ebogueur, \ldots) et ajoute, dans le cas d'un d\'eveloppement d'un service Web comme pour ce projet, un support avec la derni\'ere version de GlassFish, permettant notamment de faire des \og{}deploy on save\fg{}, de d\'eployer les applications Web sur un serveur distant et de contr\^oler le serveur (suivre la sortie de logs, d\'emarrer, arr\^eter le serveur). Il donne acc\`es \`a une gestion simple du serveur d'application GlassFish qui sera utilis\'e dans le projet.
-Sa premi\`ere version date de 1996 et portait le nom Xelfi. Il est actuellement disponible sur son site Internet\cite{biblio:siteNetbeans} en version 7.1.2.
-
+NetBeans permet de d\'evelopper et d\'eployer rapidement des applications graphiques Swing, des Applets, des JSP/Servlets et des architectures J2EE\protect\footnote{\textit{Java Platform, Enterprise Edition}}.
+Il poss\`ede toutes les fonctionnalit\'es recherch\'ees dans un IDE$^*$ moderne (coloration syntaxique, refactoring, d\'ebogueur, \ldots) et ajoute, dans le cas d'un d\'eveloppement d'un service Web comme pour ce projet, un support avec la derni\'ere version de GlassFish, permettant notamment de faire des \og{}deploy on save\fg{}, de d\'eployer les applications Web sur un serveur distant et de contr\^oler le serveur (suivre la sortie de logs, d\'emarrer, arr\^eter le serveur). 
+Il donne acc\`es \`a une gestion simple du serveur d'application GlassFish qui sera utilis\'e dans le projet.
+Sa premi\`ere version date de 1996 et portait le nom Xelfi. 
+Il est actuellement disponible sur son site Internet\cite{biblio:siteNetbeans} en version 7.1.2.
 
 \subsection{Le serveur Web GlassFish}
 
@@ -211,7 +258,7 @@ Sa premi\`ere version date de 1996 et portait le nom Xelfi. Il est actuellement 
 
 \end{figure}
 
-GlassFish est un serveur d'application open source d\'evelopp\'e par Sun Microsystems pour les plates-formes Java EE\protect\footnote{Java Entreprise Edition} 5 et 6, et est maintenant maintenu par Oracle Corporation.
+GlassFish est un serveur d'application open source d\'evelopp\'e par Sun Microsystems pour les plates-formes Java EE\protect\footnote{\textit{Java Platform, Entreprise Edition}} 5 et 6, et est maintenant maintenu par Oracle Corporation.
 Il dispose de nombreux outils pour faciliter le d\'eveloppement, le d\'eploiement et la maintenance d'application.
 Un de ses avantages est qu'il est particuli\`erement bien int\'egr\'e \`a NetBeans, ce qui permet un d\'eploiement tr\`es rapide des applications ainsi qu'une trace d'ex\'ecution lors du fonctionnement.
 GlassFish est disponible sur son site Internet\cite{biblio:siteGlassfish} en version 3.1.2.
@@ -220,7 +267,7 @@ GlassFish est disponible sur son site Internet\cite{biblio:siteGlassfish} en ver
 
 \subsection{L'acc\`es aux donn\'ees des tables}
 
-Par soucis de performance, \cad, limiter les acc\`es multiples \`a la base de donn\'ees mais aussi faciliter la manipulation des donn\'ees lors des traitements, le design pattern$^*$ Data Access Object (DAO) a \'et\'e utilis\'e.
+Par souci de performance, \cad, limiter les acc\`es multiples \`a la base de donn\'ees mais aussi faciliter la manipulation des donn\'ees lors des traitements, le design pattern$^*$ \textit{Data Access Object} (DAO) a \'et\'e utilis\'e.
 Un Data Access Object, ou objet d'acc\`es aux donn\'ees en fran\c{c}ais, est un objet qui constitue une repr\'esentation en m\'emoire des donn\'ees d'une base de donn\'ees.
 En Java, un DAO est une classe repr\'esentant une table dont les attributs sont les champs de la table comme le montre la figure~\ref{figure:dao}.
 Des classes repr\'esentant des listes sont g\'en\'eralement d\'evelopp\'e pour contenir les DAO et simplifier l'acc\`es aux donn\'ees.
@@ -230,15 +277,13 @@ Lorsqu'il sera n\'ecessaire d'effectuer des traitements r\'ep\'et\'es sur les do
 \begin{figure}[!ht]
 	\centering
 	\includegraphics[scale=0.5]{dao.jpg}
-	\caption{Exemple de mappage d'une table avec sa classe DAO associ\'ee (\textit{source : Cyrille Herby})}
+	\caption{Exemple de \textit{mapping} d'une table avec sa classe DAO associ\'ee (\textit{source : Cyrille Herby})}
 	\label{figure:dao}
 
 \end{figure}
 
 Dans le cadre du projet, les chargements sont effectu\'es lorsqu'un client appelle une m\'ethode du service Web. 
 Les donn\'ees sont charg\'ees dans une liste, elles sont ensuite trait\'ees puis retourn\'ees au client.
-
-
 
 \subsection{Le format de retour}
 \label{section:formatRetour}
@@ -249,18 +294,18 @@ L'objectif est un affichage instantan\'e des pages sur le navigateur Web ou l'ap
 De ce fait, plusieurs possibilit\'es ont \'et\'e envisag\'ees.
 
 
-\subsubsection{{\og}\textit{Parsage}{\fg} d'un texte}
+\subsubsection{{\og}\textit{Parsing}{\fg} d'un texte}
 
-La premi\`ere est de transmettre un document texte basique, celui-ci format\'e d'une certaine fa\c{c}on afin d'\^etre pars\'e ({\cad} parcourir un flux structur\'e d'informations pour en extraire les donn\'ees).
+La premi\`ere est de transmettre un document texte basique, celui-ci format\'e d'une certaine fa\c{c}on afin d'\^etre \textit{pars\'e} ({\cad} parcourir un flux structur\'e d'informations pour en extraire les donn\'ees).
 Ce qui aurait comme avantage de pouvoir \^etre r\'ecup\'er\'e par un client utilisant n'importe quel langage.
-La figure~\ref{code:exemplePlaintext} repr\'esente une exemple de fichier qu'il est facile de parser, il suffit de r\'ecup\'erer les informations se trouvant entre les arobases.
+La figure~\ref{code:exemplePlaintext} repr\'esente une exemple de fichier qu'il est facile de \textit{parser}, il suffit de r\'ecup\'erer les informations se trouvant entre les arobases.
 
 \vspace{0.20cm}
 
 \begin{lstlisting}[language=plaintext]
 info1 @ info2 @ info3 @ info4
 \end{lstlisting}
-\captionof{figure}{Exemple de ligne pouvant \^etre facilement pars\'ee}
+\captionof{figure}{Exemple de ligne pouvant \^etre facilement \textit{pars\'ee}}
 \label{code:exemplePlaintext}
 
 Pour r\'ecup\'erer les informations de cet exemple, il suffit de parcourir le fichier en stockant les informations contenues entre les \textbf{@}.
@@ -271,7 +316,7 @@ Ce qui signifie une perte de temps plus ou moins significative en fonction de la
 \subsubsection{Objet Java s\'erialisable}
 
 Une autre m\'ethode pourrait \^etre de transmettre un objet Java dit s\'erialisable.
-C'est un m\'ecanisme fournit par Java permettant de consid\'erer un objet comme une s\'equence de bytes qui inclue les donn\'ees de l'objet, le type de l'objet et le type des donn\'ees.
+La s\'erialisation est un m\'ecanisme fourni par Java permettant de consid\'erer un objet comme une s\'equence de d'octets qui inclut les donn\'ees de l'objet, le type de l'objet et le type des donn\'ees.
 De cette mani\`ere, l'objet en question peut \^etre transmis \`a travers le r\'eseau vers une autre application Java pour le r\'ecup\'erer et le d\'es\'erialiser, ce qui repr\'esente la proc\'edure inverse de la s\'erialisation.
 La figure~\ref{code:exempleJava} donne un exemple de classe Java s\'erialisable qui pourrait \^etre transmise par le r\'eseau comme un flux de bytes.
 
@@ -287,9 +332,9 @@ Ce qui peut s'av\'erer plus ou moins compliqu\'e voir impossible dans d'autres l
 
 \subsubsection{XML}
 
-eXtensible Markup Language ou XML est un langage de balisage g\'en\'erique permettant de mettre en forme les documents qui a connu un grand succ\`es depuis sa cr\'eation.
-Il est utilis\'e pour g\'erer la configuration, le stockage des donn\'ees, l'\'echange d'information et bien d'autres fonctions encore.
-La figure~\ref{code:exempleXML} donne un exemple de document XML pouvant \^etre facilement parser via un DOM$^*$.
+eXtensible Markup Language ou XML est un m\'eta langage pour r\'ealiser du balisage g\'en\'erique permettant de mettre en forme les documents. XML a connu un grand succ\`es depuis sa cr\'eation.
+Il est utilis\'e en particulier pour g\'erer la configuration, le stockage des donn\'ees, l'\'echange d'informations et bien d'autres fonctions encore.
+La figure~\ref{code:exempleXML} donne un exemple de document XML pouvant \^etre facilement converti en une arborescence DOM$^*$.
 
 \vspace{0.20cm}
 
@@ -300,8 +345,8 @@ La figure~\ref{code:exempleXML} donne un exemple de document XML pouvant \^etre 
 XML offre une solution structur\'ee et tr\`es simple \`a comprendre pour l'envoi d'information par le r\'eseau, cependant dans les \'echanges d'informations entre client et serveur, il montre ses limites :
 
 \begin{itemize}
-	\item le chargement et la manipulation deviennent vite compliqu\'es, la plupart du temps il est n\'ecessaire de parser le XML sous forme de DOM$^*$, puis de le parcourir, ce qui requiert l'appel de nombreuses fonctions, sans mentionner le fait que parser un document XML est parfois long;
-	\item la taille des fichiers \'echang\'es peut parfois \^etre cons\'equente du fait de la duplication des donn\'ees : par nature, le XML est lourd.
+	\item le chargement et la manipulation deviennent vite compliqu\'es, la plupart du temps il est n\'ecessaire de \textit{parser} le XML sous forme de DOM$^*$, puis de le parcourir, ce qui requiert l'appel de nombreuses fonctions, sans mentionner le fait que \textit{parser} un document XML est parfois long;
+	\item la taille des fichiers \'echang\'es peut parfois \^etre cons\'equente du fait de la duplication des donn\'ees : par nature, le XML ne permet pas de g\'erer une \'enorme masse d'informations.
 
 \end{itemize}
 
@@ -322,23 +367,23 @@ La figure~\ref{code:exempleJSON} donne une exemple de fichier JSON reprenant le 
 
 Le choix du format de retour des donn\'ees s'est port\'e sur l'utilisation de JSON.
 Le but du client, qui demande des informations au service Web, est de recevoir les donn\'ees le plus rapidement possible afin d'avoir \`a les afficher dans la foul\'ee.
-De ce fait, le parsage d'un texte contenant des balises \`a certains endroits s'av\`ere inadapt\'e, notamment pour r\'ecup\'erer un seul type d'information.
+De ce fait, le \textit{parsing} d'un texte contenant des balises \`a certains endroits s'av\`ere inadapt\'e, notamment pour r\'ecup\'erer un seul type d'information.
 L'envoi d'un objet s\'erialisable Java est, quant \`a lui trop restrictif. Le choix a donc \'et\'e de choisir entre XML ou JSON.
 
 XML offre un format de donn\'ees verbeux et prend beaucoup d'espace. 
-De plus un document XML peut \^etre valid\'e via l'utilisation de DTD\protect\footnote{Document Type Definition}, document permettant de d\'ecrire un mod\`ele de document XML, ou de XSD\protect\footnote{XML Schema Definition}, langage de description de format de document XML permettant de d\'efinir la structure et le type de contenu d'un document XML.
+De plus un document XML peut \^etre valid\'e via l'utilisation de DTD\protect\footnote{\textit{Document Type Definition}}, document permettant de d\'ecrire un mod\`ele de document XML, ou de XSD\protect\footnote{\textit{XML Schema Definition}}, langage de description de format de document XML permettant de d\'efinir la structure et le type de contenu d'un document XML.
 
 JSON offre un format de fichier plus simple que XML, facilement compr\'ehensible.
-Pour compl\'eter, les fichiers JSON, \`a arbre \'egal, seront toujours plus petit que l'\'equivalent XML et pr\'esenteront l'avantage d'\^etre plus rapidement pars\'es.
+Pour compl\'eter, les fichiers JSON, \`a arbre \'egal, seront toujours plus petits que l'\'equivalent XML et pr\'esenteront l'avantage d'\^etre plus rapidement \textit{pars\'es}.
 
-Au final JSON permet une plus grande rapidit\'e dans les \'echanges avec un serveur ainsi que sur le temps de parsage des fichier, le tout avec une \'economie des ressources du fait de sa petit taille.
+Au final JSON permet une plus grande rapidit\'e dans les \'echanges avec un serveur ainsi que sur le temps de \textit{parsing} des fichiers, le tout avec une \'economie des ressources du fait de sa petit taille.
 Cependant, les donn\'ees ne peuvent pas \^etre v\'erifi\'ees dans un fichier JSON, il demande donc une certaine rigueur dans son \'ecriture du cot\'e serveur ainsi qu'une connaissance de sa structure du cot\'e client.
 
 \subsection{Compl\'ement d'information sur JSON}
 
 \subsubsection{Pr\'esentation}
 
-Une courte description de ce qu'est JSON a d\'ej\`a \'et\'e faite en~\ref{section:formatRetour}.
+Une courte description de ce qu'est JSON a d\'ej\`a \'et\'e faite au \S~\ref{section:formatRetour}.
 Pour reprendre ce qui a d\'ej\`a \'et\'e dit, JSON est un format l\'eger d'\'echange de donn\'ees qui est apparu en 2002.
 Il est facile \`a \'ecrire et comprendre pour des humains.
 Il est bas\'e sur un sous-ensemble du langage de programmation JavaScript et est compl\`etement ind\'ependant de tout langage, tout en poss\`edant des conventions famili\`eres aux langages descendant du C (C++, C\#, Java, JavaScript, \ldots).
@@ -346,7 +391,7 @@ Ces propri\'et\'es font de JSON un langage d'\'echange de donn\'ees id\'eal.
 
 Cependant, il ne supporte pas les espaces de noms au contraire d'XML.
 Pour la v\'erification des donn\'ees, les sch\'emas JSON ne sont pas tr\`es utilis\'es du fait qu'ils doivent \^etre ecrit \`a la main comme il n'existe aucun outil pour g\'en\'erer un sch\'ema \`a partir de donn\'ees JSON.
-Et concernant la s\'ecurit\'e, il existe la possibilit\'e o\`u des scripts malveillants pourraient \^etre dissimul\'es et ex\'ecut\'es.
+Et concernant la s\'ecurit\'e, il existe la possibilit\'e o\`u des \textit{scripts} malveillants pourraient \^etre dissimul\'es et ex\'ecut\'es.
 Il existe des fonctions pour tester les fichiers JSON mais celles-ci ne sont pas vraiment concluantes.
 La meilleure d\'efense est de conna\^itre \`a l'avance les points sensibles et de prendre les pr\'ecautions n\'ecessaires.
 
@@ -386,11 +431,11 @@ Ainsi un module a \'et\'e d\'evelopp\'e, son but \'etant de pouvoir interroger N
 \label{section:moduleMKLivestatus}
 
 Le module MKLivestatus permet un acc\`es imm\'ediat au statut de Nagios ainsi qu'\`a ses donn\'ees de logs.
-Avant le module, une fa\c{c} classique de r\'ecup\'erer les informations importantes \'etait de parser le fichier \textsf{status.dat}, qui est cr\'e\'e automatique par Nagios \`a chacun de ses cycles.
+Avant le module, une fa\c{c}on classique de r\'ecup\'erer les informations importantes \'etait de \textit{parser} le fichier \textsf{status.dat}, qui est cr\'e\'e automatique par Nagios \`a chacun de ses cycles.
 Ce fichier contient toutes les informations concernant les services et les machines que Nagios surveille.
-Parser ce fichier s'av\`ere d\'elicat, surtout pour extaire quelques informations.
+\textit{Parser} ce fichier s'av\`ere d\'elicat, surtout pour extaire quelques informations.
 Il existe bien une mani\`ere alternative de r\'ecup\'erer ces informations avec le module NDO.
-Ce module est directement charg\'e dans le processus de Nagios et \`a chaque nouveau cycle, il envoit les mises \`a jour via une socket UNIX$^*$ \`a un processus auxiliaire qui se charge de mettre \`a jour une base de donn\'ees.
+Ce module est directement charg\'e dans le processus de Nagios et \`a chaque nouveau cycle, il envoie les mises \`a jour via une socket UNIX$^*$ \`a un processus auxiliaire qui se charge de mettre \`a jour une base de donn\'ees.
 
 Les avantages \'etant une mise \`a jour imm\'ediate de l'information et une simplicit\'e et rapidit\'e d'acc\`es aux bases de donn\'ees pour les applications.
 Mais d'un autre cot\'e, la mise en place de ce syst\^eme est complexe, elle n\'ecessite une administration humaine de la base de donn\'ees, la consommation CPU est significative juste pour garder la base \`a jour et son entretien r\'egulier peut bloquer Nagios pendant un moment (cela d\'epend de la taille de l'infrastructure).
@@ -405,7 +450,7 @@ La r\'eponse est imm\'ediate et les donn\'ees renvoy\'ees ont \'et\'e directemen
 \begin{itemize}
 	\item consommation CPU non mesurable, juste une petite consommation lors de l'ex\'ecution d'une requ\^ete;
 	\item pas d'ecritures sur le disque;
-	\item acc\`es aux donn\'ees beaucoup plus rapide qu'avec une parsage du fichier \textsf{status.dat} ou l'ex\'ecution de requ\^etes SQL$^*$.
+	\item acc\`es aux donn\'ees beaucoup plus rapide qu'avec un \textit{parsing} du fichier \textsf{status.dat} ou l'ex\'ecution de requ\^etes SQL$^*$.
 	\item pas de configuration, d'administration ou autre, tout est install\'e automatiquement.
 
 \end{itemize}
@@ -455,14 +500,14 @@ La figure~\ref{code:exempleLQL} donne un exemple de requ\^ete permettant de r\'e
 \captionof{figure}{Exemple de requ\^ete LQL}
 \label{code:exempleLQL}
 
-Les scripts Nagios utilis\'es tout au long du stage sont disponibles en annexe~\ref{annexe:fichiersLQLNagios} de ce rapport.
+Les \textit{scripts} Nagios utilis\'es tout au long du stage sont disponibles en annexe~\ref{annexe:fichiersLQLNagios} de ce rapport.
 
 \subsubsection{Ex\'ecution des requ\^etes}
 
 Comme pour une base de donn\'ees SQL$^*$, toutes les tables poss\`edent un nombre de colonnes.
 Si une requ\^ete est pass\'ee sans param\^etres, toutes les colonnes seront retourn\'ees dans l'ordre alphab\'etique.
 
-Comme vu dans en~\ref{section:moduleMKLivestatus}, il existe deux mani\`eres d'acc\'eder \`a la socket de MKLivestatus.
+Comme vu dans au \S~\ref{section:moduleMKLivestatus}, il existe deux mani\`eres d'acc\'eder \`a la socket de MKLivestatus.
 La premi\`ere m\'ethode est avec une socket UNIX$^*$. 
 Pour ce faire, MKLivestatus fournit pendant son installation un petit utilitaire appel\'e \textsf{unixcat} permettant de communiquer avec une socket UNIX$^*$.
 Sous forme d'une commande shell, cet utilitaire envoit toutes les donn\'ees lu par l'entr\'ee standard (stdin) \`a la socket et \'ecrit sur la sortie standard (stdout) tout ce qu'il re\c{c}oit de la socket.
@@ -482,7 +527,7 @@ Il suffit ensuite d'envoyer via la commande UNIX \textsf{netcat}, qui permet d'o
 
 \end{center}
 
-Dans le cadre du projet, l'utilisation d'une socket UNIX$^*$ en Java n\'ecessite l'installation de biblioth\`eques de type JNI\protect\footnote{Java Native Interface}.
+Dans le cadre du projet, l'utilisation d'une socket UNIX$^*$ en Java n\'ecessite l'installation de biblioth\`eques de type JNI\protect\footnote{\textit{Java Native Interface}}.
 Ce sont en fait des biblioth\`eques qui permettent l'int\'egration du code \'ecrit en Java avec du code \'ecrit dans un autre langage tel le C ou le C++.
 Cette installation est plus ou moins complexe et n\'ecessite une certaine configuration du serveur, ainsi, il est plus simple d'ouvrir une socket Internet plut\^ot que d'essayer la configuration d'une socket UNIX$^*$ avec JNI.
 De plus, au point de vue rapidit\'e, l'avantage de MKLivestatus est d'\^etre directement int\'egr\'e dans Nagios, de ce fait, les requ\^etes sont trait\'ees imm\'ediatement.
@@ -513,12 +558,12 @@ Chaque r\'eponse contient 1983 lignes.
 
 Apr\`es 100 requ\^etes, il est visible qu'utiliser une socket UNIX$^*$, pour une ex\'ecution syst\`eme est presque deux fois plus rapide que l'utilisation d'une socket Internet.
 Cependant, l'application ne n\'ecessite pas l'ex\'ecution de nombreuses requ\^etes simultan\'ees.
-Une seule sera effectu\'ee \`a chaque cycle comme d\'ecrit en~\ref{section:cyclePrincipal}.
+Une seule sera effectu\'ee \`a chaque cycle comme d\'ecrit au \S~\ref{section:cyclePrincipal}.
 De ce fait, l'utilisation d'une socket Internet convient dans la r\'ecup\'eration des informations de Nagios.
 
 \subsubsection{R\'ecup\'eration de l'information}
 
-Suite \`a l'ex\'ecution de la requ\^ete, l'information est retourn\'ee par Nagios, elle est ensuite pars\'ee en fonction du type de la requ\^ete et les informations sont trait\'ees.
+Suite \`a l'ex\'ecution de la requ\^ete, l'information est retourn\'ee par Nagios, elle est ensuite \textit{pars\'ee} en fonction du type de la requ\^ete et les informations sont trait\'ees.
 Nagios retourne les informations sous une forme bien sp\'ecifiques : 
 
 \begin{itemize}
@@ -556,7 +601,7 @@ Cette application fait r\'eguli\`erement appel au service Web pour obtenir les i
 Il est accessible sur le r\'eseau sous le nom de domaine \textsf{yuukou2.wmin.ac.uk}.
 
 La machine de d\'eveloppement poss\`ede un syst\`eme d'exploitation Linux Mint version 11 (\textit{Katya}), tous les outils n\'ecessaires au d\'eveloppement (comme Java, NetBeans, \ldots), mais aussi un serveur de gestion de base de donn\'ee (SGBD) MySQL et un serveur GlassFish, tous deux servant \`a effectuer des tests avant d\'eploiement.
-A chaque d\'eploiement sur le serveur principal, la version du projet est publi\'ee sur le SVN afin de garantir une s\'ecurit\'e dans le cas d'une r\'egression dans le d\'eveloppement.
+\`A chaque d\'eploiement sur le serveur principal, la version du projet est publi\'ee sur le SVN afin de garantir une s\'ecurit\'e dans le cas d'une r\'egression dans le d\'eveloppement.
 
 
 \section{Gestion de la base de donn\'ees}
@@ -582,6 +627,17 @@ A chaque d\'eploiement sur le serveur principal, la version du projet est publi\
 
 \subsection{S\'ecurisation du service Web}
 \label{section:securisation}
+
+La s\'ecurit\'e est un point important dans l'acc\`es \`a un service Web. 
+Les donn\'ees transmises par \YuukouII{} contiennent des informations sur la structure des diff\'erents campus mais aussi des informations sur les \'etudiants (nom, pr\'enom, photo par exemple).
+Il est donc important de limiter l'acc\'es aux donn\'ees mais aussi de s\'ecuriser toutes les communications.
+C'est dans cet optique, qu'il a \'et\'e d\'ecid\'e de mettre en place le protocole SSL entre le service Web et toute application voulant communiquer avec.
+
+Le protocol Secure Sockets Layer, ou SSL, est con\c{c}u pour assurer la confidentialit\'e des \'echanges entre un client et un serveur Web, sur diff\'erents protocoles de transport (en g\'en\'eral HTTP).
+Les sites Internet b\'en\'eficiant de ce protocole sont reconnaissables du fait de leurs URL\protect\footnote{\textit{Uniform Resource Locator}} commen\c{c}ant par \textsf{https://} o\`u le 's' signifie \textit{secured}.
+
+
+
 
 \section{Gestion de l'emploi du temps}
 

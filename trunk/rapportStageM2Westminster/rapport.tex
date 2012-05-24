@@ -1,6 +1,6 @@
 \documentclass[11pt, a4paper]{report}
 
-\usepackage[french]{babel}
+\usepackage[english, french]{babel}
 \usepackage[T1]{fontenc}
 \usepackage[latin1]{inputenc}
 %\usepackage{ucs}
@@ -49,7 +49,8 @@
 	rulesepcolor=\color{gris},
 	keywordstyle=\color{darkblue},
 	captionpos=b,
-	showstringspaces=false
+	showstringspaces=false,
+	numberfirstline=true
 }
 
 \lstdefinelanguage{LQL}{
@@ -83,15 +84,6 @@
 	keywordstyle=\color{darkblue}, 
 	captionpos=b
 }
-
-\setlength{\topmargin}{-6mm}
-\setlength{\textheight}{230mm}
-\setlength{\textwidth}{160mm}
-\setlength{\evensidemargin}{-5.45mm}
-\setlength{\oddsidemargin}{-5.45mm}
-
-\renewcommand{\no}{n\textsuperscript{o}}
-\renewcommand{\nos}{n\textsuperscript{os}}
 
 \renewcommand{\labelitemi}{---}
 \renewcommand{\labelitemii}{$\star$}
@@ -127,12 +119,9 @@
 \definecolor{darkblue}{rgb}{0.0,0.0,0.6}
 \definecolor{cyan}{rgb}{0.0,0.6,0.6}
 
-
-
 % Pour les marges de la page
 %\geometry{a4paper, top=2.5cm, bottom=3.5cm, left=1.5cm, right=1.5cm, marginparwidth=1.2cm}
 \geometry{a4paper}
-
 
 \parskip=5pt %% distance entre les (paragraphe)
 \sloppy %% respecter toujours la marge de droite 
