@@ -10,8 +10,8 @@
 
 \subsection{Pr\'esentation}
 
-Le terme Yuukou vient du japonais \Yuukou{} et signifie \textbf{validit\'e, disponibilit\'e, efficacit\'e}. 
-C'est un syst\`eme permettant la r\'ecup\'eration des informations depuis les serveurs LDAP\protect\footnote{Lightweight Directory Access Protocol}$^*$ de l'universit\'e afin de comprendre et construire l'infrastructure des ressources et ainsi de voir sa facilit\'e d'utilisation. 
+Le terme Yuukou comme abord\'e dans l'introduction de ce rapport, vient du japonais \Yuukou{} et signifie validit\'e, disponibilit\'e, efficacit\'e.
+C'est un syst\`eme permettant la r\'ecup\'eration des informations depuis les serveurs LDAP\protect\footnote{\textit{Lightweight Directory Access Protocol}}$^*$ de l'universit\'e afin de comprendre et construire l'infrastructure des ressources et ainsi de voir sa facilit\'e d'utilisation. 
 L'architecture du syst\`eme utilise un processus d'apprentissage simple pour d\'eduire et maintenir la structure \`a jour avec un minimum de r\'eglages initiaux.
 \Yuukou{} a \'et\'e cr\'e\'e pour montrer l'utilisation des salles informatique et conserver un historique des informations sur le campus de New Cavendish.
 
@@ -38,7 +38,7 @@ Le robot de \Yuukou{} offre deux fonctionnalites : il permet de mettre \`a jour 
 
 \subsubsection{Deuxi\`eme partie}
 
-La seconde partie est un ensemble de pages Web \'ecrites en PHP\protect\footnote{Personal Home Page ou PHP: Hypertext Preprocessor}$^*$ et h\'eberg\'ees sur un serveur Web permettant de pr\'esenter les donn\'ees collect\'ees \`a l'utilisateur final.
+La seconde partie est un ensemble de pages Web \'ecrites en PHP\protect\footnote{\textit{Personal Home Page} ou \textit{PHP: Hypertext Preprocessor}}$^*$ et h\'eberg\'ees sur un serveur Web permettant de pr\'esenter les donn\'ees collect\'ees \`a l'utilisateur final.
 Ces pages sont de deux types : les pages publiques et les pages priv\'ees.
 
 Les pages publiques sont accessibles par tous les utilisateurs de l'universit\'e le d\'esirant.
@@ -90,7 +90,7 @@ La figure~\ref{figure:yuukouAdmin} donne un exemple des fonctionnalit\'es suppl\
 \begin{figure}[!ht]
 	\centering
 	\includegraphics[scale=0.75]{yuukouPublic.jpg}
-	\caption{Exemple de page publique de \Yuukou{} rep\'esentant un campus et l'utilisation des salles informatique d'un d\'epartement}
+	\caption{Exemple de page publique de \Yuukou{} rep\'esentant un campus et l'utilisation des salles informatiques d'un d\'epartement}
 	\label{figure:yuukouPublic}
 
 \end{figure}
@@ -98,28 +98,28 @@ La figure~\ref{figure:yuukouAdmin} donne un exemple des fonctionnalit\'es suppl\
 \begin{figure}[!ht]
 	\centering
 	\includegraphics[scale=0.75]{yuukouAdmin.jpg}
-	\caption{Exemple de page priv\'ee de \Yuukou{} montrant entre autre les donn\'ees d'un utilisateur}
+	\caption{Exemple de page priv\'ee de \Yuukou{} montrant en particulier les donn\'ees d'un utilisateur}
 	\label{figure:yuukouAdmin}
 
 \end{figure}
 
 \subsection{Quelques Chiffres}
 
-Le projet \Yuukou{} permet de surveiller le r\'eseau du campus de New Cavendish soit 43 salles informatique, ce qui repr\'esente 661 PC. 
+Le projet \Yuukou{} permet de surveiller le r\'eseau du campus de New Cavendish soit 43 salles informatiques, ce qui repr\'esente 661 PC. 
 Le support des Macintosh n'\'etant pas pris en compte.
 
 \subsection{Changement vers \YuukouII}
 
 L'universit\'e souhaite reprendre le principe du projet \Yuukou, cependant elle est confront\'ee \`a diff\'erents probl\`emes.
-Le premier \'etant que les personnes qui ont d\'evelopp\'ees le projet ont quitt\'e l'universit\'e. 
+Le premier \'etant que les personnes qui ont d\'evelopp\'e le projet ont quitt\'e l'universit\'e. 
 Ce qui signifierait, pour la personne ou l'\'equipe en charge d'\'eventuellement reprendre le projet, de prendre du temps pour se former \`a Perl, comprendre tout ce qui a \'et\'e d\'ej\`a r\'ealis\'e et ensuite seulement commencer \`a d\'evelopper.
 Actuellement de nombreux projets sont en cours et il n'est pas possible pour une \'equipe de passer du temps sur l'existant.
 
-Un autre probl\`eme est les changements important, du point de vue infrastructure, qui sont en train d'\^etre mis en place.
+Un autre probl\`eme est les changements importants, du point de vue infrastructure, qui sont en train d'\^etre mis en place.
 En effet, l'universit\'e qui utilisait eDirectory$^*$ de Novell pour g\'erer ses annuaires LDAP$^*$ a commenc\'e \`a migrer toutes ses donn\'ees vers le syst\`eme Active Directory$^*$ de Microsoft qui est cens\'e \^etre plus efficace. Ce changement rendrait \Yuukou{} obsol\`ete.
 
-Point suivant, la volont\'e de donner acc\`es aux informations sur les salles pas seulement en utilisant un navigateur Internet, mais aussi et surtout en utilisant un smartphone (IPhone ou Android par exemple) ou une tablette (IPad par exemple), chose que l'ancien logiciel ne peut pas fournir.
-De ce fait, un \'etudiant aurait \`a tout moment les informations sur les salles via son smartphone ou sa tablette, si tent\'e qu'il est l'un ou l'autre.
+Point suivant, la volont\'e de donner acc\`es aux informations sur les salles pas seulement en utilisant un navigateur Internet, mais aussi et surtout en utilisant un \textit{smartphone} (IPhone ou Android par exemple) ou une tablette (IPad par exemple), chose que l'ancien logiciel ne peut pas fournir.
+De ce fait, un \'etudiant aurait \`a tout moment les informations sur les salles via son smartphone ou sa tablette, si tant est qu'il ait l'un ou l'autre.
 
 \noindent \`A ces pr\'ec\'edents probl\`emes, d'autres viennent s'ajouter :
 
@@ -154,7 +154,7 @@ L'affichage pourra se faire via un smartphone, une tablette ou encore un navigat
 
 \vspace{0.20cm}
 
-La cr\'eation d'applications permettant l'affichage des r\'esultats ne fait pas parti de ce sujet de stage. 
+La cr\'eation d'applications permettant l'affichage des r\'esultats ne fait pas partie de ce sujet de stage. 
 Ici, seule la partie r\'ecup\'eration, stockage et retour des donn\'ees est abord\'ee.
 
 \clearpage

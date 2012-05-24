@@ -22,7 +22,8 @@ La socket Nagios retournera alors le nom de la salle, le nombre de machines qu'e
 \subsubsection{R\'ecup\'eration des machines}
 
 La requ\^ete~\ref{annexe:nagiosGetResources} permet de r\'ecup\'erer toutes les machines qui peuvent poss\'eder un utilisateur de connect\'e.
-En fait, il est demand\'e la r\'ecup\'eration de tous les services ayant acc\`es \`a l'information \textsf{check\_whoisloggedin}, donc qui est connect\'e actuellement.
+En fait, il est demand\'e la r\'ecup\'eration de tous les services ayant acc\`es \`a l'information \textsf{check\_whoisloggedin}.
+Cette information permet de r\'ecup\'erer l'identifiant de la personne connect\'e \`a une machine, si tant est qu'une personne y est connect\'ee.
 Il y a pour chaque machine, un service portant ce nom, cela revient donc \`a demander tous les ordinateurs.
 La socket Nagios retournera alors le nom de la machine, son adresse IP, le \textsf{host\_groups} donc le nom de la salle \`a laquelle elle appartient, son \'etat et enfin l'utilisateur connect\'e s'il y en a un.
 
