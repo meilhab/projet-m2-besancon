@@ -1,7 +1,7 @@
 \begin{appendices}
 
 \chapter{Fichiers LQL Nagios}
-\label{annexe:fichiersLQLNagios}
+\label{chapterAnnexe:fichiersLQLNagios}
 
 Cette annexe permet une vue sur les fichiers LQL permettant la r\'ecup\'eration des informations de Nagios. 
 Ces informations sont ensuite trait\'ees par le service Web qui se charge de remplir ou actualiser la base de donn\'ees en cons\'equence.
@@ -47,7 +47,7 @@ Seul les utilisateurs \og corrects\fg{} sont gard\'es.
 \label{annexe:nagiosGetUsersLogged}
 
 \chapter{Retour de requ\^ete LQL}
-\label{annexe:reponseLQLNagios}
+\label{chapterAnnexe:reponseLQLNagios}
 
 Cette annexe permet une vue sur les informations qui sont retourn\'ees par une requ\^ete LQL.
 Les informations se pr\'esentent toujours sous la m\^eme forme : une ligne est compos\'e des diff\'erentes colonnes demand\'ees dans la requ\^etes.
@@ -88,6 +88,97 @@ La r\'eponse~\ref{annexe:reponseNagiosGetUsersLogged} correspond \`a l'ex\'ecuti
 	\label{annexe:reponseNagiosGetUsersLogged}
 
 \end{figure}
+
+\chapter{Base de donn\'ees}
+\label{chapterAnnexe:baseDeDonnees}
+
+Cette annexe permet d'avoir une vue sur les relations entre tables ainsi que sur leur contenu.
+Dans une premier temps, le diagramme sera donn\'e en entier.
+Puis, il sera d\'ecoup\'e en diff\'erentes parties qui le composent.
+
+\subsubsection{Structure g\'en\'erale}
+
+La figure~\ref{annexe:modeleGeneral} pr\'esente la structure g\'en\'erale du projet \YuukouII.
+Elle s'articule en diff\'erentes sous-parties : la partie archivage, logicielle, emploi du temps, mapping et configuration.
+
+\clearpage
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[scale=0.35]{modeleGeneral.png}
+	\caption{Structure g\'en\'erale de la base de donn\'ees}
+	\label{annexe:modeleGeneral}
+
+\end{figure}
+
+\clearpage
+
+\subsubsection{Partie archivage}
+
+La partie archivage a pour r\^ole le stockage des donn\'ees concernant d'une part l'historique des connexions actuelles et d'autre part, l'historique des connexions pass\'ees.
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[scale=0.35]{modeleArchivage.png}
+	\caption{Structure de la partie archivage de la base de donn\'ees}
+	\label{annexe:modeleArchivage}
+
+\end{figure}
+
+
+\subsubsection{Partie logicielle}
+
+La partie logicielle a pour r\^ole de lier les informations de configuration logicielle avec les salles informatiques de l'universit\'e.
+
+\clearpage
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[scale=0.35]{modeleLogiciel.png}
+	\caption{Structure de la partie logicielle de la base de donn\'ees}
+	\label{annexe:modeleLogiciel}
+
+\end{figure}
+
+
+\subsubsection{Partie emploi du temps}
+
+La partie emploi du temps a pour r\^ole de lier les informations d'emploi du temps \`a une salle en passant par une table de mapping faisant le lien entre le nom d'une salle dans {\YuukouII} et le nom d'une salle utilis\'e par les services centraux informatique lors de la g\'en\'eration de l'emploi du temps.
+
+\clearpage
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[scale=0.35]{modeleEmploiDuTemps.png}
+	\caption{Structure de la partie emploi du temps de la base de donn\'ees}
+	\label{annexe:modeleEmploiDuTemps}
+
+\end{figure}
+
+\subsubsection{Partie \textit{mapping} avec les salles}
+
+La partie \textit{mapping} avec les salles \`a pour but de faire le lien entre la localisation d'une salle et les informations concernant cette localisation.
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[scale=0.35]{modeleMapping.png}
+	\caption{Structure de la partie \textit{mapping} de la base de donn\'ees}
+	\label{annexemodeleMapping}
+
+\end{figure}
+
+\subsubsection{Partie configuration}
+
+La partie configuration a pour r\^ole de stocker tous les param\`etres permettant de g\'erer un cycle du service Web pendant son ex\'ecution.
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[scale=0.35]{modeleConfiguration.png}
+	\caption{Structure de la partie configuration de la base de donn\'ees}
+	\label{annexe:modeleConfiguration}
+
+\end{figure}
+
 
 \end{appendices}
 
