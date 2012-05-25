@@ -229,7 +229,7 @@ Le code~\ref{code:exempleJAXWS} donne un exemple d'annotations sur un code Java.
 \captionof{figure}{Exemple de classe Java annot\'ee avec JAX-WS}
 \label{code:exempleJAXWS}
 
-JAX-WS est actuellement disponible sur son site Internet\cite{biblio:siteJAXWS} en version 2.2.6.
+JAX-WS \textit{Reference Implementation} est actuellement disponible sur son site Internet\cite{biblio:siteJAXWS} en version 2.2.6.
 
 \subsection{L'IDE NetBeans}
 
@@ -500,7 +500,7 @@ La figure~\ref{code:exempleLQL} donne un exemple de requ\^ete permettant de r\'e
 \captionof{figure}{Exemple de requ\^ete LQL}
 \label{code:exempleLQL}
 
-Les \textit{scripts} Nagios utilis\'es tout au long du stage sont disponibles en annexe~\ref{annexe:fichiersLQLNagios} de ce rapport.
+Les \textit{scripts} Nagios utilis\'es tout au long du stage sont disponibles en annexe~\ref{chapterAnnexe:fichiersLQLNagios} de ce rapport.
 
 \subsubsection{Ex\'ecution des requ\^etes}
 
@@ -533,7 +533,7 @@ Cette installation est plus ou moins complexe et n\'ecessite une certaine config
 De plus, au point de vue rapidit\'e, l'avantage de MKLivestatus est d'\^etre directement int\'egr\'e dans Nagios, de ce fait, les requ\^etes sont trait\'ees imm\'ediatement.
 
 Le tableau~\ref{table:comparatifTemps} montre un comparitif des temps d'ex\'ecution mesur\'es avec la commande UNIX \textsf{time} pour 100 requ\^etes.
-La requ\^ete de la figure~\ref{annexe:nagiosGetResources} se trouvant en annexe~\ref{annexe:fichiersLQLNagios} de ce rapport a \'et\'e utilis\'ee pour effectuer ces tests.
+La requ\^ete de la figure~\ref{annexe:nagiosGetResources} se trouvant en annexe~\ref{chapterAnnexe:fichiersLQLNagios} de ce rapport a \'et\'e utilis\'ee pour effectuer ces tests.
 Chaque r\'eponse contient 1983 lignes.
 
 \begin{table}[!ht]
@@ -575,7 +575,7 @@ Nagios retourne les informations sous une forme bien sp\'ecifiques :
 
 \vspace{0.20cm}
 
-Des exemples de r\'eponses correspondant aux requ\^etes de l'annexe~\ref{annexe:fichiersLQLNagios} sont disponibles dans l'annexe~\ref{annexe:reponseLQLNagios}.
+Des exemples de r\'eponses correspondant aux requ\^etes de l'annexe~\ref{chapterAnnexe:fichiersLQLNagios} sont disponibles dans l'annexe~\ref{chapterAnnexe:reponseLQLNagios}.
 
 \section{Gestion du poste de travail}
 \label{section:gestionProjet}
@@ -608,6 +608,8 @@ La machine de d\'eveloppement poss\`ede un syst\`eme d'exploitation Linux Mint v
 
 \subsection{Structure de la base de donn\'ees}
 
+
+
 \subsection{Explications}
 
 \subsection{G\'en\'eration de la configuration Nagios \`a partir de la base de donn\'ees}
@@ -628,6 +630,8 @@ La machine de d\'eveloppement poss\`ede un syst\`eme d'exploitation Linux Mint v
 \subsection{S\'ecurisation du service Web}
 \label{section:securisation}
 
+\subsubsection{Explications}
+
 La s\'ecurit\'e est un point important dans l'acc\`es \`a un service Web. 
 Les donn\'ees transmises par \YuukouII{} contiennent des informations sur la structure des diff\'erents campus mais aussi des informations sur les \'etudiants (nom, pr\'enom, photo par exemple).
 Il est donc important de limiter l'acc\'es aux donn\'ees mais aussi de s\'ecuriser toutes les communications.
@@ -638,6 +642,15 @@ Les sites Internet b\'en\'eficiant de ce protocole sont reconnaissables du fait 
 
 
 
+\subsubsection{Mise en place}
+
+La mise en place d'un protocole SSL sur une service Web via NetBeans et GlassFish est tr\`es facile \`a mettre en place.
+Il suffit pour cela de configurer
+
+\subsubsection{Fonctionnement}
+
+
+\section{Catalogue logiciels des salles}
 
 \section{Gestion de l'emploi du temps}
 
@@ -656,6 +669,41 @@ Les sites Internet b\'en\'eficiant de ce protocole sont reconnaissables du fait 
 \section{Travail en \'equipe}
 
 \section{Probl\`emes rencontr\'es}
+
+\section{Calendrier du stage}
+Arriv\'ee : Lundi 13 F\'evrier
+D\'epart : Lundi 4 Juin
+
+semaine 1 : Arriv\'ee et d\'ecouverte du projet, premier entretien avec l'\'equipe technique et leurs attentes
+semaine 2 : D\'ecouverte des services Web 
+semaine 3 : Conception de la base de donn\'ees et d\'ebut d'impl\'ementation du cycle principal de l'application
+semaine 4 : fin d'impl\'ementation du cycle principal
+semaine 5 : Mise en place de l'emploi du temps + mise en place de SSL
+semaine 6 : D\'eveloppement des premi\`eres m\'ethodes Web + fin de mise en place de SSL
+semaine 7 : Mise en place du syst\`eme JSON
+semaine 8 : 
+semaine 9 : 
+semaine 10 : D\'ebut de r\'edaction du rapport
+semaine 11 : 
+semaine 12 : 
+semaine 13 : R\'ecup\'eration du catalogue de logiciels de M\'ediaWiki
+semaine 14 : Ajout de m\'ethodes Web et am\'elioration du chargement de la base de donn\'ees
+semaine 15 : r\'edaction du rapport de stage et maintenance des fonctionnalit\'es du service Web
+semaine 16 : fin d'\'ecriture du rapport de stage
+
+\section{R\'ecapitulatif du projet}
+
+La figure~\ref{figure:yuukouEtYuukouII} permet de donner une vue d'ensemble sur les principales fonctionnalit\'es dont le projet dispose.
+Les cadres pleins repr\'esentent des fonctionnalit\'es dont le principe a \'et\'e repris de {\Yuukou}, les cadres en pointill\'es quant \`a eux, repr\'esentent les nouvelles fonctionnalit\'es qu'apporte \YuukouII.
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[scale=0.375]{yuukouEtYuukouII.jpg}
+	\caption{R\'ecapitulatif des fonctionnalit\'es reprises de {\Yuukou} et les nouvelles de \YuukouII}
+	\label{figure:yuukouEtYuukouII}
+
+\end{figure}
+
 
 
 \clearpage
