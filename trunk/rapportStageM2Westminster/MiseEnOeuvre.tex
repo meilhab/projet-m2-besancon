@@ -82,7 +82,7 @@ Le projet a \'et\'e maintenu jusqu'en 2002 avant de changer de nom pour devenir 
 N.A.G.I.O.S. est l'acronyme r\'ecursif de \og{}\textit{Nagios Ain't Gonna Insist On Sainthood}\fg{} o\`u Sainthood est une r\'ef\'erence \`a \textit{NetSaint}.
 
 Maintenant connu sous le nom de Nagios XI, Nagios est un logiciel libre sous la licence GNU GPL V2. 
-Il est actuellement disponible sur son site Internet\cite{biblio:siteNagios} en version 3.2.1.
+Il est disponible sur son site Internet\cite{biblio:siteNagios} en version 3.2.1.
 
 \subsubsection{Fonctionnement}
 
@@ -104,6 +104,13 @@ Dans le cadre de la v\'erification de l'infrastructure, deux types de machines s
 Nagios \'etant install\'e et fonctionnel depuis un peu plus d'un an sur le site de New Cavendish, les greffons pour observer les deux types de machines ont d\'ej\`a \'et\'e d\'evelopp\'es.
 Pour les machines fonctionnant sous Windows, le greffon est en fait l'appel \`a la commande Unix \textit{Winexe} qui permet l'ex\'ecution de commandes \`a distance sur des machines Windows.
 Pour les machines fonctionnant sous Macintosh, le greffon effectue une connexion SSH\protect\footnote{\textit{SecureShell}}, offrant une connexion s\'ecuris\'ee sur une machine distante pour ensuite ex\'ecuter la commande Unix \textit{who} permettant l'obtention de l'utilisateur connect\'e.
+Pour les machines b\'en\'eficiant d'un double \textit{boot} (d'un d\'emarrage de l'ordinateur permettant de choisir entre deux syst\`emes d'exploitation) Windows-Unix, seul le syst\`eme Windows est surveill\'e.
+La configuration actuelle de Nagios ne permet pas de r\'ecup\'erer avec exactitude l'utilisateur connect\'e sur le syst\`eme Unix.
+Il est juste possible de savoir que l'ordinateur est occup\'e, mais pas par qui.
+
+La configuration de Nagios s'articule entre diff\'erents concepts : les \textit{hosts}, les \textit{hostgroups} les \textit{services}.
+Un \textit{host} repr\'esente un ordinateur, cet ordinateur poss\`ede des \textit{services} comme le service \textsf{check\_whoisloggedin} permettant de savoir si un utilisateur est actuellement connect\'e sur ladite machine.
+Il faut enfin partie d'un groupe d'ordinateurs \textit{hostgroups} qui repr\'esente une salle informatique au sein de l'universit\'e.
 
 \subsubsection{\og{}Monitoring\fg{} \`a l'universit\'e}
 
@@ -113,6 +120,26 @@ Il faut noter que seuls les Macintosh de New Cavendish sont sous surveillance, l
 De ce fait, le nombre de machines devrait augmenter par la suite.
 
 \subsubsection{Vue sur la surveillance de Nagios}
+
+Les figures~\ref{figure:nagiosGeneral} et~\ref{figure:nagiosCG24}  donnent un aper\c{c}u de l'interface graphique de configuration mais aussi de suivi de Nagios.
+La figure~\ref{figure:nagiosGeneral} offre une vue d'ensemble sur tous les  \textit{hosts} de tous les \textit{hostgroups} surveill\'es.
+La figure~\ref{figure:nagiosCG24}, quant \`a elle, offre une vue pour un \textit{hostgroup} sp\'ecifique : la salle pourtant le nom \textsf{e-cg24}.
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[scale=0.35]{nagiosGeneral.jpg}
+	\caption{Exemple d'affichage de Nagios, vue sur tous les \textit{hostgroups}}
+	\label{figure:nagiosGeneral}
+	
+\end{figure}
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[scale=0.35]{nagiosCG24.jpg}
+	\caption{Exemple d'affichage de Nagios, vue sur tous les \textit{hosts} d'un \textit{hostgroup} sp\'ecifique}
+	\label{figure:nagiosCG24}
+	
+\end{figure}
 
 
 
@@ -211,13 +238,19 @@ Toute la partie communication de JAX-WS est g\'er\'ee avec des messages de type 
 L'API$^*$ permet de cacher toute la complexit\'e des messages, le d\'eveloppeur choisit simplement la mani\`ere d'impl\'ementer le service. 
 Pour cela, il existe deux m\'ethodes : top-down et bottom-up.
 
+\subsubsection{Top-down}
+
 La m\'ethode top-down permet de d\'evelopper un service Web en partant d'un fichier WSDL.
 Ce fichier doit contenir la compl\`ete description de tout le service Web, ensuite le code Java est g\'en\'er\'e automatiquement.
 Les classes doivent ensuite \^etre compl\'et\'ees avant d\'eploiement.
 
+\subsubsection{Bottom-up}
+
 La m\'ethode bottom-up permet quant \`a elle de d\'evelopper un service Web en partant du code Java.
 Le code Java est d'une part annot\'e, ensuite le fichier WSDL est automatiquement g\'en\'er\'e.
 Le service peut enfin \^etre d\'eploy\'e.
+
+\subsubsection{Choix de la m\'ethode et exemple}
 
 C'est la m\'ethode bottom-up qui a \'et\'e employ\'ee dans le projet.
 Elle permet de ne se soucier que du code Java, le reste \'etant g\'er\'e automatiquement par NetBeans avec la construction du service Web et le d\'eploiement sur le serveur GlassFish.
@@ -229,7 +262,9 @@ Le code~\ref{code:exempleJAXWS} donne un exemple d'annotations sur un code Java.
 \captionof{figure}{Exemple de classe Java annot\'ee avec JAX-WS}
 \label{code:exempleJAXWS}
 
-JAX-WS \textit{Reference Implementation} est actuellement disponible sur son site Internet\cite{biblio:siteJAXWS} en version 2.2.6.
+\vspace{0.20cm}
+
+JAX-WS \textit{Reference Implementation} est disponible sur son site Internet\cite{biblio:siteJAXWS} en version 2.2.6.
 
 \subsection{L'IDE NetBeans}
 
@@ -247,7 +282,7 @@ NetBeans permet de d\'evelopper et d\'eployer rapidement des applications graphi
 Il poss\`ede toutes les fonctionnalit\'es recherch\'ees dans un IDE$^*$ moderne (coloration syntaxique, refactoring, d\'ebogueur, \ldots) et ajoute, dans le cas d'un d\'eveloppement d'un service Web comme pour ce projet, un support avec la derni\'ere version de GlassFish, permettant notamment de faire des \og{}deploy on save\fg{}, de d\'eployer les applications Web sur un serveur distant et de contr\^oler le serveur (suivre la sortie de logs, d\'emarrer, arr\^eter le serveur). 
 Il donne acc\`es \`a une gestion simple du serveur d'application GlassFish qui sera utilis\'e dans le projet.
 Sa premi\`ere version date de 1996 et portait le nom Xelfi. 
-Il est actuellement disponible sur son site Internet\cite{biblio:siteNetbeans} en version 7.1.2.
+Il est disponible sur son site Internet\cite{biblio:siteNetbeans} en version 7.1.2.
 
 \subsection{Le serveur Web GlassFish}
 
@@ -264,6 +299,24 @@ Un de ses avantages est qu'il est particuli\`erement bien int\'egr\'e \`a NetBea
 GlassFish est disponible sur son site Internet\cite{biblio:siteGlassfish} en version 3.1.2.
 
 \subsection{Le SGBD MySQL}
+
+Un des objectifs du projet {\YuukouII} est un archivage temporel des donn\'ees.
+Le but \'etant de g\'en\'erer des statistiques d'utilisation des salles informatiques des diff\'erents campus par exemple.
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[scale=0.75]{mysqlLogo.jpg}
+	\caption{Logo de MySQL}
+	
+\end{figure}
+
+MySQL est le Syst\`eme de Gestion de Base de Donn'ees (SGBD) la plus populaire qui fonctionne comme un serveur fournissant un acc\`es multi-utilisateurs \`a des bases de donn\'ees de type SQL$^*$.
+Il a \'et\'e cr\'e\'e par MySQL AB en 1995, rachet\'e par Sun Microsystems et est maintenant maintenu par Oracle.
+Il pr\'esente les avantages d'\^etre open source, gratuit, fiable, rapide et facile \`a utiliser.
+Il est tr\`es souvent utilis\'e avec le langage de cr\'eation de pages Web dynamique PHP$^*$.
+C'est donc avec cet outil que les donn\'ees de {\YuukouII} seront archiv\'ees.
+MySQL est disponible sur son site Internet\cite{biblio:siteMySQL} en version 5.5.24.
+
 
 \subsection{L'acc\`es aux donn\'ees des tables}
 
