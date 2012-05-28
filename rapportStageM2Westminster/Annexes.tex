@@ -15,9 +15,13 @@ La socket Nagios retournera alors le nom de la salle, le nombre de machines qu'e
 
 \vspace{0.20cm}
 
-\lstinputlisting[language=LQL]{codes/nagiosGetHostGroups.ngs}
-\captionof{figure}{Code LQL de r\'ecup\'eration des salles que surveille Nagios}
-\label{annexe:nagiosGetHostGroups}
+\begin{figure}[!ht]
+	\lstinputlisting[language=LQL]{codes/nagiosGetHostGroups.ngs}
+	%\captionof{figure}{Code LQL de r\'ecup\'eration des salles que surveille Nagios}
+	\caption{Code LQL de r\'ecup\'eration des salles que surveille Nagios}
+	\label{annexe:nagiosGetHostGroups}
+
+\end{figure}
 
 \subsubsection{R\'ecup\'eration des machines}
 
@@ -27,11 +31,13 @@ Cette information permet de r\'ecup\'erer l'identifiant de la personne connect\'
 Il y a pour chaque machine, un service portant ce nom, cela revient donc \`a demander tous les ordinateurs.
 La socket Nagios retournera alors le nom de la machine, son adresse IP, le \textsf{host\_groups} donc le nom de la salle \`a laquelle elle appartient, son \'etat et enfin l'utilisateur connect\'e s'il y en a un.
 
-\clearpage
+\begin{figure}[!ht]
+	\lstinputlisting[language=LQL]{codes/nagiosGetResources.ngs}
+	%\captionof{figure}{Code LQL de r\'ecup\'eration des machines que surveille Nagios}
+	\caption{Code LQL de r\'ecup\'eration des machines que surveille Nagios}
+	\label{annexe:nagiosGetResources}
 
-\lstinputlisting[language=LQL]{codes/nagiosGetResources.ngs}
-\captionof{figure}{Code LQL de r\'ecup\'eration des machines que surveille Nagios}
-\label{annexe:nagiosGetResources}
+\end{figure}
 
 \subsubsection{R\'ecup\'eration de tous les utilisateurs connect\'es}
 
@@ -42,9 +48,13 @@ Seul les utilisateurs \og corrects\fg{} sont gard\'es.
 
 \vspace{0.20cm}
 
-\lstinputlisting[language=LQL]{codes/nagiosGetUsersLogged.ngs}
-\captionof{figure}{Code LQL de r\'ecup\'eration des utilisateurs connect\'es sur les machines que surveille Nagios}
-\label{annexe:nagiosGetUsersLogged}
+\begin{figure}[!ht]
+	\lstinputlisting[language=LQL]{codes/nagiosGetUsersLogged.ngs}
+	%\captionof{figure}{Code LQL de r\'ecup\'eration des utilisateurs connect\'es sur les machines que surveille Nagios}
+	\caption{Code LQL de r\'ecup\'eration des utilisateurs connect\'es sur les machines que surveille Nagios}
+	\label{annexe:nagiosGetUsersLogged}
+
+\end{figure}
 
 \chapter{Retour de requ\^ete LQL}
 \label{chapterAnnexe:reponseLQLNagios}
@@ -93,8 +103,32 @@ La r\'eponse~\ref{annexe:reponseNagiosGetUsersLogged} correspond \`a l'ex\'ecuti
 \label{chapterAnnexe:baseDeDonnees}
 
 Cette annexe permet d'avoir une vue sur les relations entre tables ainsi que sur leur contenu.
-Dans une premier temps, le diagramme sera donn\'e en entier.
-Puis, il sera d\'ecoup\'e en diff\'erentes parties qui le composent.
+Dans un premier temps, une description rapide des tables sera faite.
+Ensuite, le diagramme de leur agencement les unes avec les autres sera donn\'e en entier.
+Enfin, ce diagramme sera d\'ecoup\'e en diff\'erentes parties pour plus de visibilit\'e.
+
+\subsubsection{Description des tables}
+
+{\YuukouII} est compos\'e de 14 tables :
+
+\begin{itemize}
+	\item \textsf{yuukou\_rooms} : contient la description d'une salle;
+	\item \textsf{yuukou\_resources} : contient la description d'un ordinateur appartenant \`a une salle particuli\`ere;
+	\item \textsf{yuukou\_users} : contient la description d'un utilisateur;
+	\item \textsf{yuukou\_last} : contient un historique de toutes les connexions pass\'ees sur un ordinateur
+	\item \textsf{yuukou\_who} : contient un historique de toutes les connexions en cours sur un ordinateur
+	\item \textsf{yuukou\_mapping\_location} : contient les informations sur le diff\'erents campus de l'Universit\'e, le but \'etant de faire un lien avec la localisation de la table \textsf{yuukou\_rooms} et la description compl\`ete de cette localisation contenu dans la table de \textit{mapping};
+	\item \textsf{yuukou\_mapping\_room} : contient les diff\'erentes correspondances entre le nom des salles tel qu'elle sont appel\'ees dans {\YuukouII} et le nom des salles r\'ecup\'er\'ees avec les emplois du temps;
+	\item \textsf{yuukou\_timetables} : contient les diff\'erentes informations concernant un \'el\'ement de l'emploi du temps;
+	\item \textsf{yuukou\_settings} : contient les diff\'erents informations de configuration de \YuukouII;
+	\item \textsf{yuukou\_groups} : contient la description d'un groupe de logiciels;
+	\item \textsf{yuukou\_software} : contient la description d'un logiciel;
+	\item \textsf{yuukou\_groups\_software} : contient les diff\'erents liens entre un groupe de logiciels et tous les logiciels le composant;
+	\item \textsf{yuukou\_rooms\_groups} : contient les diff\'erents liens entre une salle et tous les groupes de logiciels la composant;
+	\item \textsf{yuukou\_roms\_software} : contient les diff\'erents liens entre une salle et tous les logiciels, n'appartenant pas \`a un groupe de logiciels, la composant.
+	
+\end{itemize}
+
 
 \subsubsection{Structure g\'en\'erale}
 

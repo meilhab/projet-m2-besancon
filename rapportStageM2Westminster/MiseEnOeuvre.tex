@@ -146,127 +146,8 @@ La figure~\ref{figure:nagiosCG24}, quant \`a elle, offre une vue pour un \textit
 
 TODO REPRENDRE
 
-
-
-\section{La notion de service Web}
-\label{section:serviceWeb}
-
-\subsection{D\'efinition}
-
-Un service Web est une application accessible par le r\'eseau, qui permet \`a un client de dialoguer avec le service Web et cela ind\'ependamment de tout langage de programmation et de toute plate-forme d'ex\'ecution.
-Un service Web d\'evelopp\'e en Java peut donc \^etre accessible par un client PHP$^*$ par exemple.
-C'est un syst\`eme de messagerie standard utilisant le protocole HTTP pour communiquer \`a travers le r\'eseau et s'\`echangeant des fichiers XML.
-Son int\'er\^et resulte dans l'utilisation de normes (HTTP et XML) permettant l'int\'erop\'erabilit\'e des services.
-De plus, le fait que les services Web n'imposent pas de mod\`ele de programmation sp\'ecifique permet aux vendeurs d'outils de d\'eveloppement d'offrir des m\'ethodes diff\'erentes et donc de facilement diff\'erencier leurs produits de ceux de leurs concurrents.
-
-\subsection{Architecture}
-
-Lorsqu'on parle de services Web, on parle aussi de SOA, \textit{Service-Oriented Architecture} ou architecture orient\'ee services en fran\c{c}ais.
-Une architecture orient\'ee services est un style d'architecture qui a pour objectif une interd\'ependance faible entre diff\'erents agents logiciels (module, services).
-Les services Web poss\`edent trois normes principales qui sont SOAP, WSDL et UDDI qui permettent respectivement la fa\c{c}on dont les messages sont \'echang\'es, sa description et sa d\'ecouverte.
-
-\subsubsection{\'Echange de messages}
-
-Dans la grande majorit\'e des services Web, le protocole principal de communication est SOAP\protect\footnote{\textit{Simple Object Access Protocol}}.
-Il offre le transport d'objets s\'erialis\'es (objets repr\'esent\'es par un flux de bytes) et autres donn\'ees en XML, et l'appel de proc\'edures distantes.
-
-\subsubsection{Description d'un service Web}
-
-Un service Web est d\'ecrit par un document WSDL\protect\footnote{\textit{Web Services Description Language}}.
-C'est un langage de description bas\'e sur XML qui permet de donner de fa\c{c}on pr\'ecise les d\'etails concernant le service Web :
-
-\begin{itemize}
-	\item son protocole de communication utilis\'e;
-	\item le format de messages requis pour communiquer avec le service Web;
-	\item les m\'ethodes que le client peut utiliser;
-	\item sa localisation.
-
-\end{itemize}
-
-\vspace{0.20cm}
-
-\noindent Un fichier WSDL permet ainsi de savoir comment communiquer avec le service Web.
-
-\subsubsection{D\'ecouverte d'un service Web}
-
-Pour utiliser un service Web, il faut savoir s'il existe.
-UDDI\protect\footnote{\textit{Universal Description, Discovery and Integration Service}} est une norme qui d\'efinit le m\'ecanisme pour d\'ecouvrir dynamiquement des services Web.
-C'est en fait un annuaire de services permettant de localiser sur le r\'eseau le service Web demand\'e.
-\noindent Il comporte :
-
-\begin{itemize}
-	\item \textit{des pages blanches}, liste des entreprises ainsi que les informations les concernant;
-	\item \textit{des pages jaunes}, liste des services Web de chacunes des entreprises sous le format WSDL
-	\item \textit{des pages vertes}, liste des informations techniques pr\'ecises sur les services fournis.
-
-\end{itemize}
-
-
-\subsection{Fonctionnement}
-
-Le fonctionnement des services Web s'articule autour de trois acteurs principaux illustr\'es par la figure~\ref{figure:schemaServiceWeb}.
-
-\begin{figure}[!ht]
-	\centering
-	\includegraphics[scale=0.35]{schemaServiceWeb.jpg}
-	\caption{Fonctionnement des services Web}
-	\label{figure:schemaServiceWeb}
-
-\end{figure}
-
-Les \'etapes impliquant la mise \`a disposition et l'utilisation (consommation) d'un service Web sont les suivantes :
-
-\begin{enumerate}
-	\item le service Web d\'ecrit son service en utilisant WSDL. 
-	Cette d\'efinition est publi\'ee dans l'annuaire UDDI;
-	\item le client envoit une ou plusieurs requ\^ete afin de localiser le service Web \`a l'annuaire et d\'eterminer comment communiquer avec ce service;
-	\item une partie du fichier WSDL fourni par le service Web est pass\'e au client. 
-	Le client peut maintenant savoir quelles requ\^etes et r\'eponses envoyer au service Web;
-	\item le client utilise le fichier WSDL pour envoyer une requ\^ete au service Web;
-	\item le service Web fournit la r\'eponse attendue au client.
-
-\end{enumerate}
-
-\subsection{L'API JAX-WS}
-
-Java API$^*$ for XML Web Services (JAX-WS) est une API Java permettant de simplifier la cr\'eation, le d\'eveloppement et le d\'eploiement de services Web clients et de services Web prestataires.
-Il fonctionne avec un syst\`eme d'annotations sp\'ecifique du code Java.
-JAX-WS fait partie de la plate-forme Java EE\protect\footnote{\textit{Java Platform, Entreprise Edition}} de Sun Microsystems.
-Anciennement appel\'ee JAX-RPC\protect\footnote{\textit{Java API for XML-based RPC}}, ce changement de nom intervient lors de l'abandon du style RPC\protect\footnote{\textit{Remote Procedure Call}}, des appels de proc\'edures distantes, pour des services Web de style document, avec une transmission de donn\'ees au format XML d\'efinies dans un sch\'ema XML.
-
-Toute la partie communication de JAX-WS est g\'er\'ee avec des messages de type SOAP \`a travers HTTP.
-L'API$^*$ permet de cacher toute la complexit\'e des messages, le d\'eveloppeur choisit simplement la mani\`ere d'impl\'ementer le service. 
-Pour cela, il existe deux m\'ethodes : top-down et bottom-up.
-
-\subsubsection{Top-down}
-
-La m\'ethode top-down permet de d\'evelopper un service Web en partant d'un fichier WSDL.
-Ce fichier doit contenir la compl\`ete description de tout le service Web, ensuite le code Java est g\'en\'er\'e automatiquement.
-Les classes doivent ensuite \^etre compl\'et\'ees avant d\'eploiement.
-
-\subsubsection{Bottom-up}
-
-La m\'ethode bottom-up permet quant \`a elle de d\'evelopper un service Web en partant du code Java.
-Le code Java est d'une part annot\'e, ensuite le fichier WSDL est automatiquement g\'en\'er\'e.
-Le service peut enfin \^etre d\'eploy\'e.
-
-\subsubsection{Choix de la m\'ethode et exemple}
-
-C'est la m\'ethode bottom-up qui a \'et\'e employ\'ee dans le projet.
-Elle permet de ne se soucier que du code Java, le reste \'etant g\'er\'e automatiquement par NetBeans avec la construction du service Web et le d\'eploiement sur le serveur GlassFish.
-Le code~\ref{code:exempleJAXWS} donne un exemple d'annotations sur un code Java.
-
-\vspace{0.20cm}
-
-\lstinputlisting[language=Java]{codes/ExempleService.java}
-\captionof{figure}{Exemple de classe Java annot\'ee avec JAX-WS}
-\label{code:exempleJAXWS}
-
-\vspace{0.20cm}
-
-JAX-WS \textit{Reference Implementation} est disponible sur son site Internet\cite{biblio:siteJAXWS} en version 2.2.6.
-
 \subsection{L'IDE NetBeans}
+\label{section:netbeans}
 
 \begin{figure}[!ht]
 	\centering
@@ -285,6 +166,7 @@ Sa premi\`ere version date de 1996 et portait le nom Xelfi.
 Il est disponible sur son site Internet\cite{biblio:siteNetbeans} en version 7.1.2.
 
 \subsection{Le serveur Web GlassFish}
+\label{section:glassfish}
 
 \begin{figure}[!ht]
 	\centering
@@ -355,11 +237,16 @@ La figure~\ref{code:exemplePlaintext} repr\'esente une exemple de fichier qu'il 
 
 \vspace{0.20cm}
 
-\begin{lstlisting}[language=plaintext]
-info1 @ info2 @ info3 @ info4
-\end{lstlisting}
-\captionof{figure}{Exemple de ligne pouvant \^etre facilement \textit{pars\'ee}}
-\label{code:exemplePlaintext}
+\begin{figure}[!ht]
+	\begin{lstlisting}[language=plaintext]
+	info1 @ info2 @ info3 @ info4
+	\end{lstlisting}
+	
+	%\captionof{figure}{Exemple de ligne pouvant \^etre facilement \textit{pars\'ee}}
+	\caption{Exemple de ligne pouvant \^etre facilement \textit{pars\'ee}}
+	\label{code:exemplePlaintext}
+
+\end{figure}
 
 Pour r\'ecup\'erer les informations de cet exemple, il suffit de parcourir le fichier en stockant les informations contenues entre les \textbf{@}.
 
@@ -375,9 +262,13 @@ La figure~\ref{code:exempleJava} donne un exemple de classe Java s\'erialisable 
 
 \vspace{0.20cm}
 
-\lstinputlisting[language=Java]{codes/Exemple.java}
-\captionof{figure}{Exemple de classe Java s\'erialisable}
-\label{code:exempleJava}
+\begin{figure}[!ht]
+	\lstinputlisting[language=Java]{codes/Exemple.java}
+	%\captionof{figure}{Exemple de classe Java s\'erialisable}
+	\caption{Exemple de classe Java s\'erialisable}
+	\label{code:exempleJava}
+
+\end{figure}
 
 L'objet contiendrait toutes les donn\'ees utiles et celles-ci seraient facilement accessibles.
 Le probl\`eme venant avec cette solution est que les objets doivent \^etre r\'ecup\'er\'es par une JVM$^*$.
@@ -391,9 +282,13 @@ La figure~\ref{code:exempleXML} donne un exemple de document XML pouvant \^etre 
 
 \vspace{0.20cm}
 
-\lstinputlisting[language=XML]{codes/Exemple.xml}
-\captionof{figure}{Exemple de document XML}
-\label{code:exempleXML}
+\begin{figure}[!ht]
+	\lstinputlisting[language=XML]{codes/Exemple.xml}
+	%\captionof{figure}{Exemple de document XML}
+	\caption{Exemple de document XML}
+	\label{code:exempleXML}
+
+\end{figure}
 
 XML offre une solution structur\'ee et tr\`es simple \`a comprendre pour l'envoi d'information par le r\'eseau, cependant dans les \'echanges d'informations entre client et serveur, il montre ses limites :
 
@@ -412,9 +307,13 @@ La figure~\ref{code:exempleJSON} donne une exemple de fichier JSON reprenant le 
 
 \vspace{0.20cm}
 
-\lstinputlisting[language=JSON]{codes/Exemple.json}
-\captionof{figure}{Exemple de fichier JSON}
-\label{code:exempleJSON}
+\begin{figure}[!ht]
+	\lstinputlisting[language=JSON]{codes/Exemple.json}
+	%\captionof{figure}{Exemple de fichier JSON}
+	\caption{Exemple de fichier JSON}
+	\label{code:exempleJSON}
+
+\end{figure}
 
 \subsubsection{Choix du format}
 
@@ -549,9 +448,13 @@ La figure~\ref{code:exempleLQL} donne un exemple de requ\^ete permettant de r\'e
 
 \vspace{0.20cm}
 
-\lstinputlisting[language=LQL]{codes/nagiosExemple.ngs}
-\captionof{figure}{Exemple de requ\^ete LQL}
-\label{code:exempleLQL}
+\begin{figure}[!ht]
+	\lstinputlisting[language=LQL]{codes/nagiosExemple.ngs}
+	%\captionof{figure}{Exemple de requ\^ete LQL}
+	\caption{Exemple de requ\^ete LQL}
+	\label{code:exempleLQL}
+
+\end{figure}
 
 Les \textit{scripts} Nagios utilis\'es tout au long du stage sont disponibles en annexe~\ref{chapterAnnexe:fichiersLQLNagios} de ce rapport.
 
@@ -630,6 +533,56 @@ Nagios retourne les informations sous une forme bien sp\'ecifiques :
 
 Des exemples de r\'eponses correspondant aux requ\^etes de l'annexe~\ref{chapterAnnexe:fichiersLQLNagios} sont disponibles dans l'annexe~\ref{chapterAnnexe:reponseLQLNagios}.
 
+Nagios poss\`ede sa propre fa\c{c}on de nommer une salle ou encore un ordinateur.
+\noindent Les salles dans Nagios sont nomm\'ees comme suit : 
+
+\begin{center}
+	\textsf{abr\'eviation du lieu---nom de la salle}
+
+\end{center}
+
+\noindent Les diff\'erentes abr\'eviations sont les suivantes :
+
+\begin{table}[!ht]
+	\centering
+	\begin{tabular}{|c|c|}
+		\hline
+		\rowcolor{grisclair} \textbf{Abr\'eviation} & \textbf{Description}\\
+		\hline
+		e & \textit{Electronics and Computer Science}\\
+		\hline
+		h & \textit{Harrow}\\
+		\hline
+		l & \textit{Little Tichtfield Street}\\
+		\hline
+		m & \textit{Marylebone}\\
+		\hline
+		n & \textit{New Cavendish Street}\\
+		\hline
+		r & \textit{Regent Street}\\
+		\hline
+		w & \textit{Wells Street}\\
+		\hline
+	
+	\end{tabular}
+	
+	\caption{Abr\'eviations et lieux utilis\'es par Nagios pour nommer les salles et ordinateurs}
+	\label{table:abreviation}
+
+\end{table}
+
+Ainsi, la salle \textsf{4111} se trouvant sur le campus de New Cavendish sera identifi\'ee de cette mani\`ere : \textsf{n-4111}.
+
+\noindent Les ordinateurs sont nomm\'ees en suivant la m\^eme logique :
+
+\begin{center}
+	\textsf{abr\'eviation du lieu---nom de la salle---type ordinateur---numero ordinateur}
+	
+\end{center}
+
+Le type d'ordinateur peut \^etre de deux type : \textsf{pc} si c'est un PC ou \textsf{mc} si c'est un Macintosh.
+Ainsi, un ordinateur se trouvant dans la salle \textsf{n-4111}, \'etant un Macintosh et portant le num\'ero 1 sera identifi\'e comme suit : \textsf{n-4111-mc-01}.
+
 \section{Gestion du poste de travail}
 \label{section:gestionProjet}
 
@@ -661,7 +614,43 @@ La machine de d\'eveloppement poss\`ede un syst\`eme d'exploitation Linux Mint v
 
 \subsection{Structure de la base de donn\'ees}
 
+La base de donn\'ees a \'evolu\'e tout au long du projet en fonction des fonctionnalit\'es qui ont \'et\'e demand\'ees.
+L'annexe~\ref{chapterAnnexe:baseDeDonnees} permet d'avoir une description des diff\'erentes tables composant la base de donn\'ees, une vue g\'en\'erale de ce \`a quoi elle ressemble, et des vues d\'ecoup\'ees des diff\'erentes parties la composant.
 
+La base de donn\'ees peut \^etre d\'ecoup\'ee en diff\'erentes grandes parties.
+La partie archivage a pour but de conserver les donn\'ees dans le temps.
+Pour ce faire, elle est compos\'ee de deux tables centrales de sauvegarde d'informations.
+La premi\`ere est la table \textsf{yuukou\_who}, son but est de simuler la commande UNIX \textsf{who}.
+Cette commande permet de donner tous les utilisateur connect\'es sur la machine o\`u elle est ex\'ecut\'ee.
+De ce fait, si elle est port\'ee au niveau de Nagios et du projet, la table contiendra tous les utilisateurs connect\'es sur un ordinateur et depuis quand ils le sont.
+La deuxi\`eme table est \textsf{yuukou\_last}, son but est aussi de simuler une commande UNIX, la commande \textsf{last}.
+Cette commande permet de donner la liste de toutes les derni\`eres connexions sur la machine sur laquelle elle est ex\'ecut\'ee.
+De ce fait, si elle est port\'ee au niveau de Nagios et du projet, la table contiendra toutes les connexions des utilisateurs sur un ordinateur, l'heure de d\'ebut et de fin et la cause de la d\'econnexion. En fait, elle contiendra les donn\'ees de la table \textsf{yuukou\_who} et ajoutant les informations du temps de fin de connexion et la cause de la d\'econnexion.
+
+La partie logicielle a pour but de stocker la configuration logicielle de chaque salle informatique.
+La r\'ecup\'eration de cette configuration est expliqu\'ee au \S~\ref{section:catalogueLogiciel}.
+Cette partie est compos\'ee de plusieurs tables.
+Une salle informatique peut avoir des groupes de logiciels, \textsf{yuukou\_rooms\_groups} et aussi des logiciels ind\'ependants de tout groupe, \textsf{yuukou\_rooms\_software}.
+Un groupe de logiciels contient des logiciels, \textsf{yuukou\_groups\_software}.
+Les descriptions des groupes et logiciels sont contenues dans les tables \textsf{yuukou\_groups} et \textsf{yuukou\_software}.
+Avec ces tables, il est possible de facilement reconstruire la configuration logicielle d'une salle.
+
+La partie emploi du temps a pour but de stocker tous \'ev\`enements des diff\'erents emplois du temps de l'Universit\'e.
+La r\'ecup\'eration de cette configuration est expliqu\'ee au \S~\ref{section:emploiDuTemps}.
+Cette partie est compos\'ees de trois tables.
+La premi\`ere table est celle contenant toutes les salles \textsf{yuukou\_rooms}, la deuxi\`eme contenant tous les \'ev\`enements \textsf{yuukou\_timetables}.
+Pour la derni\`ere table \textsf{yuukou\_mapping\_room}, son r\^ole est de faire le lien entre les noms des salles dans Nagios et les noms des salles qui sont utilis\'ees pour l'emploi du temps.
+En effet, la g\'en\'eration des emplois du temps est effectu\'ee par un service de l'Universit\'e.
+De ce fait, ce service utilise un syst\`eme pour nommer les salles qui lui est propre.
+Il est donc n\'ecessaire de pouvoir relier un \'ev\`enement \`a une salle \`a l'aide de cette derni\`ere table.
+
+La partie \textit{mapping} avec les salles a pour but de faire le lien entre une description compl\`ete d'un lieu et la description courte qui est donn\'e dans la description d'une salle dans la table \textsf{yuukou\_rooms}.
+Les informations concernant les diff\'erents lieux sont contenues dans la table \textit{yuukou\_mapping\_location}.
+
+La derni\`ere partie, configuration, a pour but de g\'erer les diff\'erents param\`etres permettant la gestion de cycle lors du fonctionnement du service Web. 
+Les explications concernant ce qu'est un cycle se trouvent au \S~\ref{section:cyclePrincipal}.
+
+TODO a finir
 
 \subsection{Explications}
 
@@ -669,19 +658,70 @@ La machine de d\'eveloppement poss\`ede un syst\`eme d'exploitation Linux Mint v
 
 \section{Le service Web}
 
+Le service Web peut se d\'ecomposer en deux grandes parties.
+La premi\`ere consiste en un cycle principal qui a pour but de r\'ecup\'erer les informations de Nagios et de les traiter.
+La deuxi\`eme consiste en de multiples fonctions pouvant \^etre accessibles soit par un administrateur, soit par un utilisateur normal et permettant le retour d'une partie des informations accumul\'ees avec le cycle principal.
+
 \subsection{Mise en place}
 
 \subsection{Le cycle principal}
 \label{section:cyclePrincipal}
 
+C'est en quelque sorte le moteur du projet.
+Il collecte des informations de Nagios, et effectue diverses op\'erations sur la base de donn\'ees pour la maintenir \`a jour.
+La figure~\ref{figure:cyclePrincipal} permet de voir les diff\'erentes \'etapes qui composent le cycle principal du service Web.
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[scale=0.35]{cyclePrincipal.jpg}
+	\caption{Sch\'ema du d\'eroulement du cycle principal du service Web}
+	\label{figure:cyclePrincipal}
+	
+\end{figure}
+
+Dans un premier temps, \`a la premi\`ere ex\'ecution du cycle, les diff\'erents \textit{scripts} \'ecris en LQL Nagios sont charg\'es en m\'emoire.
+Ensuite, une v\'erification de la coh\'erence des donn\'ees contenues dans les tables permettant de g\'erer l'archivage des donn\'ees est effectu\'ee.
+Cette v\'erification a pour but de s'assurer que il n'y a pas des donn\'ees absurdes de connexion : les donn\'ees de connexion dont dat\'ees de plus de 6 heures pour la table \textsf{yuukou\_who} et les donn\'ees de connexion dont la diff\'erence entre la date de d\'ebut de connexion et la date de fin de connexion est de plus de 6 heures elle aussi.
+Si de telles donn\'ees sont trouv\'ees, elles sont automatiquement effac\'ees de la table auxquelles elles appartiennent.
+
+L'\'etape suivante entre dans le d\'ebut du cycle \`a proprement parler.
+Elle a pour objectif de v\'erifier si des donn\'ees de la table \textsf{yuukou\_last} ont besoin d'\^etre d\'eplac\'ees.
+Des explications sur la migration des donn\'ees se trouvent au\S~\ref{section:migrationDonnees}.
+
+Suite \`a cette v\'erification, les \textit{scripts} Nagios sont envoy\'es et les informations r\'ecup\'er\'ees sont transmises \`a l'\'etape de traitements des donn\'ees Nagios.
+
+Cette \'etape commence par ajouter les machines qui n'existent pas dans la base de donn\'ees.
+Ensuite, ce sont les utilisateurs qui sont trait\'es.
+S'ils n'existent pas dans la base de donn\'ees, une recherche LDAP$^*$ est effectu\'ee pour obtenir les informations les concernant (nom, pr\'enom, photo, r\^ole).
+Ils sont ensuite \`a leur tour, ajout\'es dans la table correspondante.
+Le couple ordinateur - utilisateur est ensuite ajout\'e, mis \`a jour ou retir\'e des tables d'archivage.
+Ici aussi, si une donn\'ee de connexion d\'epasse les 6 heures, elle sera ignor\'ee.
+
+Suite \`a ce traitement, une v\'erification est effectu\'ee sur tous les ordinateurs connus.
+En effet, un ordinateur poss\`ede un statut particulier : fonctionnel, \'eteint ou en attente d'effacement.
+Ce statut est maintenant d'une part avec l'\'etape de traitement des r\'esultats pr\'ec\'edente, au d'autre part avec l'\'etape actuelle.
+Si le statut d'un ordinateur reste \'eteint pendant une semaine, son statut change et passe \`a : en attente d'effacement.
+
+Une v\'erification des emplois du temps est ensuite effectu\'ee.
+Des explications sur la r\'ecup\'eration des emplois du temps se trouvent au \S~\ref{section:emploiDuTemps}.
+Cette v\'erification a pour r\^ole de mettre \`a jour les donn\'ees sur les emplois du temps de fa\c{c}on journali\`ere.
+De ce fait, tous les jours, les diff\'erents emplois du temps sont r\'ecup\'er\'es automatiquement.
+\`A la suite de cette derni\`ere \'etape, le cycle se met en pause pendant une minute.
+
+Diff\'erentes s\'ecurit\'es ont \'et\'e mises en place pour \'eviter les appels successifs au cycle principal.
+En effet, quand un administrateur lance le cycle principal, il lance un processus annexe qui se charge d'effectuer le cycle ind\'efiniment.
+Le seul moyen d'arr\^eter ce processus ou d'\'eviter les conflits est l'utilisation de la table \textsf{yuukou\_settings}.
+Cette table permet de savoir quand un cycle a \'et\'e effectu\'e pour la derni\`ere fois et s'il est ou non en cours.
+Agir sur cette table permet donc de stopper le processus mais aussi d'avoir une assurance qualit\'e sur les informations qui seront retourn\'ees par les m\'ethodes accessibles pour le client.
+Si un cycle date de 5 heures, alors il ne faut pas tenir compte des informations retourn\'ees.
+
 \subsection{Les fonctionnalit\'es publiques}
 
 \subsection{Les fonctionnalit\'es priv\'ees}
 
-\subsection{Le retour des informations}
-
 \subsection{S\'ecurisation du service Web}
 \label{section:securisation}
+TODO: a finir
 
 \subsubsection{Explications}
 
@@ -704,8 +744,22 @@ Il suffit pour cela de configurer
 
 
 \section{Catalogue logiciels des salles}
+\label{section:catalogueLogiciel}
+
+Un des objectifs final de {\YuukouII} est de fournir \`a \'etudiant une liste des logiciels pouvant \^etre utilis\'es dans chaque salle.
+Le but \'etant, qu'un \'etudiant, voulant travailler dans une salle libre sur un logiciel sp\'ecifique, comme Visual Studio, puisse trouver rapidement les salles qui correspondent \`a ses attentes.
+
+Il existe un \textit{MediaWiki} mettant \`a disposition des membres de l'Universit\'e, des informations sur les salles telles que une photo de la salle, une description, les responsables et la configuration logicielle de la salle.
+Un \textit{MediaWiki} est un logiciel permettant de r\'ealiser des sites Internet de type wiki$^*$. 
+Il s'agit d'un syst\`eme de gestion de contenu de sites Web qui rend les pages Web librement modifiables par tous les visiteurs autoris\'es.
+Le site Web \textit{Wikip\'edia} (\url{http://fr.wikipedia.org/wiki/Wikip\%C3\%A9dia:Accueil\_principal}) a \'et\'e d\'evelopp\'e avec \textit{MediaWiki}.
+
+Afin de faciliter la gestion de sites Web de ce genre, de nombreuses API$^*$ existent.
+C'est donc en utilisant une de ces API$^*$ que la configuration logicielle de chaque salle a \'et\'e r\'ecup\'er\'ee et ins\'er\'ee dans la base de donn\'ees.
+Cependant, il est \`a noter que le \textit{MediaWiki} ne concerne que quelques salles de la \textit{School of Electronics and Computer Science}.
 
 \section{Gestion de l'emploi du temps}
+\label{section:emploiDuTemps}
 
 \subsection{Les flux RSS de l'universit\'e}
 
@@ -757,6 +811,8 @@ Les cadres pleins repr\'esentent des fonctionnalit\'es dont le principe a \'et\'
 
 \end{figure}
 
+\section{Migration des donn\'ees}
+\label{section:migrationDonnees}
 
 
 \clearpage
