@@ -776,7 +776,7 @@ Les donn\'ees transmises par \YuukouII{} contiennent des informations sur la str
 Il est donc important de limiter l'acc\'es aux donn\'ees mais aussi de s\'ecuriser toutes les communications.
 C'est dans cet optique, qu'il a \'et\'e d\'ecid\'e de mettre en place le protocole SSL entre le service Web et toute application voulant communiquer avec.
 
-Le protocol Secure Sockets Layer, ou SSL, est con\c{c}u pour assurer la confidentialit\'e, l'authentification et l'int\'egrit\'es des donn\'ees lorsdes \'echanges entre un client et un serveur Web, sur diff\'erents protocoles de transport (en g\'en\'eral HTTP).
+Le protocole \textit{Secure Sockets Layer}, ou SSL, est con\c{c}u pour assurer la confidentialit\'e, l'authentification et l'int\'egrit\'es des donn\'ees lorsdes \'echanges entre un client et un serveur Web, sur diff\'erents protocoles de transport (en g\'en\'eral HTTP).
 SSL met en place un chiffrement \`a cl'es publiques, \cad, une combinaise de deux cl\'es : une cl\'e publique servant au chiffrement des donn\'ees et une cl\'e priv\'ee servant au d\'echiffrement.
 Les sites Internet b\'en\'eficiant de ce protocole sont reconnaissables du fait de leurs URL\protect\footnote{\textit{Uniform Resource Locator}} commen\c{c}ant par \textsf{https://} o\`u le 's' signifie \textit{secured}.
 
@@ -873,11 +873,40 @@ La figure~\ref{figure:rrdTool} pr\'esente un exemple de graphe d'utilisation des
 
 \section{Am\'eliorations possibles}
 
+Le projet {\YuukouII} est loin d'\^etre fini m\^eme si fonctionnel \`a l'heure actuelle.
+Il reste diverses fonctionnalit\'es \`a d\'evelopper.
+Une de ces fonctionnalit\'es serait de rajouter une s\'ecurit\'e lors de l'acc\`es aux m\'ethodes du service Web par le client.
+En effet, il serait int\'eressant que le client s'authentifie.
+De ce fait, deux r\^oles pourraient \^etre d\'efinis : administrateur et utilisateur.
+Avec cette m\'ethode, un utilisateur ne pourrait jamais se servir d'une m\'ethode dite priv\'ee car actuellement, si un client d\'eveloppe son propre programme pour acc\'eder au service Web {\YuukouII}, une fois le protocole SSL\protect\footnote{\textit{Secure Sockets Layer}} en place, rien ne l'emp\^eche d'utiliser les fonctions qu'il veut.
+
+Des am\'eliorations peuvent aussi \^etre port\'ees sur la fa\c{c}on dont RRDtool a \'et\'e mis en place.
+Il ne s'agit que d'un essai pour tester les possibilit\'es, mais il serait int\'eressant de l'int\'egrer pleinement au service Web et surtout au cycle principal d'ex\'ecution.
+
+
+
 \section{Travail en \'equipe}
 
 \section{Probl\`emes rencontr\'es}
 
-correspondance entre tous les noms de salles dans timetables
+Durant toute la dur\'ee du projet, de nombreux probl\`emes ont \'et\'e rencontr\'es.
+Ils \'etaient principalement dus au manque de connaissances dans le domaine vis\'e.
+
+Le SSL\protect\footnote{\textit{Secure Sockets Layer}} a \'et\'e difficilement mis en place dans les premiers temps.
+En effet, le manque de connaissance dans les services Web et dans les outils NetBeans et GlassFish ont \'et\'e un frein dans sa mise en place.
+De plus, la documentation sur le Web est plus ou moins \'evasive et les m\'ethodes sont diverses pour s\'ecuriser un service Web.
+Cependant, avec l'aide de l'Universit\'e, notamment en fournissant les diff\'erents certificats et les instructions, le protocole a pu \^etre mis en fonction.
+
+Il est apparu pendant le stage que les diff\'erents services de l'Universit\'e n'appliquaient que rarement les m\^emes normes.
+Cela s'est fait ressentir dans la mise en place de la gestion des emplois du temps.
+Effectivement, les noms des salles entre {\YuukouII} et ceux dans les emplois du temps n'avaient rien \`a voir.
+Certes, certaines pouvaient \^etre devin\'ees, elles ont \'et\'e de ce fait trait\'ees.
+Mais pour d'autres cela s'av\'erait impossible, surtout si on consid\`ere que plusieurs personnes s'occupent des emplois du temps et que ces personnes appliquent chacun une m\'ethode de nommage plus ou moins diff\'erentes les unes des autres.
+Une r\'eunion a eu lieu pendant le stage avec l\'equipe en charge afin d'aborder ce point.
+Au final, un nouveau syst\`eme d'identification des salles devrait \^etre mis en place, mais le service \'etant occup\'e, il n'y a pas de date dans la mise en fonction d'une telle mesure.
+Lorsque ce syst\`eme sera appliqu\'e, la liste des nouveaux noms de salles sera communiqu\'ee, ce qui rendra cette partie pleinement fonctionnelle.
+
+TODO a finir
 
 \section{Calendrier du stage}
 Arriv\'ee : Lundi 13 F\'evrier

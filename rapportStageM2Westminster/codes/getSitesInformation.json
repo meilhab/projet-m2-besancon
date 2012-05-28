@@ -1,0 +1,15 @@
+{ "JSONMaintenance":"NO",
+  "JSONLastCycle":"2012-05-28 17:59:36",
+  "JSONContents":[{ "Location":"e",
+                    "LongLocation":"Electronics and 
+                                Computer Science",
+                    "ShortLocation":"ECS"
+                  },
+                  { "Location":"h",
+                    "LongLocation":"Harrow",
+                    "ShortLocation":"HAR"
+                  },
+                  ...
+                  }],
+  "JSONState":"OK"
+} 
