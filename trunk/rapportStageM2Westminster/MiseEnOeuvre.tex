@@ -156,7 +156,7 @@ TODO REPRENDRE
 
 \end{figure}
 
-NetBeans est un IDE\protect\footnote{\textit{Integrated Development Environment}}$^*$ open source d\'evelopp\'e par Sun Microsystems permettant le d\'eveloppement en utilisant les langages de programmation tels que Java, JavaScript, PHP$^*$, C, C++, et autres.
+NetBeans est un IDE\protect\footnote{\textit{Integrated Development Environment}}$^*$ \textit{open source} d\'evelopp\'e par Sun Microsystems permettant le d\'eveloppement en utilisant les langages de programmation tels que Java, JavaScript, PHP$^*$, C, C++, et autres.
 Il est \'ecrit en Java et fonctionne sous Windows, Mac OS, Linux, Solaris et d'autres plates-formes du moment qu'elles poss\`edent une JVM\protect\footnote{\textit{Java Virtual Machine}}$^*$ compatible.
 
 NetBeans permet de d\'evelopper et d\'eployer rapidement des applications graphiques Swing, des Applets, des JSP/Servlets et des architectures J2EE\protect\footnote{\textit{Java Platform, Enterprise Edition}}.
@@ -175,7 +175,7 @@ Il est disponible sur son site Internet\cite{biblio:siteNetbeans} en version 7.1
 
 \end{figure}
 
-GlassFish est un serveur d'application open source d\'evelopp\'e par Sun Microsystems pour les plates-formes Java EE\protect\footnote{\textit{Java Platform, Entreprise Edition}} 5 et 6, et est maintenant maintenu par Oracle Corporation.
+GlassFish est un serveur d'application \textit{open source} d\'evelopp\'e par Sun Microsystems pour les plates-formes Java EE\protect\footnote{\textit{Java Platform, Entreprise Edition}} 5 et 6, et est maintenant maintenu par Oracle Corporation.
 Il dispose de nombreux outils pour faciliter le d\'eveloppement, le d\'eploiement et la maintenance d'application.
 Un de ses avantages est qu'il est particuli\`erement bien int\'egr\'e \`a NetBeans, ce qui permet un d\'eploiement tr\`es rapide des applications ainsi qu'une trace d'ex\'ecution lors du fonctionnement.
 GlassFish est disponible sur son site Internet\cite{biblio:siteGlassfish} en version 3.1.2.
@@ -194,7 +194,7 @@ Le but \'etant de g\'en\'erer des statistiques d'utilisation des salles informat
 
 MySQL est le Syst\`eme de Gestion de Base de Donn'ees (SGBD) la plus populaire qui fonctionne comme un serveur fournissant un acc\`es multi-utilisateurs \`a des bases de donn\'ees de type SQL$^*$.
 Il a \'et\'e cr\'e\'e par MySQL AB en 1995, rachet\'e par Sun Microsystems et est maintenant maintenu par Oracle.
-Il pr\'esente les avantages d'\^etre open source, gratuit, fiable, rapide et facile \`a utiliser.
+Il pr\'esente les avantages d'\^etre \textit{open source}, gratuit, fiable, rapide et facile \`a utiliser.
 Il est tr\`es souvent utilis\'e avec le langage de cr\'eation de pages Web dynamique PHP$^*$.
 C'est donc avec cet outil que les donn\'ees de {\YuukouII} seront archiv\'ees.
 MySQL est disponible sur son site Internet\cite{biblio:siteMySQL} en version 5.5.24.
@@ -662,8 +662,6 @@ Le service Web peut se d\'ecomposer en deux grandes parties.
 La premi\`ere consiste en un cycle principal qui a pour but de r\'ecup\'erer les informations de Nagios et de les traiter.
 La deuxi\`eme consiste en de multiples fonctions pouvant \^etre accessibles soit par un administrateur, soit par un utilisateur normal et permettant le retour d'une partie des informations accumul\'ees avec le cycle principal.
 
-\subsection{Mise en place}
-
 \subsection{Le cycle principal}
 \label{section:cyclePrincipal}
 
@@ -716,12 +714,60 @@ Agir sur cette table permet donc de stopper le processus mais aussi d'avoir une 
 Si un cycle date de 5 heures, alors il ne faut pas tenir compte des informations retourn\'ees.
 
 \subsection{Les fonctionnalit\'es publiques}
+\label{section:fonctionnalitesPubliques}
+
+Ces fonctionnalit\'es sont accessibles par tous les utilisateurs appartenant \`a l'Universit\'e.
+Elles ne retournent aucunes informations pouvant porter atteinte aux utilisateurs ou pouvant donner acc\`es \`a l'administration du service Web.
+
+\noindent\textbf{healthForRoom (String idRoom)} : retourne toutes les informations concernant une salle : emploi du temps, nombre d'utilisateur, description de la salle, \ldots
+
+\noindent\textbf{healthForAllRooms ()} : retourne des informations simplifi\'ees concernant l'ensemble des salles surveill\'ees;
+
+\noindent\textbf{getListRooms ()} : retourne la liste de toutes les salles;
+
+\noindent\textbf{getSitesInformation ()} : retourne les informations concernant les diff\'erents campus de l'Universit\'e;
+
+\noindent\textbf{getRoomsType (String typeRoom)} : retourne la liste des salles en fonction d'un type de machine (PC ou MAC).
 
 \subsection{Les fonctionnalit\'es priv\'ees}
 
+Ces fonctionnalit\'es sont un compl\'ement aux fonctionnalit\'es publiques du \S~\ref{section:fonctionnalitesPubliques}.
+Elles permettent un contr\^ole sur le cycle principal du service Web et des informations retourn\'ees plus compl\`etes.
+
+\noindent\textbf{launchCycle ()} : permet dans lancer le cycle du service Web
+
+\noindent\textbf{checkConfigHealth ()} : compare les diff\'erences entre la table des salles informations (\textsf{yuukou\_rooms}) et la configuration dans Nagios, et retourne les diff\'erences;
+
+\noindent\textbf{who ()} : retourne la liste de tous les utilisateurs connect\'es, sur quel ordinateur et depuis quand (\textsf{yuukou\_who});
+
+\noindent\textbf{lastDefault ()} : retourne la table compl\`ete \textsf{yuukou\_last};
+
+\noindent\textbf{last (int numberDays)} : retourne la table \textsf{yuukou\_last} mais pour un nombre de jours d\'efinis;
+
+\noindent\textbf{searchHistoryUser (String idUser, boolean who, boolean last, int numberLast)} : retourne l'historique de connexion actuel (who) ou pass\'e (last) d'un utilisateur, possibilit\'e de fixer le nombre d'informations retourn\'e;
+
+\noindent\textbf{searchHistoryResource (String idResource, boolean who, boolean last, int numberLast)} : retourne l'historique d'utilisation en cours (who) et pass\'e (last) d'un ordinateur, possibilit\'e de fixer le nombre d'informations retourn\'e;
+
+\noindent\textbf{getGraphWithRequestUsingJson (String rqtLabel, String label, String startTime, String endTime, String addToRqt, int factor)} : retourne un flux d'octets contenant une image g\'en\'er\'ee \`a partir de la fr\'equence d'utilisation des salles informatiques entre un temps de d\'ebut et de fin (\textit{startTime} et \textit{endTime}), les donn\'ees servant \`a construire le graphe sont aussi retourn\'ees. L'\'echelle du graphe peut \^etre fix\'e avec \textit{factor} : heures, semaines, mois, ann\'ees.
+Il est possible de personnalis\'er la requ\^ete (\textit{addToRqt}), de personnaliser la l\'egende (\textit{label}) et de choisir l'\'el\'ement recherch\'e (\textit{rqtLabel});
+
+\noindent\textbf{healthResourcesReportForAllRooms ()} : retourne l\'etat des ordinateurs de toutes les salles informatiques surveill\'ees;
+
+\noindent\textbf{healthResourcesReportForRoom (String idRoom)} : retourne l'\'etat des ordinateurs d'une salle sp\'ecifique;
+
+\noindent\textbf{actualiseLDAPInfo ()} : permet d'actualiser les donn\'ees LDAP des utilisateurs qui sont inconnus dans la base de donn\'ees;
+
+\noindent\textbf{isCycleRunning ()} : donne l'\'etat du cycle, s'il est en cours ou non;
+
+\noindent\textbf{askMaintenance ()} : si le cycle n'est pas en cours, modifie la table de configuration pour stopper le cycle \`a sa prochaine it\'eration.
+Tout lancement de cycle est impossible ensuite;
+
+\noindent\textbf{endMaintenance ()} : met fin \`a la maintenance, le cycle peut ensuite \^etre relanc\'e;
+
+\noindent\textbf{isMaintenanceScheduled ()} : permet de savoir si une maintenance est en cours ou non.
+
 \subsection{S\'ecurisation du service Web}
 \label{section:securisation}
-TODO: a finir
 
 \subsubsection{Explications}
 
@@ -730,18 +776,32 @@ Les donn\'ees transmises par \YuukouII{} contiennent des informations sur la str
 Il est donc important de limiter l'acc\'es aux donn\'ees mais aussi de s\'ecuriser toutes les communications.
 C'est dans cet optique, qu'il a \'et\'e d\'ecid\'e de mettre en place le protocole SSL entre le service Web et toute application voulant communiquer avec.
 
-Le protocol Secure Sockets Layer, ou SSL, est con\c{c}u pour assurer la confidentialit\'e des \'echanges entre un client et un serveur Web, sur diff\'erents protocoles de transport (en g\'en\'eral HTTP).
+Le protocol Secure Sockets Layer, ou SSL, est con\c{c}u pour assurer la confidentialit\'e, l'authentification et l'int\'egrit\'es des donn\'ees lorsdes \'echanges entre un client et un serveur Web, sur diff\'erents protocoles de transport (en g\'en\'eral HTTP).
+SSL met en place un chiffrement \`a cl'es publiques, \cad, une combinaise de deux cl\'es : une cl\'e publique servant au chiffrement des donn\'ees et une cl\'e priv\'ee servant au d\'echiffrement.
 Les sites Internet b\'en\'eficiant de ce protocole sont reconnaissables du fait de leurs URL\protect\footnote{\textit{Uniform Resource Locator}} commen\c{c}ant par \textsf{https://} o\`u le 's' signifie \textit{secured}.
-
-
 
 \subsubsection{Mise en place}
 
-La mise en place d'un protocole SSL sur une service Web via NetBeans et GlassFish est tr\`es facile \`a mettre en place.
-Il suffit pour cela de configurer
+La mise en place d'un protocole SSL sur un service Web via NetBeans et GlassFish est tr\`es simple.
+Il faut cependant disposer de plusieurs fichiers : une autorit\'e de certification et un couple cl\'e priv\'e - cl\'e publique tous deux fournis par l'Universit\'e.
+\`A partir de ces deux fichiers, un certificat de s\'ecurit\'e est g\'en\'er\'e.
+Ensuite l'autorit\'e de certification et le nouveau certificat sont ajout\'es \`a la configuration de GlassFish.
+
+La configuration avec NetBeans consiste \`a pr\'eciser que le service Web utilisera une connexion s\'ecuris\'ee de type SSL sur toutes les m\'ethodes HTTP (Get, Post, \ldots).
+Apr\`es d\'eploiement, le service Web ne sera accessible qu'avec HTTPS et le certificat sera diffus\'e.
 
 \subsubsection{Fonctionnement}
 
+La mise en place d'un tunnel SSL entre client et serveur se fait en 4 \'etapes :
+
+\begin{enumerate}
+	\item le client fait une demande de connexion s\'ecuris\'ee, il demande donc le certificat garantissant la cl\'e publique du serveur;
+	\item le serveur lui envoie son certificat d'authentification d\'elivr\'e par l'autorit\'e de certification, ce certificat contient la cl\'e publique;
+	\item si l'autorit\'e de certification et le certificat sont valide, alors le client envoie une cl\'e secr\`ete, cr\'e\'ee \`a partir de la cl\'e publique;
+	\item le client et le serveur poss\`ede maintenant une cl\'e secr\`ete qui sera encrypt\'e \`a l'aide d'un algorithme de hachage pour plus de s\'ecurit\'e.
+	Si la connexion est perdue, une nouvelle cl\'e secr\`ete sera n\'egoci\'ee.
+
+\end{enumerate}
 
 \section{Catalogue logiciels des salles}
 \label{section:catalogueLogiciel}
@@ -763,7 +823,47 @@ Cependant, il est \`a noter que le \textit{MediaWiki} ne concerne que quelques s
 
 \subsection{Les flux RSS de l'universit\'e}
 
+Pouvoir donner l'\'etat d'une salle informatique a un \'etudiant est un point cl\'e du service Web.
+L'Universit\'e met \`a disposition 4 flux RSS$^*$ contenant toutes les informations sur l'occupation des salles.
+Ces 4 flux correspondent aux 4 grands campus de l'Universit\'e : Harrow, New Canvendish, Marylebone et Regent.
+Ils pr\'esentent l'avantage d'\^etre \'ecris en XML, de ce fait, le contenu des flux peut \^etre r\'ecup\'er\'e.
+Les informations permettant d'identifier un \'ev\'enement sont extraites \`a l'aide d'un \textit{parseur} de type DOM$^*$.
+Chaque \'ev\'enement est ensuite ajout\'e dans la base de donn\'ees.
+
 \subsection{Correspondance des salles}
+
+Les noms des salles informatiques contenus dans les flux RSS$^*$ et ceux pr\'esents dans {\YuukouII} ne sont pas les m\^emes.
+Cela vient du fait que les flux existent depuis longtemps, de ce fait, les \'equipes charg\'ees de leurs maintenance ont adopt\'es leur propre syst\`eme de nommage des salles.
+Un table interm\'ediaire a donc \'et\'e cr\'e\'ee pour faire la relation entre une salle de {\YuukouII} et une salle de l'emploi du temps.
+Cependant, le nommage ambigu des salles dans les diff\'erents flux d'emploi du temps fait que seules quelques salles ont une correspondance dans le projet.
+Une discussion a eu lieu \`a ce sujet dans le but d'adopter un syst\`eme logique permettant de faire une correspondance plus facile avec toutes les salles surveill\'ees.
+Mais la mise en place d'un tel syst\`eme n'est pas pr\'evu dans l'imm\'ediat.
+
+\section{G\'en\'eration de graphes d'utilisation}
+
+Afin de rajouter des fonctionnalit\'es au service Web, il a \'et\'e mis en place une m\'ethode permettant de g\'en\'erer des graphes d'utilisation sous forme d'une image.
+Basiquement, une requ\^ete est ex\'ecut\'ee sur la table \textsf{yuukou\_last}, les donn\'ees sont compt\'ees et la g\'en\'eration d'un graphe est effectu\'ee.
+
+La g\'en\'eration de graphes utilise l'API$^*$ RRD4J.
+Cette API$^*$ est en fait l'impl\'ementation Java de RRDtool.
+RRDtool est un outil de gestion de base de donn\'ees RRD (\textit{Round-Robin Database}).
+C'est un outil \textit{open source} permettant le stockage et la g\'en\'eration de graphes \`a partir de donn\'ees chronologiques.
+RRDtool est utilis\'e avec notamment Nagios et Cacti par exemple.
+
+Dans le cadre du projet, l'utilisation r\'eelle de ce logiciel a \'et\'e d\'etourn\'ee du fait que normalement, les donn\'ees sont constamment archiv\'ees.
+En fait, \`a chaque demande de graphes, une nouvelle table RRD est cr\'e\'ee, remplie, exploit\'ee pour obtenir une image de graphe puis effac\'ee.
+Le but n'\'etait pas une int\'egration parfaite au service Web, mais un aper\c{c}u des possibilit\'es qu'offre RRDtool.
+
+La figure~\ref{figure:rrdTool} pr\'esente un exemple de graphe d'utilisation des salles informatiques de l'Universit\'e \`a l'aide de l'API$^*$ RRD4J pendant une journ\'ee.
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[scale=0.5]{exempleRRDtool.jpg}
+	\caption{Exemple de graphe d'utilisation des salles informatiques de l'Universit\'e g\'en\'er\'e avec RRD4J}
+	\label{figure:rrdTool}
+
+\end{figure}
+
 
 \section{Tests du service Web}
 
@@ -777,12 +877,14 @@ Cependant, il est \`a noter que le \textit{MediaWiki} ne concerne que quelques s
 
 \section{Probl\`emes rencontr\'es}
 
+correspondance entre tous les noms de salles dans timetables
+
 \section{Calendrier du stage}
 Arriv\'ee : Lundi 13 F\'evrier
 D\'epart : Lundi 4 Juin
 
 semaine 1 : Arriv\'ee et d\'ecouverte du projet, premier entretien avec l'\'equipe technique et leurs attentes
-semaine 2 : D\'ecouverte des services Web 
+semaine 2 : D\'ecouverte des services Web et choix des outils utilis\'es
 semaine 3 : Conception de la base de donn\'ees et d\'ebut d'impl\'ementation du cycle principal de l'application
 semaine 4 : fin d'impl\'ementation du cycle principal
 semaine 5 : Mise en place de l'emploi du temps + mise en place de SSL
@@ -813,6 +915,26 @@ Les cadres pleins repr\'esentent des fonctionnalit\'es dont le principe a \'et\'
 
 \section{Migration des donn\'ees}
 \label{section:migrationDonnees}
+
+Pendant le d\'eveloppement du projet, vue la quantit\'e de donn\'ees contenues dans la table \textsf{yuukou\_last} (environ 50 000 \`a 60 000 entr\'ees par mois), la question de l'archivage de ses donn\'ees s'est pos\'ee.
+Une m\'ethode a donc \'et\'e recherch\'ee en consid\'erant le fait que les donn\'ees archiv\'ees peuvent \^etre r\'eutilis\'ees lors de l'ex\'ecution de quelques m\'ethodes par le client.
+
+Une solution a \'et\'e trouv\'ee : le d\'eplacement \`a chaque d\'ebut de mois des donn\'ees dans une nouvelle table.
+Chaque nouvelle table est identifi\'ee de la sorte : 
+
+\begin{center}
+	\textsf{yuukou\_last \_ ann\'ee mois}
+
+\end{center}
+
+Avec un exemple pour illustrer, \'etant en juin 2012, la table archiv\'ee correspondant au mois de mai portera le nom suivant : 
+
+\begin{center}
+	\textsf{yuukou\_last\_201205}
+
+\end{center}
+
+De cette mani\`ere, les donn\'ees contenues dans la table \textsf{yuukou\_last} correspondent aux mois en cours.
 
 
 \clearpage

@@ -24,10 +24,10 @@
 %\usepackage[babel=true]{csquotes}
 
 %ICI
-\usepackage{picins} %image avec texte a ct
-\usepackage[toc,page]{appendix}
-\usepackage{subfig}
-\usepackage{capt-of}
+\usepackage{extensions/picins} %image avec texte a ct
+\usepackage[toc,page]{extensions/appendix}
+\usepackage{extensions/subfig}
+%\usepackage{capt-of}
 
 \usepackage{fancyhdr} % Pour les entetes de page
 \usepackage[
@@ -225,6 +225,8 @@
 \addcontentsline{toc}{chapter}{Liste des tableaux}
 \listoftables
 
-%\input{Resume}
+\clearpage
+
+\input{Resume}
 
 \end{document}
