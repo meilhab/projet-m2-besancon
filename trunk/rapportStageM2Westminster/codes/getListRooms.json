@@ -1,0 +1,12 @@
+{ "JSONMaintenance":"NO",
+  "JSONLastCycle":"2012-05-28 18:01:49",
+  "JSONContents":[{"Room":"e-cg24"},
+                  {"Room":"e-clg41"},
+                  {"Room":"e-clg42"},
+                  {"Room":"e-clg45"},
+                  {"Room":"e-clg46"},
+                  {"Room":"e-clg49"},
+                  ...
+                 ],
+  "JSONState":"OK"
+}
