@@ -200,178 +200,6 @@ C'est donc avec cet outil que les donn\'ees de {\YuukouII} seront archiv\'ees.
 MySQL est disponible sur son site Internet\cite{biblio:siteMySQL} en version 5.5.24.
 
 
-\subsection{L'acc\`es aux donn\'ees des tables}
-
-Par souci de performance, \cad, limiter les acc\`es multiples \`a la base de donn\'ees mais aussi faciliter la manipulation des donn\'ees lors des traitements, le design pattern$^*$ \textit{Data Access Object} (DAO) a \'et\'e utilis\'e.
-Un Data Access Object, ou objet d'acc\`es aux donn\'ees en fran\c{c}ais, est un objet qui constitue une repr\'esentation en m\'emoire des donn\'ees d'une base de donn\'ees.
-En Java, un DAO est une classe repr\'esentant une table dont les attributs sont les champs de la table comme le montre la figure~\ref{figure:dao}.
-Des classes repr\'esentant des listes sont g\'en\'eralement d\'evelopp\'e pour contenir les DAO et simplifier l'acc\`es aux donn\'ees.
-
-Lorsqu'il sera n\'ecessaire d'effectuer des traitements r\'ep\'et\'es sur les donn\'ees d'une table, m\^eme si ces traitements ne portent pas sur la totali\'e de la table, il est pr\'ef\'erable de charger en m\'emoire la totalit\'e des \'el\'ements utiles avec, dans le cas id\'eal, une seule requ\^ete SQL$^*$.
-
-\begin{figure}[!ht]
-	\centering
-	\includegraphics[scale=0.5]{dao.jpg}
-	\caption{Exemple de \textit{mapping} d'une table avec sa classe DAO associ\'ee (\textit{source : Cyrille Herby})}
-	\label{figure:dao}
-
-\end{figure}
-
-Dans le cadre du projet, les chargements sont effectu\'es lorsqu'un client appelle une m\'ethode du service Web. 
-Les donn\'ees sont charg\'ees dans une liste, elles sont ensuite trait\'ees puis retourn\'ees au client.
-
-\subsection{Le format de retour}
-\label{section:formatRetour}
-
-Le choix du type de retour est un choix important.
-En effet, il faut que les donn\'ees puissent \^etre rapidement transmises, r\'ecup\'er\'ees, trait\'ees et affich\'ees.
-L'objectif est un affichage instantan\'e des pages sur le navigateur Web ou l'application mobile.
-De ce fait, plusieurs possibilit\'es ont \'et\'e envisag\'ees.
-
-
-\subsubsection{{\og}\textit{Parsing}{\fg} d'un texte}
-
-La premi\`ere est de transmettre un document texte basique, celui-ci format\'e d'une certaine fa\c{c}on afin d'\^etre \textit{pars\'e} ({\cad} parcourir un flux structur\'e d'informations pour en extraire les donn\'ees).
-Ce qui aurait comme avantage de pouvoir \^etre r\'ecup\'er\'e par un client utilisant n'importe quel langage.
-La figure~\ref{code:exemplePlaintext} repr\'esente une exemple de fichier qu'il est facile de \textit{parser}, il suffit de r\'ecup\'erer les informations se trouvant entre les arobases.
-
-\vspace{0.20cm}
-
-\begin{figure}[!ht]
-	\begin{lstlisting}[language=plaintext]
-	info1 @ info2 @ info3 @ info4
-	\end{lstlisting}
-	
-	%\captionof{figure}{Exemple de ligne pouvant \^etre facilement \textit{pars\'ee}}
-	\caption{Exemple de ligne pouvant \^etre facilement \textit{pars\'ee}}
-	\label{code:exemplePlaintext}
-
-\end{figure}
-
-Pour r\'ecup\'erer les informations de cet exemple, il suffit de parcourir le fichier en stockant les informations contenues entre les \textbf{@}.
-
-Cependant cette m\'ethode est assez contraignante et oblige \`a parcourir l'ensemble du fichier alors qu'un seul type d'information peut \^etre utile.
-Ce qui signifie une perte de temps plus ou moins significative en fonction de la taille du fichier re\c{c}u.
-
-\subsubsection{Objet Java s\'erialisable}
-
-Une autre m\'ethode pourrait \^etre de transmettre un objet Java dit s\'erialisable.
-La s\'erialisation est un m\'ecanisme fourni par Java permettant de consid\'erer un objet comme une s\'equence de d'octets qui inclut les donn\'ees de l'objet, le type de l'objet et le type des donn\'ees.
-De cette mani\`ere, l'objet en question peut \^etre transmis \`a travers le r\'eseau vers une autre application Java pour le r\'ecup\'erer et le d\'es\'erialiser, ce qui repr\'esente la proc\'edure inverse de la s\'erialisation.
-La figure~\ref{code:exempleJava} donne un exemple de classe Java s\'erialisable qui pourrait \^etre transmise par le r\'eseau comme un flux de bytes.
-
-\vspace{0.20cm}
-
-\begin{figure}[!ht]
-	\lstinputlisting[language=Java]{codes/Exemple.java}
-	%\captionof{figure}{Exemple de classe Java s\'erialisable}
-	\caption{Exemple de classe Java s\'erialisable}
-	\label{code:exempleJava}
-
-\end{figure}
-
-L'objet contiendrait toutes les donn\'ees utiles et celles-ci seraient facilement accessibles.
-Le probl\`eme venant avec cette solution est que les objets doivent \^etre r\'ecup\'er\'es par une JVM$^*$.
-Ce qui peut s'av\'erer plus ou moins compliqu\'e voir impossible dans d'autres langages de programmation que Java.
-
-\subsubsection{XML}
-
-eXtensible Markup Language ou XML est un m\'eta langage pour r\'ealiser du balisage g\'en\'erique permettant de mettre en forme les documents. XML a connu un grand succ\`es depuis sa cr\'eation.
-Il est utilis\'e en particulier pour g\'erer la configuration, le stockage des donn\'ees, l'\'echange d'informations et bien d'autres fonctions encore.
-La figure~\ref{code:exempleXML} donne un exemple de document XML pouvant \^etre facilement converti en une arborescence DOM$^*$.
-
-\vspace{0.20cm}
-
-\begin{figure}[!ht]
-	\lstinputlisting[language=XML]{codes/Exemple.xml}
-	%\captionof{figure}{Exemple de document XML}
-	\caption{Exemple de document XML}
-	\label{code:exempleXML}
-
-\end{figure}
-
-XML offre une solution structur\'ee et tr\`es simple \`a comprendre pour l'envoi d'information par le r\'eseau, cependant dans les \'echanges d'informations entre client et serveur, il montre ses limites :
-
-\begin{itemize}
-	\item le chargement et la manipulation deviennent vite compliqu\'es, la plupart du temps il est n\'ecessaire de \textit{parser} le XML sous forme de DOM$^*$, puis de le parcourir, ce qui requiert l'appel de nombreuses fonctions, sans mentionner le fait que \textit{parser} un document XML est parfois long;
-	\item la taille des fichiers \'echang\'es peut parfois \^etre cons\'equente du fait de la duplication des donn\'ees : par nature, le XML ne permet pas de g\'erer une \'enorme masse d'informations.
-
-\end{itemize}
-
-\subsubsection{JSON}
-
-JavaScript Object Notation ou JSON est un format l\'eger d'\'echange de donn\'ees texte.
-Il utilise la notation des objets JavaScript pour transmettre de l'information structur\'ee.
-Il est aussi souvent utili\'e pour simplifier et all\'eger les acc\`es \`a des services Web depuis les navigateurs.
-La figure~\ref{code:exempleJSON} donne une exemple de fichier JSON reprenant le m\^eme arbre que le document XML de la figure~\ref{code:exempleXML}.
-
-\vspace{0.20cm}
-
-\begin{figure}[!ht]
-	\lstinputlisting[language=JSON]{codes/Exemple.json}
-	%\captionof{figure}{Exemple de fichier JSON}
-	\caption{Exemple de fichier JSON}
-	\label{code:exempleJSON}
-
-\end{figure}
-
-\subsubsection{Choix du format}
-
-Le choix du format de retour des donn\'ees s'est port\'e sur l'utilisation de JSON.
-Le but du client, qui demande des informations au service Web, est de recevoir les donn\'ees le plus rapidement possible afin d'avoir \`a les afficher dans la foul\'ee.
-De ce fait, le \textit{parsing} d'un texte contenant des balises \`a certains endroits s'av\`ere inadapt\'e, notamment pour r\'ecup\'erer un seul type d'information.
-L'envoi d'un objet s\'erialisable Java est, quant \`a lui trop restrictif. Le choix a donc \'et\'e de choisir entre XML ou JSON.
-
-XML offre un format de donn\'ees verbeux et prend beaucoup d'espace. 
-De plus un document XML peut \^etre valid\'e via l'utilisation de DTD\protect\footnote{\textit{Document Type Definition}}, document permettant de d\'ecrire un mod\`ele de document XML, ou de XSD\protect\footnote{\textit{XML Schema Definition}}, langage de description de format de document XML permettant de d\'efinir la structure et le type de contenu d'un document XML.
-
-JSON offre un format de fichier plus simple que XML, facilement compr\'ehensible.
-Pour compl\'eter, les fichiers JSON, \`a arbre \'egal, seront toujours plus petits que l'\'equivalent XML et pr\'esenteront l'avantage d'\^etre plus rapidement \textit{pars\'es}.
-
-Au final JSON permet une plus grande rapidit\'e dans les \'echanges avec un serveur ainsi que sur le temps de \textit{parsing} des fichiers, le tout avec une \'economie des ressources du fait de sa petit taille.
-Cependant, les donn\'ees ne peuvent pas \^etre v\'erifi\'ees dans un fichier JSON, il demande donc une certaine rigueur dans son \'ecriture du cot\'e serveur ainsi qu'une connaissance de sa structure du cot\'e client.
-
-\subsection{Compl\'ement d'information sur JSON}
-
-\subsubsection{Pr\'esentation}
-
-Une courte description de ce qu'est JSON a d\'ej\`a \'et\'e faite au \S~\ref{section:formatRetour}.
-Pour reprendre ce qui a d\'ej\`a \'et\'e dit, JSON est un format l\'eger d'\'echange de donn\'ees qui est apparu en 2002.
-Il est facile \`a \'ecrire et comprendre pour des humains.
-Il est bas\'e sur un sous-ensemble du langage de programmation JavaScript et est compl\`etement ind\'ependant de tout langage, tout en poss\`edant des conventions famili\`eres aux langages descendant du C (C++, C\#, Java, JavaScript, \ldots).
-Ces propri\'et\'es font de JSON un langage d'\'echange de donn\'ees id\'eal.
-
-Cependant, il ne supporte pas les espaces de noms au contraire d'XML.
-Pour la v\'erification des donn\'ees, les sch\'emas JSON ne sont pas tr\`es utilis\'es du fait qu'ils doivent \^etre ecrit \`a la main comme il n'existe aucun outil pour g\'en\'erer un sch\'ema \`a partir de donn\'ees JSON.
-Et concernant la s\'ecurit\'e, il existe la possibilit\'e o\`u des \textit{scripts} malveillants pourraient \^etre dissimul\'es et ex\'ecut\'es.
-Il existe des fonctions pour tester les fichiers JSON mais celles-ci ne sont pas vraiment concluantes.
-La meilleure d\'efense est de conna\^itre \`a l'avance les points sensibles et de prendre les pr\'ecautions n\'ecessaires.
-
-\subsubsection{Structure}
-
-JSON se base sur deux structures de donn\'ees universelles dans pratiquement tous les langages de programmation modernes :
-
-\begin{itemize}
-	\item une collection de couples nom/valeur;
-	\item une liste de valeurs ordonn\'ees.
-
-\end{itemize}
-
-\vspace{0.20cm}
-
-\noindent Ces \'el\'ements repr\'esentent trois types de donn\'ees :
-
-\begin{itemize}
-	\item un \textit{objet} :\\Ensemble de couples nom/valeur non ordonn\'es. Un objet commence par \textsf{\{ (accolade gauche)} et se termine par \textsf{\} (accolade droite)}.
-	Chaque nom est suivi de \textsf{: (deux-points)} et les couples nom/valeur sont s\'epar\'es par \textsf{, (virgule)};
-	\item un \textit{tableau} :\\Collection de valeurs ordonn\'ees. Un tableau commence par \textsf{$[$ (crochet gauche)} et se termine par \textsf{$]$ (crochet droit)}.
-	Les valeurs sont s\'epar\'ees par \textsf{, (virgule)};
-	\item une \textit{valeur} :\\Soit une \textsf{cha\^ine de caract\`eres} entre guillemets, soit un \textsf{nombre}, soit \textsf{true} ou \textsf{false} ou \textsf{null}, soit un \textsf{objet}, soit un \textsf{tableau}.
-	Ces structures peuvent \^etre imbriqu\'ees;
-	\item une \textit{cha\^ine de caract\`eres} :\\Suite caract\'eres Unicode (z\'ero ou plus), entre guillemets, et utilisant les \'echappements avec antislash. 
-	Un caract\`eres est repr\'esent\'e par une cha\^ine d'un seul caract\`ere.
-
-\end{itemize}
 
 \section{Communication avec Nagios}
 
@@ -583,84 +411,14 @@ Ainsi, la salle \textsf{4111} se trouvant sur le campus de New Cavendish sera id
 Le type d'ordinateur peut \^etre de deux type : \textsf{pc} si c'est un PC ou \textsf{mc} si c'est un Macintosh.
 Ainsi, un ordinateur se trouvant dans la salle \textsf{n-4111}, \'etant un Macintosh et portant le num\'ero 1 sera identifi\'e comme suit : \textsf{n-4111-mc-01}.
 
-\section{Gestion du poste de travail}
-\label{section:gestionProjet}
-
-Afin de d\'evelopper efficacement, une organisation du poste de travail mais plus g\'en\'eralement du projet en lui-m\^eme a \'et\'e choisie.
-Cette organisation comporte une machine de d\'eveloppement et deux serveurs comme le montre la figure~\ref{figure:gestionProjet}.
-
-\begin{figure}[!ht]
-	\centering
-	\includegraphics[scale=0.35]{gestionProjet.jpg}
-	\caption{Sch\'ema de la gestion du projet}
-	\label{figure:gestionProjet}
-
-\end{figure}
-
-Le serveur principal poss\`ede un syst\`eme d'exploitation Debian version 6.0.5 (\textit{Squeeze}) et h\'eberge le service Web dans une version stable ainsi que tous les outils n\'ecessaire \`a son fonctionnement comme le serveur de gestion de base de donn\'ees (SGBD) MySQL, une version de Java \`a jour, le serveur d'application GlassFish mais aussi Nagios.
-La faible consommation CPU de Nagios dans la surveillance des machines de l'universit\'e fait, qu'actuellement, il peut \^etre h\'eberg\'e sur le m\^eme serveur que le service Web.
-Le serveur principal h\'eberge aussi le gestionnaire de version subversion (SVN) sur lequel est constamment maintenu le projet.
-Il est accessible sur le r\'eseau sous le nom de domaine \textsf{yuukou-ws.wmin.ac.uk}.
-
-Le serveur dit {\og}secondaire{\fg} poss\`ede lui aussi le m\^eme syst\`eme d'exploitation Debian et h\'eberge l'application Web permettant de communiquer avec le service Web.
-Cette application fait r\'eguli\`erement appel au service Web pour obtenir les informations dont elle a besoin pour afficher correctement ses pages.
-Il est accessible sur le r\'eseau sous le nom de domaine \textsf{yuukou2.wmin.ac.uk}.
-
-La machine de d\'eveloppement poss\`ede un syst\`eme d'exploitation Linux Mint version 11 (\textit{Katya}), tous les outils n\'ecessaires au d\'eveloppement (comme Java, NetBeans, \ldots), mais aussi un serveur de gestion de base de donn\'ee (SGBD) MySQL et un serveur GlassFish, tous deux servant \`a effectuer des tests avant d\'eploiement.
-\`A chaque d\'eploiement sur le serveur principal, la version du projet est publi\'ee sur le SVN afin de garantir une s\'ecurit\'e dans le cas d'une r\'egression dans le d\'eveloppement.
 
 
-\section{Gestion de la base de donn\'ees}
-
-\subsection{Structure de la base de donn\'ees}
-
-La base de donn\'ees a \'evolu\'e tout au long du projet en fonction des fonctionnalit\'es qui ont \'et\'e demand\'ees.
-L'annexe~\ref{chapterAnnexe:baseDeDonnees} permet d'avoir une description des diff\'erentes tables composant la base de donn\'ees, une vue g\'en\'erale de ce \`a quoi elle ressemble, et des vues d\'ecoup\'ees des diff\'erentes parties la composant.
-
-La base de donn\'ees peut \^etre d\'ecoup\'ee en diff\'erentes grandes parties.
-La partie archivage a pour but de conserver les donn\'ees dans le temps.
-Pour ce faire, elle est compos\'ee de deux tables centrales de sauvegarde d'informations.
-La premi\`ere est la table \textsf{yuukou\_who}, son but est de simuler la commande UNIX \textsf{who}.
-Cette commande permet de donner tous les utilisateur connect\'es sur la machine o\`u elle est ex\'ecut\'ee.
-De ce fait, si elle est port\'ee au niveau de Nagios et du projet, la table contiendra tous les utilisateurs connect\'es sur un ordinateur et depuis quand ils le sont.
-La deuxi\`eme table est \textsf{yuukou\_last}, son but est aussi de simuler une commande UNIX, la commande \textsf{last}.
-Cette commande permet de donner la liste de toutes les derni\`eres connexions sur la machine sur laquelle elle est ex\'ecut\'ee.
-De ce fait, si elle est port\'ee au niveau de Nagios et du projet, la table contiendra toutes les connexions des utilisateurs sur un ordinateur, l'heure de d\'ebut et de fin et la cause de la d\'econnexion. En fait, elle contiendra les donn\'ees de la table \textsf{yuukou\_who} et ajoutant les informations du temps de fin de connexion et la cause de la d\'econnexion.
-
-La partie logicielle a pour but de stocker la configuration logicielle de chaque salle informatique.
-La r\'ecup\'eration de cette configuration est expliqu\'ee au \S~\ref{section:catalogueLogiciel}.
-Cette partie est compos\'ee de plusieurs tables.
-Une salle informatique peut avoir des groupes de logiciels, \textsf{yuukou\_rooms\_groups} et aussi des logiciels ind\'ependants de tout groupe, \textsf{yuukou\_rooms\_software}.
-Un groupe de logiciels contient des logiciels, \textsf{yuukou\_groups\_software}.
-Les descriptions des groupes et logiciels sont contenues dans les tables \textsf{yuukou\_groups} et \textsf{yuukou\_software}.
-Avec ces tables, il est possible de facilement reconstruire la configuration logicielle d'une salle.
-
-La partie emploi du temps a pour but de stocker tous \'ev\`enements des diff\'erents emplois du temps de l'Universit\'e.
-La r\'ecup\'eration de cette configuration est expliqu\'ee au \S~\ref{section:emploiDuTemps}.
-Cette partie est compos\'ees de trois tables.
-La premi\`ere table est celle contenant toutes les salles \textsf{yuukou\_rooms}, la deuxi\`eme contenant tous les \'ev\`enements \textsf{yuukou\_timetables}.
-Pour la derni\`ere table \textsf{yuukou\_mapping\_room}, son r\^ole est de faire le lien entre les noms des salles dans Nagios et les noms des salles qui sont utilis\'ees pour l'emploi du temps.
-En effet, la g\'en\'eration des emplois du temps est effectu\'ee par un service de l'Universit\'e.
-De ce fait, ce service utilise un syst\`eme pour nommer les salles qui lui est propre.
-Il est donc n\'ecessaire de pouvoir relier un \'ev\`enement \`a une salle \`a l'aide de cette derni\`ere table.
-
-La partie \textit{mapping} avec les salles a pour but de faire le lien entre une description compl\`ete d'un lieu et la description courte qui est donn\'e dans la description d'une salle dans la table \textsf{yuukou\_rooms}.
-Les informations concernant les diff\'erents lieux sont contenues dans la table \textit{yuukou\_mapping\_location}.
-
-La derni\`ere partie, configuration, a pour but de g\'erer les diff\'erents param\`etres permettant la gestion de cycle lors du fonctionnement du service Web. 
-Les explications concernant ce qu'est un cycle se trouvent au \S~\ref{section:cyclePrincipal}.
-
-TODO a finir
-
-\subsection{Explications}
-
-\subsection{G\'en\'eration de la configuration Nagios \`a partir de la base de donn\'ees}
-
-\section{Le service Web}
+\section{Fonctionnement du service Web}
 
 Le service Web peut se d\'ecomposer en deux grandes parties.
 La premi\`ere consiste en un cycle principal qui a pour but de r\'ecup\'erer les informations de Nagios et de les traiter.
 La deuxi\`eme consiste en de multiples fonctions pouvant \^etre accessibles soit par un administrateur, soit par un utilisateur normal et permettant le retour d'une partie des informations accumul\'ees avec le cycle principal.
+TODO reprendre
 
 \subsection{Le cycle principal}
 \label{section:cyclePrincipal}
@@ -713,10 +471,10 @@ Cette table permet de savoir quand un cycle a \'et\'e effectu\'e pour la derni\`
 Agir sur cette table permet donc de stopper le processus mais aussi d'avoir une assurance qualit\'e sur les informations qui seront retourn\'ees par les m\'ethodes accessibles pour le client.
 Si un cycle date de 5 heures, alors il ne faut pas tenir compte des informations retourn\'ees.
 
-\subsection{Les fonctionnalit\'es publiques}
-\label{section:fonctionnalitesPubliques}
+\subsection{Les fonctions publiques}
+\label{section:fonctionsPubliques}
 
-Ces fonctionnalit\'es sont accessibles par tous les utilisateurs appartenant \`a l'Universit\'e.
+Ces fonctions sont accessibles par tous les utilisateurs appartenant \`a l'Universit\'e.
 Elles ne retournent aucunes informations pouvant porter atteinte aux utilisateurs ou pouvant donner acc\`es \`a l'administration du service Web.
 
 \noindent\textbf{healthForRoom (String idRoom)} : retourne toutes les informations concernant une salle : emploi du temps, nombre d'utilisateur, description de la salle, \ldots
@@ -729,9 +487,9 @@ Elles ne retournent aucunes informations pouvant porter atteinte aux utilisateur
 
 \noindent\textbf{getRoomsType (String typeRoom)} : retourne la liste des salles en fonction d'un type de machine (PC ou MAC).
 
-\subsection{Les fonctionnalit\'es priv\'ees}
+\subsection{Les fonctions priv\'ees}
 
-Ces fonctionnalit\'es sont un compl\'ement aux fonctionnalit\'es publiques du \S~\ref{section:fonctionnalitesPubliques}.
+Ces fonctions sont un compl\'ement aux fonctions publiques du \S~\ref{section:fonctionsPubliques}.
 Elles permettent un contr\^ole sur le cycle principal du service Web et des informations retourn\'ees plus compl\`etes.
 
 \noindent\textbf{launchCycle ()} : permet dans lancer le cycle du service Web
@@ -765,6 +523,9 @@ Tout lancement de cycle est impossible ensuite;
 \noindent\textbf{endMaintenance ()} : met fin \`a la maintenance, le cycle peut ensuite \^etre relanc\'e;
 
 \noindent\textbf{isMaintenanceScheduled ()} : permet de savoir si une maintenance est en cours ou non.
+
+
+\section{Fonctionnalit\'ees en place}
 
 \subsection{S\'ecurisation du service Web}
 \label{section:securisation}
@@ -803,7 +564,8 @@ La mise en place d'un tunnel SSL entre client et serveur se fait en 4 \'etapes :
 
 \end{enumerate}
 
-\section{Catalogue logiciels des salles}
+
+\subsection{Catalogue logiciels des salles}
 \label{section:catalogueLogiciel}
 
 Un des objectifs final de {\YuukouII} est de fournir \`a \'etudiant une liste des logiciels pouvant \^etre utilis\'es dans chaque salle.
@@ -818,10 +580,10 @@ Afin de faciliter la gestion de sites Web de ce genre, de nombreuses API$^*$ exi
 C'est donc en utilisant une de ces API$^*$ que la configuration logicielle de chaque salle a \'et\'e r\'ecup\'er\'ee et ins\'er\'ee dans la base de donn\'ees.
 Cependant, il est \`a noter que le \textit{MediaWiki} ne concerne que quelques salles de la \textit{School of Electronics and Computer Science}.
 
-\section{Gestion de l'emploi du temps}
+\subsection{Gestion de l'emploi du temps}
 \label{section:emploiDuTemps}
 
-\subsection{Les flux RSS de l'universit\'e}
+\subsubsection{Les flux RSS de l'universit\'e}
 
 Pouvoir donner l'\'etat d'une salle informatique a un \'etudiant est un point cl\'e du service Web.
 L'Universit\'e met \`a disposition 4 flux RSS$^*$ contenant toutes les informations sur l'occupation des salles.
@@ -830,7 +592,7 @@ Ils pr\'esentent l'avantage d'\^etre \'ecris en XML, de ce fait, le contenu des 
 Les informations permettant d'identifier un \'ev\'enement sont extraites \`a l'aide d'un \textit{parseur} de type DOM$^*$.
 Chaque \'ev\'enement est ensuite ajout\'e dans la base de donn\'ees.
 
-\subsection{Correspondance des salles}
+\subsubsection{Correspondance des salles}
 
 Les noms des salles informatiques contenus dans les flux RSS$^*$ et ceux pr\'esents dans {\YuukouII} ne sont pas les m\^emes.
 Cela vient du fait que les flux existent depuis longtemps, de ce fait, les \'equipes charg\'ees de leurs maintenance ont adopt\'es leur propre syst\`eme de nommage des salles.
@@ -839,7 +601,7 @@ Cependant, le nommage ambigu des salles dans les diff\'erents flux d'emploi du t
 Une discussion a eu lieu \`a ce sujet dans le but d'adopter un syst\`eme logique permettant de faire une correspondance plus facile avec toutes les salles surveill\'ees.
 Mais la mise en place d'un tel syst\`eme n'est pas pr\'evu dans l'imm\'ediat.
 
-\section{G\'en\'eration de graphes d'utilisation}
+\subsection{G\'en\'eration de graphes d'utilisation}
 
 Afin de rajouter des fonctionnalit\'es au service Web, il a \'et\'e mis en place une m\'ethode permettant de g\'en\'erer des graphes d'utilisation sous forme d'une image.
 Basiquement, une requ\^ete est ex\'ecut\'ee sur la table \textsf{yuukou\_last}, les donn\'ees sont compt\'ees et la g\'en\'eration d'un graphe est effectu\'ee.
@@ -864,28 +626,297 @@ La figure~\ref{figure:rrdTool} pr\'esente un exemple de graphe d'utilisation des
 
 \end{figure}
 
+\subsection{Migration des donn\'ees}
+\label{section:migrationDonnees}
 
-\section{Tests du service Web}
+Pendant le d\'eveloppement du projet, vue la quantit\'e de donn\'ees contenues dans la table \textsf{yuukou\_last} (environ 50 000 \`a 60 000 entr\'ees par mois), la question de l'archivage de ses donn\'ees s'est pos\'ee.
+Une m\'ethode a donc \'et\'e recherch\'ee en consid\'erant le fait que les donn\'ees archiv\'ees peuvent \^etre r\'eutilis\'ees lors de l'ex\'ecution de quelques m\'ethodes par le client.
 
-\subsection{Mise en place d'un client}
+Une solution a \'et\'e trouv\'ee : le d\'eplacement \`a chaque d\'ebut de mois des donn\'ees dans une nouvelle table.
+Chaque nouvelle table est identifi\'ee de la sorte : 
 
-\subsection{Consommation les m\'ethodes}
+\begin{center}
+	\textsf{yuukou\_last \_ ann\'ee mois}
 
-\section{Am\'eliorations possibles}
+\end{center}
 
-Le projet {\YuukouII} est loin d'\^etre fini m\^eme si fonctionnel \`a l'heure actuelle.
-Il reste diverses fonctionnalit\'es \`a d\'evelopper.
-Une de ces fonctionnalit\'es serait de rajouter une s\'ecurit\'e lors de l'acc\`es aux m\'ethodes du service Web par le client.
-En effet, il serait int\'eressant que le client s'authentifie.
-De ce fait, deux r\^oles pourraient \^etre d\'efinis : administrateur et utilisateur.
-Avec cette m\'ethode, un utilisateur ne pourrait jamais se servir d'une m\'ethode dite priv\'ee car actuellement, si un client d\'eveloppe son propre programme pour acc\'eder au service Web {\YuukouII}, une fois le protocole SSL\protect\footnote{\textit{Secure Sockets Layer}} en place, rien ne l'emp\^eche d'utiliser les fonctions qu'il veut.
+Avec un exemple pour illustrer, \'etant en juin 2012, la table archiv\'ee correspondant au mois de mai portera le nom suivant : 
 
-Des am\'eliorations peuvent aussi \^etre port\'ees sur la fa\c{c}on dont RRDtool a \'et\'e mis en place.
-Il ne s'agit que d'un essai pour tester les possibilit\'es, mais il serait int\'eressant de l'int\'egrer pleinement au service Web et surtout au cycle principal d'ex\'ecution.
+\begin{center}
+	\textsf{yuukou\_last\_201205}
+
+\end{center}
+
+De cette mani\`ere, les donn\'ees contenues dans la table \textsf{yuukou\_last} correspondent aux mois en cours.
+
+\subsection{L'acc\`es aux donn\'ees des tables}
+
+Par souci de performance, \cad, limiter les acc\`es multiples \`a la base de donn\'ees mais aussi faciliter la manipulation des donn\'ees lors des traitements, le design pattern$^*$ \textit{Data Access Object} (DAO) a \'et\'e utilis\'e.
+Un Data Access Object, ou objet d'acc\`es aux donn\'ees en fran\c{c}ais, est un objet qui constitue une repr\'esentation en m\'emoire des donn\'ees d'une base de donn\'ees.
+En Java, un DAO est une classe repr\'esentant une table dont les attributs sont les champs de la table comme le montre la figure~\ref{figure:dao}.
+Des classes repr\'esentant des listes sont g\'en\'eralement d\'evelopp\'e pour contenir les DAO et simplifier l'acc\`es aux donn\'ees.
+
+Lorsqu'il sera n\'ecessaire d'effectuer des traitements r\'ep\'et\'es sur les donn\'ees d'une table, m\^eme si ces traitements ne portent pas sur la totali\'e de la table, il est pr\'ef\'erable de charger en m\'emoire la totalit\'e des \'el\'ements utiles avec, dans le cas id\'eal, une seule requ\^ete SQL$^*$.
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[scale=0.5]{dao.jpg}
+	\caption{Exemple de \textit{mapping} d'une table avec sa classe DAO associ\'ee (\textit{source : Cyrille Herby})}
+	\label{figure:dao}
+
+\end{figure}
+
+Dans le cadre du projet, les chargements sont effectu\'es lorsqu'un client appelle une m\'ethode du service Web. 
+Les donn\'ees sont charg\'ees dans une liste, elles sont ensuite trait\'ees puis retourn\'ees au client.
+
+\subsection{Le format de retour}
+\label{section:formatRetour}
+
+Le choix du type de retour est un choix important.
+En effet, il faut que les donn\'ees puissent \^etre rapidement transmises, r\'ecup\'er\'ees, trait\'ees et affich\'ees.
+L'objectif est un affichage instantan\'e des pages sur le navigateur Web ou l'application mobile.
+De ce fait, plusieurs possibilit\'es ont \'et\'e envisag\'ees.
 
 
+\subsubsection{{\og}\textit{Parsing}{\fg} d'un texte}
 
-\section{Travail en \'equipe}
+La premi\`ere est de transmettre un document texte basique, celui-ci format\'e d'une certaine fa\c{c}on afin d'\^etre \textit{pars\'e} ({\cad} parcourir un flux structur\'e d'informations pour en extraire les donn\'ees).
+Ce qui aurait comme avantage de pouvoir \^etre r\'ecup\'er\'e par un client utilisant n'importe quel langage.
+La figure~\ref{code:exemplePlaintext} repr\'esente une exemple de fichier qu'il est facile de \textit{parser}, il suffit de r\'ecup\'erer les informations se trouvant entre les arobases.
+
+\vspace{0.20cm}
+
+\begin{figure}[!ht]
+	\begin{lstlisting}[language=plaintext]
+	info1 @ info2 @ info3 @ info4
+	\end{lstlisting}
+	
+	%\captionof{figure}{Exemple de ligne pouvant \^etre facilement \textit{pars\'ee}}
+	\caption{Exemple de ligne pouvant \^etre facilement \textit{pars\'ee}}
+	\label{code:exemplePlaintext}
+
+\end{figure}
+
+Pour r\'ecup\'erer les informations de cet exemple, il suffit de parcourir le fichier en stockant les informations contenues entre les \textbf{@}.
+
+Cependant cette m\'ethode est assez contraignante et oblige \`a parcourir l'ensemble du fichier alors qu'un seul type d'information peut \^etre utile.
+Ce qui signifie une perte de temps plus ou moins significative en fonction de la taille du fichier re\c{c}u.
+
+\subsubsection{Objet Java s\'erialisable}
+
+Une autre m\'ethode pourrait \^etre de transmettre un objet Java dit s\'erialisable.
+La s\'erialisation est un m\'ecanisme fourni par Java permettant de consid\'erer un objet comme une s\'equence de d'octets qui inclut les donn\'ees de l'objet, le type de l'objet et le type des donn\'ees.
+De cette mani\`ere, l'objet en question peut \^etre transmis \`a travers le r\'eseau vers une autre application Java pour le r\'ecup\'erer et le d\'es\'erialiser, ce qui repr\'esente la proc\'edure inverse de la s\'erialisation.
+La figure~\ref{code:exempleJava} donne un exemple de classe Java s\'erialisable qui pourrait \^etre transmise par le r\'eseau comme un flux de bytes.
+
+\vspace{0.20cm}
+
+\begin{figure}[!ht]
+	\lstinputlisting[language=Java]{codes/Exemple.java}
+	%\captionof{figure}{Exemple de classe Java s\'erialisable}
+	\caption{Exemple de classe Java s\'erialisable}
+	\label{code:exempleJava}
+
+\end{figure}
+
+L'objet contiendrait toutes les donn\'ees utiles et celles-ci seraient facilement accessibles.
+Le probl\`eme venant avec cette solution est que les objets doivent \^etre r\'ecup\'er\'es par une JVM$^*$.
+Ce qui peut s'av\'erer plus ou moins compliqu\'e voir impossible dans d'autres langages de programmation que Java.
+
+\subsubsection{XML}
+
+eXtensible Markup Language ou XML est un m\'eta langage pour r\'ealiser du balisage g\'en\'erique permettant de mettre en forme les documents. XML a connu un grand succ\`es depuis sa cr\'eation.
+Il est utilis\'e en particulier pour g\'erer la configuration, le stockage des donn\'ees, l'\'echange d'informations et bien d'autres fonctions encore.
+La figure~\ref{code:exempleXML} donne un exemple de document XML pouvant \^etre facilement converti en une arborescence DOM$^*$.
+
+\vspace{0.20cm}
+
+\begin{figure}[!ht]
+	\lstinputlisting[language=XML]{codes/Exemple.xml}
+	%\captionof{figure}{Exemple de document XML}
+	\caption{Exemple de document XML}
+	\label{code:exempleXML}
+
+\end{figure}
+
+XML offre une solution structur\'ee et tr\`es simple \`a comprendre pour l'envoi d'information par le r\'eseau, cependant dans les \'echanges d'informations entre client et serveur, il montre ses limites :
+
+\begin{itemize}
+	\item le chargement et la manipulation deviennent vite compliqu\'es, la plupart du temps il est n\'ecessaire de \textit{parser} le XML sous forme de DOM$^*$, puis de le parcourir, ce qui requiert l'appel de nombreuses fonctions, sans mentionner le fait que \textit{parser} un document XML est parfois long;
+	\item la taille des fichiers \'echang\'es peut parfois \^etre cons\'equente du fait de la duplication des donn\'ees : par nature, le XML ne permet pas de g\'erer une \'enorme masse d'informations.
+
+\end{itemize}
+
+\subsubsection{JSON}
+
+JavaScript Object Notation ou JSON est un format l\'eger d'\'echange de donn\'ees texte.
+Il utilise la notation des objets JavaScript pour transmettre de l'information structur\'ee.
+Il est aussi souvent utili\'e pour simplifier et all\'eger les acc\`es \`a des services Web depuis les navigateurs.
+La figure~\ref{code:exempleJSON} donne une exemple de fichier JSON reprenant le m\^eme arbre que le document XML de la figure~\ref{code:exempleXML}.
+
+\vspace{0.20cm}
+
+\begin{figure}[!ht]
+	\lstinputlisting[language=JSON]{codes/Exemple.json}
+	%\captionof{figure}{Exemple de fichier JSON}
+	\caption{Exemple de fichier JSON}
+	\label{code:exempleJSON}
+
+\end{figure}
+
+\subsubsection{Choix du format}
+
+Le choix du format de retour des donn\'ees s'est port\'e sur l'utilisation de JSON.
+Le but du client, qui demande des informations au service Web, est de recevoir les donn\'ees le plus rapidement possible afin d'avoir \`a les afficher dans la foul\'ee.
+De ce fait, le \textit{parsing} d'un texte contenant des balises \`a certains endroits s'av\`ere inadapt\'e, notamment pour r\'ecup\'erer un seul type d'information.
+L'envoi d'un objet s\'erialisable Java est, quant \`a lui trop restrictif. Le choix a donc \'et\'e de choisir entre XML ou JSON.
+
+XML offre un format de donn\'ees verbeux et prend beaucoup d'espace. 
+De plus un document XML peut \^etre valid\'e via l'utilisation de DTD\protect\footnote{\textit{Document Type Definition}}, document permettant de d\'ecrire un mod\`ele de document XML, ou de XSD\protect\footnote{\textit{XML Schema Definition}}, langage de description de format de document XML permettant de d\'efinir la structure et le type de contenu d'un document XML.
+
+JSON offre un format de fichier plus simple que XML, facilement compr\'ehensible.
+Pour compl\'eter, les fichiers JSON, \`a arbre \'egal, seront toujours plus petits que l'\'equivalent XML et pr\'esenteront l'avantage d'\^etre plus rapidement \textit{pars\'es}.
+
+Au final JSON permet une plus grande rapidit\'e dans les \'echanges avec un serveur ainsi que sur le temps de \textit{parsing} des fichiers, le tout avec une \'economie des ressources du fait de sa petit taille.
+Cependant, les donn\'ees ne peuvent pas \^etre v\'erifi\'ees dans un fichier JSON, il demande donc une certaine rigueur dans son \'ecriture du cot\'e serveur ainsi qu'une connaissance de sa structure du cot\'e client.
+
+\subsection{Compl\'ement d'information sur JSON}
+
+\subsubsection{Pr\'esentation}
+
+Une courte description de ce qu'est JSON a d\'ej\`a \'et\'e faite au \S~\ref{section:formatRetour}.
+Pour reprendre ce qui a d\'ej\`a \'et\'e dit, JSON est un format l\'eger d'\'echange de donn\'ees qui est apparu en 2002.
+Il est facile \`a \'ecrire et comprendre pour des humains.
+Il est bas\'e sur un sous-ensemble du langage de programmation JavaScript et est compl\`etement ind\'ependant de tout langage, tout en poss\`edant des conventions famili\`eres aux langages descendant du C (C++, C\#, Java, JavaScript, \ldots).
+Ces propri\'et\'es font de JSON un langage d'\'echange de donn\'ees id\'eal.
+
+Cependant, il ne supporte pas les espaces de noms au contraire d'XML.
+Pour la v\'erification des donn\'ees, les sch\'emas JSON ne sont pas tr\`es utilis\'es du fait qu'ils doivent \^etre ecrit \`a la main comme il n'existe aucun outil pour g\'en\'erer un sch\'ema \`a partir de donn\'ees JSON.
+Et concernant la s\'ecurit\'e, il existe la possibilit\'e o\`u des \textit{scripts} malveillants pourraient \^etre dissimul\'es et ex\'ecut\'es.
+Il existe des fonctions pour tester les fichiers JSON mais celles-ci ne sont pas vraiment concluantes.
+La meilleure d\'efense est de conna\^itre \`a l'avance les points sensibles et de prendre les pr\'ecautions n\'ecessaires.
+
+\subsubsection{Structure}
+
+JSON se base sur deux structures de donn\'ees universelles dans pratiquement tous les langages de programmation modernes :
+
+\begin{itemize}
+	\item une collection de couples nom/valeur;
+	\item une liste de valeurs ordonn\'ees.
+
+\end{itemize}
+
+\vspace{0.20cm}
+
+\noindent Ces \'el\'ements repr\'esentent trois types de donn\'ees :
+
+\begin{itemize}
+	\item un \textit{objet} :\\Ensemble de couples nom/valeur non ordonn\'es. Un objet commence par \textsf{\{ (accolade gauche)} et se termine par \textsf{\} (accolade droite)}.
+	Chaque nom est suivi de \textsf{: (deux-points)} et les couples nom/valeur sont s\'epar\'es par \textsf{, (virgule)};
+	\item un \textit{tableau} :\\Collection de valeurs ordonn\'ees. Un tableau commence par \textsf{$[$ (crochet gauche)} et se termine par \textsf{$]$ (crochet droit)}.
+	Les valeurs sont s\'epar\'ees par \textsf{, (virgule)};
+	\item une \textit{valeur} :\\Soit une \textsf{cha\^ine de caract\`eres} entre guillemets, soit un \textsf{nombre}, soit \textsf{true} ou \textsf{false} ou \textsf{null}, soit un \textsf{objet}, soit un \textsf{tableau}.
+	Ces structures peuvent \^etre imbriqu\'ees;
+	\item une \textit{cha\^ine de caract\`eres} :\\Suite caract\'eres Unicode (z\'ero ou plus), entre guillemets, et utilisant les \'echappements avec antislash. 
+	Un caract\`eres est repr\'esent\'e par une cha\^ine d'un seul caract\`ere.
+
+\end{itemize}
+
+\subsection{Gestion de la base de donn\'ees}
+
+La base de donn\'ees a \'evolu\'e tout au long du projet en fonction des fonctionnalit\'es qui ont \'et\'e demand\'ees.
+L'annexe~\ref{chapterAnnexe:baseDeDonnees} permet d'avoir une description des diff\'erentes tables composant la base de donn\'ees, une vue g\'en\'erale de ce \`a quoi elle ressemble, et des vues d\'ecoup\'ees des diff\'erentes parties.
+
+La base de donn\'ees peut \^etre d\'ecoup\'ee en diff\'erentes grandes parties.
+La partie archivage a pour but de conserver les donn\'ees dans le temps.
+Pour ce faire, elle est compos\'ee de deux tables centrales de sauvegarde d'informations.
+La premi\`ere est la table \textsf{yuukou\_who}, son but est de simuler la commande UNIX \textsf{who}.
+Cette commande permet de donner tous les utilisateur connect\'es sur la machine o\`u elle est ex\'ecut\'ee.
+De ce fait, si elle est port\'ee au niveau de Nagios et du projet, la table contiendra tous les utilisateurs connect\'es sur un ordinateur et depuis quand ils le sont.
+La deuxi\`eme table est \textsf{yuukou\_last}, son but est aussi de simuler une commande UNIX, la commande \textsf{last}.
+Cette commande permet de donner la liste de toutes les derni\`eres connexions sur la machine sur laquelle elle est ex\'ecut\'ee.
+De ce fait, si elle est port\'ee au niveau de Nagios et du projet, la table contiendra toutes les connexions des utilisateurs sur un ordinateur, l'heure de d\'ebut et de fin et la cause de la d\'econnexion. En fait, elle contiendra les donn\'ees de la table \textsf{yuukou\_who} et ajoutant les informations du temps de fin de connexion et la cause de la d\'econnexion.
+
+La partie logicielle a pour but de stocker la configuration logicielle de chaque salle informatique.
+La r\'ecup\'eration de cette configuration est expliqu\'ee au \S~\ref{section:catalogueLogiciel}.
+Cette partie est compos\'ee de plusieurs tables.
+Une salle informatique peut avoir des groupes de logiciels, \textsf{yuukou\_rooms\_groups} et aussi des logiciels ind\'ependants de tout groupe, \textsf{yuukou\_rooms\_software}.
+Un groupe de logiciels contient des logiciels, \textsf{yuukou\_groups\_software}.
+Les descriptions des groupes et logiciels sont contenues dans les tables \textsf{yuukou\_groups} et \textsf{yuukou\_software}.
+Avec ces tables, il est possible de facilement reconstruire la configuration logicielle d'une salle.
+
+La partie emploi du temps a pour but de stocker tous \'ev\`enements des diff\'erents emplois du temps de l'Universit\'e.
+La r\'ecup\'eration de cette configuration est expliqu\'ee au \S~\ref{section:emploiDuTemps}.
+Cette partie est compos\'ees de trois tables.
+La premi\`ere table est celle contenant toutes les salles \textsf{yuukou\_rooms}, la deuxi\`eme contenant tous les \'ev\`enements \textsf{yuukou\_timetables}.
+Pour la derni\`ere table \textsf{yuukou\_mapping\_room}, son r\^ole est de faire le lien entre les noms des salles dans Nagios et les noms des salles qui sont utilis\'ees pour l'emploi du temps.
+En effet, la g\'en\'eration des emplois du temps est effectu\'ee par un service de l'Universit\'e.
+De ce fait, ce service utilise un syst\`eme pour nommer les salles qui lui est propre.
+Il est donc n\'ecessaire de pouvoir relier un \'ev\`enement \`a une salle \`a l'aide de cette derni\`ere table.
+
+La partie \textit{mapping} avec les salles a pour but de faire le lien entre une description compl\`ete d'un lieu et la description courte qui est donn\'e dans la description d'une salle dans la table \textsf{yuukou\_rooms}.
+Les informations concernant les diff\'erents lieux sont contenues dans la table \textit{yuukou\_mapping\_location}.
+
+La derni\`ere partie, configuration, a pour but de g\'erer les diff\'erents param\`etres permettant la gestion de cycle lors du fonctionnement du service Web. 
+Les explications concernant ce qu'est un cycle se trouvent au \S~\ref{section:cyclePrincipal}.
+
+TODO a finir
+
+\section{Organisation du travail}
+
+\subsection{Gestion du poste de travail}
+\label{section:gestionProjet}
+
+Afin de d\'evelopper efficacement, une organisation du poste de travail mais plus g\'en\'eralement du projet en lui-m\^eme a \'et\'e choisie.
+Cette organisation comporte une machine de d\'eveloppement et deux serveurs comme le montre la figure~\ref{figure:gestionProjet}.
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[scale=0.35]{gestionProjet.jpg}
+	\caption{Sch\'ema de la gestion du projet}
+	\label{figure:gestionProjet}
+
+\end{figure}
+
+Le serveur principal poss\`ede un syst\`eme d'exploitation Debian version 6.0.5 (\textit{Squeeze}) et h\'eberge le service Web dans une version stable ainsi que tous les outils n\'ecessaire \`a son fonctionnement comme le serveur de gestion de base de donn\'ees (SGBD) MySQL, une version de Java \`a jour, le serveur d'application GlassFish mais aussi Nagios.
+La faible consommation CPU de Nagios dans la surveillance des machines de l'universit\'e fait, qu'actuellement, il peut \^etre h\'eberg\'e sur le m\^eme serveur que le service Web.
+Le serveur principal h\'eberge aussi le gestionnaire de version subversion (SVN) sur lequel est constamment maintenu le projet.
+Il est accessible sur le r\'eseau sous le nom de domaine \textsf{yuukou-ws.wmin.ac.uk}.
+
+Le serveur dit {\og}secondaire{\fg} poss\`ede lui aussi le m\^eme syst\`eme d'exploitation Debian et h\'eberge l'application Web permettant de communiquer avec le service Web.
+Cette application fait r\'eguli\`erement appel au service Web pour obtenir les informations dont elle a besoin pour afficher correctement ses pages.
+Il est accessible sur le r\'eseau sous le nom de domaine \textsf{yuukou2.wmin.ac.uk}.
+
+La machine de d\'eveloppement poss\`ede un syst\`eme d'exploitation Linux Mint version 11 (\textit{Katya}), tous les outils n\'ecessaires au d\'eveloppement (comme Java, NetBeans, \ldots), mais aussi un serveur de gestion de base de donn\'ee (SGBD) MySQL et un serveur GlassFish, tous deux servant \`a effectuer des tests avant d\'eploiement.
+\`A chaque d\'eploiement sur le serveur principal, la version du projet est publi\'ee sur le SVN afin de garantir une s\'ecurit\'e dans le cas d'une r\'egression dans le d\'eveloppement.
+
+\subsection{Travail en \'equipe}
+
+Le projet {\YuukouII}, comme \'enonc\'e dans le \S~\ref{section:architectureProjet}, a \'et\'e divis\'e en deux parties.
+La partie service Web, permettant de remplir et maintenir la base de donn\'ees ainsi que de mettre \`a disposition d'un client des m\'ethodes retournant une partie des informations r\'ecup\'er\'ees, et la partie affichage dont le r\^ole est de pr\'esenter les informations \`a un utilisateur lambda.
+La partie affichage fut confi\'ee \`a Yacine MAGHEZZI, \'etudiant en 3\up{i\`eme} ann\'ee de licence informatique \`a l'Universit\'e de Franche-Comt\'e de Besan\c{c}on.
+Le but de son projet \'etait, \`a l'aide du service Web, de permettre un affichage r\'esumant la disponibilit\'e des laboratoires informatiques dans l'Universit\'e.
+
+Ainsi, \`a chaque red\'eploiement du service Web lors d'une mise \`a jour importante ou d'un ajout de fonctionnalit\'es, il \'etait important de le tenir inform\'e des diff\'erents changements qui ont \'et\'e effectu\'es.
+TODO : reference structure
+C'est dans le cadre de ce travail en \'equipe qu'une structure de retour standard a \'et\'e adopt\'ee.
+En effet, un minimum de rigueur dans le d\'eveloppement permettait de ne pas avoir de surprises \`a chaque \'etape du projet.
+
+Cependant, la majeure partie de la communication se faisait selon les besoins de M. MAGHEZZI.
+Avant son arriv\'ee, les fonctionnalit\'es et les informations qu'elles retournaient n'\`etaient que limit\'ees.
+Cela \'etant d\^u au fait que les informations retourn\'ees n'\'etaient exploit\'ees par personne.
+Apr\`es son arriv\'ee et sa premi\`ere connexion au service Web, M. MAGHEZZI a commenc\'e \`a exprimer des demandes concernant les \'el\'ements qu'il aimerait voir appara\^itre.
+C'est \`a ce moment que le dialogue s'est vraiment mis en place.
+
+\'Etant dans le m\^eme bureau, la communication se d\'eroulait principalement oralement, il \'etait inform\'e directement et m\^eme en avance par rapport au d\'eploiement d'une nouvelle version du service Web.
+Concernant les structures de retour JSON, il arrivait qu'un mail lui soit envoy\'e, ce mail contenant le sch\'ema d'une structure de retour de tous les cas possibles pour une m\'ethode sp\'ecifique du service Web.
+
+\subsection{Tests du service Web}
+
+\subsubsection{Mise en place d'un client}
+
+\subsubsection{Consommation les m\'ethodes}
+
 
 \section{Probl\`emes rencontr\'es}
 
@@ -908,62 +939,6 @@ Lorsque ce syst\`eme sera appliqu\'e, la liste des nouveaux noms de salles sera 
 
 TODO a finir
 
-\section{Calendrier du stage}
-Arriv\'ee : Lundi 13 F\'evrier
-D\'epart : Lundi 4 Juin
-
-semaine 1 : Arriv\'ee et d\'ecouverte du projet, premier entretien avec l'\'equipe technique et leurs attentes
-semaine 2 : D\'ecouverte des services Web et choix des outils utilis\'es
-semaine 3 : Conception de la base de donn\'ees et d\'ebut d'impl\'ementation du cycle principal de l'application
-semaine 4 : fin d'impl\'ementation du cycle principal
-semaine 5 : Mise en place de l'emploi du temps + mise en place de SSL
-semaine 6 : D\'eveloppement des premi\`eres m\'ethodes Web + fin de mise en place de SSL
-semaine 7 : Mise en place du syst\`eme JSON
-semaine 8 : 
-semaine 9 : 
-semaine 10 : D\'ebut de r\'edaction du rapport
-semaine 11 : 
-semaine 12 : 
-semaine 13 : R\'ecup\'eration du catalogue de logiciels de M\'ediaWiki
-semaine 14 : Ajout de m\'ethodes Web et am\'elioration du chargement de la base de donn\'ees
-semaine 15 : r\'edaction du rapport de stage et maintenance des fonctionnalit\'es du service Web
-semaine 16 : fin d'\'ecriture du rapport de stage
-
-\section{R\'ecapitulatif du projet}
-
-La figure~\ref{figure:yuukouEtYuukouII} permet de donner une vue d'ensemble sur les principales fonctionnalit\'es dont le projet dispose.
-Les cadres pleins repr\'esentent des fonctionnalit\'es dont le principe a \'et\'e repris de {\Yuukou}, les cadres en pointill\'es quant \`a eux, repr\'esentent les nouvelles fonctionnalit\'es qu'apporte \YuukouII.
-
-\begin{figure}[!ht]
-	\centering
-	\includegraphics[scale=0.375]{yuukouEtYuukouII.jpg}
-	\caption{R\'ecapitulatif des fonctionnalit\'es reprises de {\Yuukou} et les nouvelles de \YuukouII}
-	\label{figure:yuukouEtYuukouII}
-
-\end{figure}
-
-\section{Migration des donn\'ees}
-\label{section:migrationDonnees}
-
-Pendant le d\'eveloppement du projet, vue la quantit\'e de donn\'ees contenues dans la table \textsf{yuukou\_last} (environ 50 000 \`a 60 000 entr\'ees par mois), la question de l'archivage de ses donn\'ees s'est pos\'ee.
-Une m\'ethode a donc \'et\'e recherch\'ee en consid\'erant le fait que les donn\'ees archiv\'ees peuvent \^etre r\'eutilis\'ees lors de l'ex\'ecution de quelques m\'ethodes par le client.
-
-Une solution a \'et\'e trouv\'ee : le d\'eplacement \`a chaque d\'ebut de mois des donn\'ees dans une nouvelle table.
-Chaque nouvelle table est identifi\'ee de la sorte : 
-
-\begin{center}
-	\textsf{yuukou\_last \_ ann\'ee mois}
-
-\end{center}
-
-Avec un exemple pour illustrer, \'etant en juin 2012, la table archiv\'ee correspondant au mois de mai portera le nom suivant : 
-
-\begin{center}
-	\textsf{yuukou\_last\_201205}
-
-\end{center}
-
-De cette mani\`ere, les donn\'ees contenues dans la table \textsf{yuukou\_last} correspondent aux mois en cours.
 
 
 \clearpage
