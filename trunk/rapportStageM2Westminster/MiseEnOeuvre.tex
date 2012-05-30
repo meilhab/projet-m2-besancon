@@ -1,6 +1,14 @@
 \chapter{Le projet Yuukou II}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% RECHERCHES %%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Recherches}
+
+Une fois la notion de service Web acquise, il a fallu se concentrer sur la fa\c{c}on et les diff\'erents outils \`a utiliser afin de d\'evelopper le projet.
+La r\'eflexion se portera d'abord sur une architecture du projet dont le but est de se faire une id\'ee de comment toutes les pi\`eces peuvent s'articuler les unes avec les autres.
+Ensuite il sera fait une description des outils utilis\'es durant le projet.
+Enfin les choix techniques pris lors du stage seront d\'ecrit.
 
 \subsection{Architecture du projet}
 \label{section:architectureProjet}
@@ -141,10 +149,7 @@ La figure~\ref{figure:nagiosCG24}, quant \`a elle, offre une vue pour un \textit
 	
 \end{figure}
 
-
-
-
-TODO REPRENDRE
+TODO reprendre eventuellement
 
 \subsection{L'IDE NetBeans}
 \label{section:netbeans}
@@ -160,7 +165,7 @@ NetBeans est un IDE\protect\footnote{\textit{Integrated Development Environment}
 Il est \'ecrit en Java et fonctionne sous Windows, Mac OS, Linux, Solaris et d'autres plates-formes du moment qu'elles poss\`edent une JVM\protect\footnote{\textit{Java Virtual Machine}}$^*$ compatible.
 
 NetBeans permet de d\'evelopper et d\'eployer rapidement des applications graphiques Swing, des Applets, des JSP/Servlets et des architectures J2EE\protect\footnote{\textit{Java Platform, Enterprise Edition}}.
-Il poss\`ede toutes les fonctionnalit\'es recherch\'ees dans un IDE$^*$ moderne (coloration syntaxique, refactoring, d\'ebogueur, \ldots) et ajoute, dans le cas d'un d\'eveloppement d'un service Web comme pour ce projet, un support avec la derni\'ere version de GlassFish, permettant notamment de faire des \og{}deploy on save\fg{}, de d\'eployer les applications Web sur un serveur distant et de contr\^oler le serveur (suivre la sortie de logs, d\'emarrer, arr\^eter le serveur). 
+Il poss\`ede toutes les fonctionnalit\'es recherch\'ees dans un IDE$^*$ moderne (coloration syntaxique, refactoring, d\'ebogueur, \ldots) et ajoute, dans le cas d'un d\'eveloppement d'un service Web comme pour ce projet, un support avec la derni\'ere version de GlassFish, permettant notamment de faire des {\og}deploy on save{\fg}, de d\'eployer les applications Web sur un serveur distant et de contr\^oler le serveur (suivre la sortie de logs, d\'emarrer, arr\^eter le serveur). 
 Il donne acc\`es \`a une gestion simple du serveur d'application GlassFish qui sera utilis\'e dans le projet.
 Sa premi\`ere version date de 1996 et portait le nom Xelfi. 
 Il est disponible sur son site Internet\cite{biblio:siteNetbeans} en version 7.1.2.
@@ -199,8 +204,178 @@ Il est tr\`es souvent utilis\'e avec le langage de cr\'eation de pages Web dynam
 C'est donc avec cet outil que les donn\'ees de {\YuukouII} seront archiv\'ees.
 MySQL est disponible sur son site Internet\cite{biblio:siteMySQL} en version 5.5.24.
 
+\subsection{L'acc\`es aux donn\'ees des tables}
+
+Par souci de performance, \cad, limiter les acc\`es multiples \`a la base de donn\'ees mais aussi faciliter la manipulation des donn\'ees lors des traitements, le design pattern$^*$ \textit{Data Access Object} (DAO) a \'et\'e utilis\'e.
+Un Data Access Object, ou objet d'acc\`es aux donn\'ees en fran\c{c}ais, est un objet qui constitue une repr\'esentation en m\'emoire des donn\'ees d'une base de donn\'ees.
+En Java, un DAO est une classe repr\'esentant une table dont les attributs sont les champs de la table comme le montre la figure~\ref{figure:dao}.
+Des classes repr\'esentant des listes sont g\'en\'eralement d\'evelopp\'e pour contenir les DAO et simplifier l'acc\`es aux donn\'ees.
+
+Lorsqu'il sera n\'ecessaire d'effectuer des traitements r\'ep\'et\'es sur les donn\'ees d'une table, m\^eme si ces traitements ne portent pas sur la totali\'e de la table, il est pr\'ef\'erable de charger en m\'emoire la totalit\'e des \'el\'ements utiles avec, dans le cas id\'eal, une seule requ\^ete SQL$^*$.
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[scale=0.5]{dao.jpg}
+	\caption{Exemple de \textit{mapping} d'une table avec sa classe DAO associ\'ee (\textit{source : Cyrille Herby})}
+	\label{figure:dao}
+
+\end{figure}
+
+Dans le cadre du projet, les chargements sont effectu\'es lorsqu'un client appelle une m\'ethode du service Web. 
+Les donn\'ees sont charg\'ees dans une liste, elles sont ensuite trait\'ees puis retourn\'ees au client.
+
+\subsection{Le format de retour}
+\label{section:formatRetour}
+
+Le choix du type de retour est un choix important.
+En effet, il faut que les donn\'ees puissent \^etre rapidement transmises, r\'ecup\'er\'ees, trait\'ees et affich\'ees.
+L'objectif est un affichage instantan\'e des pages sur le navigateur Web ou l'application mobile.
+De ce fait, plusieurs possibilit\'es ont \'et\'e envisag\'ees.
+
+\subsubsection{{\og}\textit{Parsing}{\fg} d'un texte}
+
+La premi\`ere est de transmettre un document texte basique, celui-ci format\'e d'une certaine fa\c{c}on afin d'\^etre \textit{pars\'e} ({\cad} parcourir un flux structur\'e d'informations pour en extraire les donn\'ees).
+Ce qui aurait comme avantage de pouvoir \^etre r\'ecup\'er\'e par un client utilisant n'importe quel langage.
+La figure~\ref{code:exemplePlaintext} repr\'esente une exemple de fichier qu'il est facile de \textit{parser}, il suffit de r\'ecup\'erer les informations se trouvant entre les arobases.
+
+\vspace{0.20cm}
+
+\begin{figure}[!ht]
+	\begin{lstlisting}[language=plaintext]
+	info1 @ info2 @ info3 @ info4
+	\end{lstlisting}
+	
+	\caption{Exemple de ligne pouvant \^etre facilement \textit{pars\'ee}}
+	\label{code:exemplePlaintext}
+
+\end{figure}
+
+Pour r\'ecup\'erer les informations de cet exemple, il suffit de parcourir le fichier en stockant les informations contenues entre les \textbf{@}.
+
+Cependant cette m\'ethode est assez contraignante et oblige \`a parcourir l'ensemble du fichier alors qu'un seul type d'information peut \^etre utile.
+Ce qui signifie une perte de temps plus ou moins significative en fonction de la taille du fichier re\c{c}u.
+
+\subsubsection{Objet Java s\'erialisable}
+
+Une autre m\'ethode pourrait \^etre de transmettre un objet Java dit s\'erialisable.
+La s\'erialisation est un m\'ecanisme fourni par Java permettant de consid\'erer un objet comme une s\'equence de d'octets qui inclut les donn\'ees de l'objet, le type de l'objet et le type des donn\'ees.
+De cette mani\`ere, l'objet en question peut \^etre transmis \`a travers le r\'eseau vers une autre application Java pour le r\'ecup\'erer et le d\'es\'erialiser, ce qui repr\'esente la proc\'edure inverse de la s\'erialisation.
+La figure~\ref{code:exempleJava} donne un exemple de classe Java s\'erialisable qui pourrait \^etre transmise par le r\'eseau comme un flux de bytes.
+
+\vspace{0.20cm}
+
+\begin{figure}[!ht]
+	\lstinputlisting[language=Java]{codes/Exemple.java}
+	\caption{Exemple de classe Java s\'erialisable}
+	\label{code:exempleJava}
+
+\end{figure}
+
+L'objet contiendrait toutes les donn\'ees utiles et celles-ci seraient facilement accessibles.
+Le probl\`eme venant avec cette solution est que les objets doivent \^etre r\'ecup\'er\'es par une JVM$^*$.
+Ce qui peut s'av\'erer plus ou moins compliqu\'e voir impossible dans d'autres langages de programmation que Java.
+
+\subsubsection{XML}
+
+eXtensible Markup Language ou XML est un m\'eta langage pour r\'ealiser du balisage g\'en\'erique permettant de mettre en forme les documents. XML a connu un grand succ\`es depuis sa cr\'eation.
+Il est utilis\'e en particulier pour g\'erer la configuration, le stockage des donn\'ees, l'\'echange d'informations et bien d'autres fonctions encore.
+La figure~\ref{code:exempleXML} donne un exemple de document XML pouvant \^etre facilement converti en une arborescence DOM$^*$.
+
+\vspace{0.20cm}
+
+\begin{figure}[!ht]
+	\lstinputlisting[language=XML]{codes/Exemple.xml}
+	\caption{Exemple de document XML}
+	\label{code:exempleXML}
+
+\end{figure}
+
+XML offre une solution structur\'ee et tr\`es simple \`a comprendre pour l'envoi d'information par le r\'eseau, cependant dans les \'echanges d'informations entre client et serveur, il montre ses limites :
+
+\begin{itemize}
+	\item le chargement et la manipulation deviennent vite compliqu\'es, la plupart du temps il est n\'ecessaire de \textit{parser} le XML sous forme de DOM$^*$, puis de le parcourir, ce qui requiert l'appel de nombreuses fonctions, sans mentionner le fait que \textit{parser} un document XML est parfois long;
+	\item la taille des fichiers \'echang\'es peut parfois \^etre cons\'equente du fait de la duplication des donn\'ees : par nature, le XML ne permet pas de g\'erer une \'enorme masse d'informations.
+
+\end{itemize}
+
+\subsubsection{JSON}
+
+JavaScript Object Notation ou JSON est un format l\'eger d'\'echange de donn\'ees texte.
+Il utilise la notation des objets JavaScript pour transmettre de l'information structur\'ee.
+Il est aussi souvent utili\'e pour simplifier et all\'eger les acc\`es \`a des services Web depuis les navigateurs.
+La figure~\ref{code:exempleJSON} donne une exemple de fichier JSON reprenant le m\^eme arbre que le document XML de la figure~\ref{code:exempleXML}.
+
+\vspace{0.20cm}
+
+\begin{figure}[!ht]
+	\lstinputlisting[language=JSON]{codes/Exemple.json}
+	\caption{Exemple de fichier JSON}
+	\label{code:exempleJSON}
+
+\end{figure}
+
+\subsubsection{Choix du format}
+
+Le choix du format de retour des donn\'ees s'est port\'e sur l'utilisation de JSON.
+Le but du client, qui demande des informations au service Web, est de recevoir les donn\'ees le plus rapidement possible afin d'avoir \`a les afficher dans la foul\'ee.
+De ce fait, le \textit{parsing} d'un texte contenant des balises \`a certains endroits s'av\`ere inadapt\'e, notamment pour r\'ecup\'erer un seul type d'information.
+L'envoi d'un objet s\'erialisable Java est, quant \`a lui trop restrictif. Le choix a donc \'et\'e de choisir entre XML ou JSON.
+
+XML offre un format de donn\'ees verbeux et prend beaucoup d'espace. 
+De plus un document XML peut \^etre valid\'e via l'utilisation de DTD\protect\footnote{\textit{Document Type Definition}}, document permettant de d\'ecrire un mod\`ele de document XML, ou de XSD\protect\footnote{\textit{XML Schema Definition}}, langage de description de format de document XML permettant de d\'efinir la structure et le type de contenu d'un document XML.
+
+JSON offre un format de fichier plus simple que XML, facilement compr\'ehensible.
+Pour compl\'eter, les fichiers JSON, \`a arbre \'egal, seront toujours plus petits que l'\'equivalent XML et pr\'esenteront l'avantage d'\^etre plus rapidement \textit{pars\'es}.
+
+Au final JSON permet une plus grande rapidit\'e dans les \'echanges avec un serveur ainsi que sur le temps de \textit{parsing} des fichiers, le tout avec une \'economie des ressources du fait de sa petit taille.
+Cependant, les donn\'ees ne peuvent pas \^etre v\'erifi\'ees dans un fichier JSON, il demande donc une certaine rigueur dans son \'ecriture du cot\'e serveur ainsi qu'une connaissance de sa structure du cot\'e client.
+
+\subsection{Compl\'ement d'information sur JSON}
+
+\subsubsection{Pr\'esentation}
+
+Une courte description de ce qu'est JSON a d\'ej\`a \'et\'e faite au \S~\ref{section:formatRetour}.
+Pour reprendre ce qui a d\'ej\`a \'et\'e dit, JSON est un format l\'eger d'\'echange de donn\'ees qui est apparu en 2002.
+Il est facile \`a \'ecrire et comprendre pour des humains.
+Il est bas\'e sur un sous-ensemble du langage de programmation JavaScript et est compl\`etement ind\'ependant de tout langage, tout en poss\`edant des conventions famili\`eres aux langages descendant du C (C++, C\#, Java, JavaScript, \ldots).
+Ces propri\'et\'es font de JSON un langage d'\'echange de donn\'ees id\'eal.
+
+Cependant, il ne supporte pas les espaces de noms au contraire d'XML.
+Pour la v\'erification des donn\'ees, les sch\'emas JSON ne sont pas tr\`es utilis\'es du fait qu'ils doivent \^etre ecrit \`a la main comme il n'existe aucun outil pour g\'en\'erer un sch\'ema \`a partir de donn\'ees JSON.
+Et concernant la s\'ecurit\'e, il existe la possibilit\'e o\`u des \textit{scripts} malveillants pourraient \^etre dissimul\'es et ex\'ecut\'es.
+Il existe des fonctions pour tester les fichiers JSON mais celles-ci ne sont pas vraiment concluantes.
+La meilleure d\'efense est de conna\^itre \`a l'avance les points sensibles et de prendre les pr\'ecautions n\'ecessaires.
+
+\subsubsection{Structure}
+
+JSON se base sur deux structures de donn\'ees universelles dans pratiquement tous les langages de programmation modernes :
+
+\begin{itemize}
+	\item une collection de couples nom/valeur;
+	\item une liste de valeurs ordonn\'ees.
+
+\end{itemize}
+
+\vspace{0.20cm}
+
+\noindent Ces \'el\'ements repr\'esentent trois types de donn\'ees :
+
+\begin{itemize}
+	\item un \textit{objet} :\\Ensemble de couples nom/valeur non ordonn\'es. Un objet commence par \textsf{\{ (accolade gauche)} et se termine par \textsf{\} (accolade droite)}.
+	Chaque nom est suivi de \textsf{: (deux-points)} et les couples nom/valeur sont s\'epar\'es par \textsf{, (virgule)};
+	\item un \textit{tableau} :\\Collection de valeurs ordonn\'ees. Un tableau commence par \textsf{$[$ (crochet gauche)} et se termine par \textsf{$]$ (crochet droit)}.
+	Les valeurs sont s\'epar\'ees par \textsf{, (virgule)};
+	\item une \textit{valeur} :\\Soit une \textsf{cha\^ine de caract\`eres} entre guillemets, soit un \textsf{nombre}, soit \textsf{true} ou \textsf{false} ou \textsf{null}, soit un \textsf{objet}, soit un \textsf{tableau}.
+	Ces structures peuvent \^etre imbriqu\'ees;
+	\item une \textit{cha\^ine de caract\`eres} :\\Suite caract\'eres Unicode (z\'ero ou plus), entre guillemets, et utilisant les \'echappements avec antislash. 
+	Un caract\`eres est repr\'esent\'e par une cha\^ine d'un seul caract\`ere.
+
+\end{itemize}
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% COMMUNICATION NAGIOS %%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Communication avec Nagios}
 
 Nagios offre la surveillance d'un grand ensemble de machines dans l'universit\'e. 
@@ -411,8 +586,9 @@ Ainsi, la salle \textsf{4111} se trouvant sur le campus de New Cavendish sera id
 Le type d'ordinateur peut \^etre de deux type : \textsf{pc} si c'est un PC ou \textsf{mc} si c'est un Macintosh.
 Ainsi, un ordinateur se trouvant dans la salle \textsf{n-4111}, \'etant un Macintosh et portant le num\'ero 1 sera identifi\'e comme suit : \textsf{n-4111-mc-01}.
 
-
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% FONCTIONNEMENT WS %%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Fonctionnement du service Web}
 
 Le service Web peut se d\'ecomposer en deux grandes parties.
@@ -524,7 +700,9 @@ Tout lancement de cycle est impossible ensuite;
 
 \noindent\textbf{isMaintenanceScheduled ()} : permet de savoir si une maintenance est en cours ou non.
 
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% FONCTIONNALITES WS %%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Fonctionnalit\'ees en place}
 
 \subsection{S\'ecurisation du service Web}
@@ -649,179 +827,6 @@ Avec un exemple pour illustrer, \'etant en juin 2012, la table archiv\'ee corres
 
 De cette mani\`ere, les donn\'ees contenues dans la table \textsf{yuukou\_last} correspondent aux mois en cours.
 
-\subsection{L'acc\`es aux donn\'ees des tables}
-
-Par souci de performance, \cad, limiter les acc\`es multiples \`a la base de donn\'ees mais aussi faciliter la manipulation des donn\'ees lors des traitements, le design pattern$^*$ \textit{Data Access Object} (DAO) a \'et\'e utilis\'e.
-Un Data Access Object, ou objet d'acc\`es aux donn\'ees en fran\c{c}ais, est un objet qui constitue une repr\'esentation en m\'emoire des donn\'ees d'une base de donn\'ees.
-En Java, un DAO est une classe repr\'esentant une table dont les attributs sont les champs de la table comme le montre la figure~\ref{figure:dao}.
-Des classes repr\'esentant des listes sont g\'en\'eralement d\'evelopp\'e pour contenir les DAO et simplifier l'acc\`es aux donn\'ees.
-
-Lorsqu'il sera n\'ecessaire d'effectuer des traitements r\'ep\'et\'es sur les donn\'ees d'une table, m\^eme si ces traitements ne portent pas sur la totali\'e de la table, il est pr\'ef\'erable de charger en m\'emoire la totalit\'e des \'el\'ements utiles avec, dans le cas id\'eal, une seule requ\^ete SQL$^*$.
-
-\begin{figure}[!ht]
-	\centering
-	\includegraphics[scale=0.5]{dao.jpg}
-	\caption{Exemple de \textit{mapping} d'une table avec sa classe DAO associ\'ee (\textit{source : Cyrille Herby})}
-	\label{figure:dao}
-
-\end{figure}
-
-Dans le cadre du projet, les chargements sont effectu\'es lorsqu'un client appelle une m\'ethode du service Web. 
-Les donn\'ees sont charg\'ees dans une liste, elles sont ensuite trait\'ees puis retourn\'ees au client.
-
-\subsection{Le format de retour}
-\label{section:formatRetour}
-
-Le choix du type de retour est un choix important.
-En effet, il faut que les donn\'ees puissent \^etre rapidement transmises, r\'ecup\'er\'ees, trait\'ees et affich\'ees.
-L'objectif est un affichage instantan\'e des pages sur le navigateur Web ou l'application mobile.
-De ce fait, plusieurs possibilit\'es ont \'et\'e envisag\'ees.
-
-
-\subsubsection{{\og}\textit{Parsing}{\fg} d'un texte}
-
-La premi\`ere est de transmettre un document texte basique, celui-ci format\'e d'une certaine fa\c{c}on afin d'\^etre \textit{pars\'e} ({\cad} parcourir un flux structur\'e d'informations pour en extraire les donn\'ees).
-Ce qui aurait comme avantage de pouvoir \^etre r\'ecup\'er\'e par un client utilisant n'importe quel langage.
-La figure~\ref{code:exemplePlaintext} repr\'esente une exemple de fichier qu'il est facile de \textit{parser}, il suffit de r\'ecup\'erer les informations se trouvant entre les arobases.
-
-\vspace{0.20cm}
-
-\begin{figure}[!ht]
-	\begin{lstlisting}[language=plaintext]
-	info1 @ info2 @ info3 @ info4
-	\end{lstlisting}
-	
-	%\captionof{figure}{Exemple de ligne pouvant \^etre facilement \textit{pars\'ee}}
-	\caption{Exemple de ligne pouvant \^etre facilement \textit{pars\'ee}}
-	\label{code:exemplePlaintext}
-
-\end{figure}
-
-Pour r\'ecup\'erer les informations de cet exemple, il suffit de parcourir le fichier en stockant les informations contenues entre les \textbf{@}.
-
-Cependant cette m\'ethode est assez contraignante et oblige \`a parcourir l'ensemble du fichier alors qu'un seul type d'information peut \^etre utile.
-Ce qui signifie une perte de temps plus ou moins significative en fonction de la taille du fichier re\c{c}u.
-
-\subsubsection{Objet Java s\'erialisable}
-
-Une autre m\'ethode pourrait \^etre de transmettre un objet Java dit s\'erialisable.
-La s\'erialisation est un m\'ecanisme fourni par Java permettant de consid\'erer un objet comme une s\'equence de d'octets qui inclut les donn\'ees de l'objet, le type de l'objet et le type des donn\'ees.
-De cette mani\`ere, l'objet en question peut \^etre transmis \`a travers le r\'eseau vers une autre application Java pour le r\'ecup\'erer et le d\'es\'erialiser, ce qui repr\'esente la proc\'edure inverse de la s\'erialisation.
-La figure~\ref{code:exempleJava} donne un exemple de classe Java s\'erialisable qui pourrait \^etre transmise par le r\'eseau comme un flux de bytes.
-
-\vspace{0.20cm}
-
-\begin{figure}[!ht]
-	\lstinputlisting[language=Java]{codes/Exemple.java}
-	%\captionof{figure}{Exemple de classe Java s\'erialisable}
-	\caption{Exemple de classe Java s\'erialisable}
-	\label{code:exempleJava}
-
-\end{figure}
-
-L'objet contiendrait toutes les donn\'ees utiles et celles-ci seraient facilement accessibles.
-Le probl\`eme venant avec cette solution est que les objets doivent \^etre r\'ecup\'er\'es par une JVM$^*$.
-Ce qui peut s'av\'erer plus ou moins compliqu\'e voir impossible dans d'autres langages de programmation que Java.
-
-\subsubsection{XML}
-
-eXtensible Markup Language ou XML est un m\'eta langage pour r\'ealiser du balisage g\'en\'erique permettant de mettre en forme les documents. XML a connu un grand succ\`es depuis sa cr\'eation.
-Il est utilis\'e en particulier pour g\'erer la configuration, le stockage des donn\'ees, l'\'echange d'informations et bien d'autres fonctions encore.
-La figure~\ref{code:exempleXML} donne un exemple de document XML pouvant \^etre facilement converti en une arborescence DOM$^*$.
-
-\vspace{0.20cm}
-
-\begin{figure}[!ht]
-	\lstinputlisting[language=XML]{codes/Exemple.xml}
-	%\captionof{figure}{Exemple de document XML}
-	\caption{Exemple de document XML}
-	\label{code:exempleXML}
-
-\end{figure}
-
-XML offre une solution structur\'ee et tr\`es simple \`a comprendre pour l'envoi d'information par le r\'eseau, cependant dans les \'echanges d'informations entre client et serveur, il montre ses limites :
-
-\begin{itemize}
-	\item le chargement et la manipulation deviennent vite compliqu\'es, la plupart du temps il est n\'ecessaire de \textit{parser} le XML sous forme de DOM$^*$, puis de le parcourir, ce qui requiert l'appel de nombreuses fonctions, sans mentionner le fait que \textit{parser} un document XML est parfois long;
-	\item la taille des fichiers \'echang\'es peut parfois \^etre cons\'equente du fait de la duplication des donn\'ees : par nature, le XML ne permet pas de g\'erer une \'enorme masse d'informations.
-
-\end{itemize}
-
-\subsubsection{JSON}
-
-JavaScript Object Notation ou JSON est un format l\'eger d'\'echange de donn\'ees texte.
-Il utilise la notation des objets JavaScript pour transmettre de l'information structur\'ee.
-Il est aussi souvent utili\'e pour simplifier et all\'eger les acc\`es \`a des services Web depuis les navigateurs.
-La figure~\ref{code:exempleJSON} donne une exemple de fichier JSON reprenant le m\^eme arbre que le document XML de la figure~\ref{code:exempleXML}.
-
-\vspace{0.20cm}
-
-\begin{figure}[!ht]
-	\lstinputlisting[language=JSON]{codes/Exemple.json}
-	%\captionof{figure}{Exemple de fichier JSON}
-	\caption{Exemple de fichier JSON}
-	\label{code:exempleJSON}
-
-\end{figure}
-
-\subsubsection{Choix du format}
-
-Le choix du format de retour des donn\'ees s'est port\'e sur l'utilisation de JSON.
-Le but du client, qui demande des informations au service Web, est de recevoir les donn\'ees le plus rapidement possible afin d'avoir \`a les afficher dans la foul\'ee.
-De ce fait, le \textit{parsing} d'un texte contenant des balises \`a certains endroits s'av\`ere inadapt\'e, notamment pour r\'ecup\'erer un seul type d'information.
-L'envoi d'un objet s\'erialisable Java est, quant \`a lui trop restrictif. Le choix a donc \'et\'e de choisir entre XML ou JSON.
-
-XML offre un format de donn\'ees verbeux et prend beaucoup d'espace. 
-De plus un document XML peut \^etre valid\'e via l'utilisation de DTD\protect\footnote{\textit{Document Type Definition}}, document permettant de d\'ecrire un mod\`ele de document XML, ou de XSD\protect\footnote{\textit{XML Schema Definition}}, langage de description de format de document XML permettant de d\'efinir la structure et le type de contenu d'un document XML.
-
-JSON offre un format de fichier plus simple que XML, facilement compr\'ehensible.
-Pour compl\'eter, les fichiers JSON, \`a arbre \'egal, seront toujours plus petits que l'\'equivalent XML et pr\'esenteront l'avantage d'\^etre plus rapidement \textit{pars\'es}.
-
-Au final JSON permet une plus grande rapidit\'e dans les \'echanges avec un serveur ainsi que sur le temps de \textit{parsing} des fichiers, le tout avec une \'economie des ressources du fait de sa petit taille.
-Cependant, les donn\'ees ne peuvent pas \^etre v\'erifi\'ees dans un fichier JSON, il demande donc une certaine rigueur dans son \'ecriture du cot\'e serveur ainsi qu'une connaissance de sa structure du cot\'e client.
-
-\subsection{Compl\'ement d'information sur JSON}
-
-\subsubsection{Pr\'esentation}
-
-Une courte description de ce qu'est JSON a d\'ej\`a \'et\'e faite au \S~\ref{section:formatRetour}.
-Pour reprendre ce qui a d\'ej\`a \'et\'e dit, JSON est un format l\'eger d'\'echange de donn\'ees qui est apparu en 2002.
-Il est facile \`a \'ecrire et comprendre pour des humains.
-Il est bas\'e sur un sous-ensemble du langage de programmation JavaScript et est compl\`etement ind\'ependant de tout langage, tout en poss\`edant des conventions famili\`eres aux langages descendant du C (C++, C\#, Java, JavaScript, \ldots).
-Ces propri\'et\'es font de JSON un langage d'\'echange de donn\'ees id\'eal.
-
-Cependant, il ne supporte pas les espaces de noms au contraire d'XML.
-Pour la v\'erification des donn\'ees, les sch\'emas JSON ne sont pas tr\`es utilis\'es du fait qu'ils doivent \^etre ecrit \`a la main comme il n'existe aucun outil pour g\'en\'erer un sch\'ema \`a partir de donn\'ees JSON.
-Et concernant la s\'ecurit\'e, il existe la possibilit\'e o\`u des \textit{scripts} malveillants pourraient \^etre dissimul\'es et ex\'ecut\'es.
-Il existe des fonctions pour tester les fichiers JSON mais celles-ci ne sont pas vraiment concluantes.
-La meilleure d\'efense est de conna\^itre \`a l'avance les points sensibles et de prendre les pr\'ecautions n\'ecessaires.
-
-\subsubsection{Structure}
-
-JSON se base sur deux structures de donn\'ees universelles dans pratiquement tous les langages de programmation modernes :
-
-\begin{itemize}
-	\item une collection de couples nom/valeur;
-	\item une liste de valeurs ordonn\'ees.
-
-\end{itemize}
-
-\vspace{0.20cm}
-
-\noindent Ces \'el\'ements repr\'esentent trois types de donn\'ees :
-
-\begin{itemize}
-	\item un \textit{objet} :\\Ensemble de couples nom/valeur non ordonn\'es. Un objet commence par \textsf{\{ (accolade gauche)} et se termine par \textsf{\} (accolade droite)}.
-	Chaque nom est suivi de \textsf{: (deux-points)} et les couples nom/valeur sont s\'epar\'es par \textsf{, (virgule)};
-	\item un \textit{tableau} :\\Collection de valeurs ordonn\'ees. Un tableau commence par \textsf{$[$ (crochet gauche)} et se termine par \textsf{$]$ (crochet droit)}.
-	Les valeurs sont s\'epar\'ees par \textsf{, (virgule)};
-	\item une \textit{valeur} :\\Soit une \textsf{cha\^ine de caract\`eres} entre guillemets, soit un \textsf{nombre}, soit \textsf{true} ou \textsf{false} ou \textsf{null}, soit un \textsf{objet}, soit un \textsf{tableau}.
-	Ces structures peuvent \^etre imbriqu\'ees;
-	\item une \textit{cha\^ine de caract\`eres} :\\Suite caract\'eres Unicode (z\'ero ou plus), entre guillemets, et utilisant les \'echappements avec antislash. 
-	Un caract\`eres est repr\'esent\'e par une cha\^ine d'un seul caract\`ere.
-
-\end{itemize}
-
 \subsection{Gestion de la base de donn\'ees}
 
 La base de donn\'ees a \'evolu\'e tout au long du projet en fonction des fonctionnalit\'es qui ont \'et\'e demand\'ees.
@@ -862,6 +867,9 @@ Les explications concernant ce qu'est un cycle se trouvent au \S~\ref{section:cy
 
 TODO a finir
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ORGANISATION TRAVAIL %%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Organisation du travail}
 
 \subsection{Gestion du poste de travail}
@@ -913,11 +921,16 @@ Concernant les structures de retour JSON, il arrivait qu'un mail lui soit envoy\
 
 \subsection{Tests du service Web}
 
+Le d\'eploiement du service Web sur le serveur principal impose d'avoir une version stable et sans bogue.
+De ce fait, comme vu dans 
+
 \subsubsection{Mise en place d'un client}
 
 \subsubsection{Consommation les m\'ethodes}
 
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PROBLEMES RENCONTRES %%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Probl\`emes rencontr\'es}
 
 Durant toute la dur\'ee du projet, de nombreux probl\`emes ont \'et\'e rencontr\'es.
