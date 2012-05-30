@@ -2,6 +2,12 @@
 
 \section{Bilan du travail r\'ealis\'e}
 
+Ce bilan r\'esumera le travail r\'ealis\'e durant le stage.
+Dans une premi\`ere partie, un r\'ecapitulatif du projet sera donn\'e, avec notamment un graphique afin de montrer les fonctionnalit\'es reprises de {\Yuukou} ainsi que les diff\'erentes fonctionnalit\'es qu'apporte {\YuukouII}.
+Ensuite le calendrier des 16 semaines de stage, avec les diff\'erentes t\^aches effectu\'ees semaines apr\`es semaines.
+Il sera suivi par une partie donnant ce qu'apporte le projet \`a l'Universit\'e, les avantages qu'elle peut en tirer.
+Enfin une derni\`ere partie traitera des am\'eliorations qu'il est possible d'apporter au service Web afin d'accro\^itre ses performances et ses fonctionnalit\'es.
+
 \subsection{R\'ecapitulatif du projet}
 
 La figure~\ref{figure:yuukouEtYuukouII} permet de donner une vue d'ensemble sur les principales fonctionnalit\'es dont le projet dispose.
@@ -36,9 +42,27 @@ semaine 14 : Ajout de m\'ethodes Web et am\'elioration du chargement de la base 
 semaine 15 : r\'edaction du rapport de stage et maintenance des fonctionnalit\'es du service Web
 semaine 16 : fin d'\'ecriture du rapport de stage
 
-\subsection{R\'esultat pour l'Universit\'e}
+\subsection{Bilan pour l'Universit\'e}
+
+Le service Web est fonctionnel \`a l'Universit\'e.
+Il dispose d'un cycle principal permettant la r\'ecup\'eration des donn\'ees de Nagios et le stockage dans la base de donn\'ees.
+De nombreuses fonctionnalit\'ees ont \'et\'e d\'evelopp\'ees pour \'etendre les possibilit\'es du service Web.
+Une s\'ecurisation des communications avec la mise en place du protocole SSL\protect\footnote{\textit{Secure Sockets Layer}}.
+Une gestion des emplois du temps en r\'ecup\'erant quotidiennement les diff\'erents emplois du temps des campus de l'Universit\'e.
+Une gestion de la configuration logicielle des salles informatiques avec l'extraction des donn\'ees pr\'esentes sur le \textit{MediaWiki} de la \textit{School of Electronics and Computer Science}.
+Une g\'en\'eration d'un graphe d'utilisation des salles informatiques dans une p\'eriode donn\'ee.
+
+Le service Web dispose de nombreuses fonctions permettant \`a un client de r\'ecup\'erer juste les informations dont il a besoin concernant la disponibilit\'e des salles en temps r\'eel.
+Mais aussi les historiques dans le temps de connexions.
+Il propose aussi une gestion de cycle permettant de l'arr\^eter et de le remettre en marche.
+
+L'utilisation de JSON permet la cr\'eation de client ind\'ependamment du langage employ\'e.
+Une fois la structure du fichier retourn\'e comprise, il est facile d'extraire les donn\'ees voulues et de les afficher.
+
+Ajout\'e \`a cela la documentation Java (\textit{javadoc}) du service Web afin que dans le futur diff\'erentes am\'eliorations, parmi celles exprim\'ees au \S~\ref{section:amelioration}, soient mises en place.
 
 \subsection{Am\'eliorations possibles}
+\label{section:amelioration}
 
 Le projet {\YuukouII} est loin d'\^etre fini m\^eme si fonctionnel \`a l'heure actuelle.
 Il reste diverses fonctionnalit\'es \`a d\'evelopper.
@@ -49,10 +73,51 @@ Avec cette m\'ethode, un utilisateur ne pourrait jamais se servir d'une m\'ethod
 
 Des am\'eliorations peuvent aussi \^etre port\'ees sur la fa\c{c}on dont RRDtool a \'et\'e mis en place.
 Il ne s'agit que d'un essai pour tester les possibilit\'es, mais il serait int\'eressant de l'int\'egrer pleinement au service Web et surtout au cycle principal d'ex\'ecution.
+De ce fait, les donn\'ees seraient enregistr\'ees en temps r\'eel et les requ\^etres de g\'en\'eration de graphe pourraient gagner en rapidit\'e d'ex\'ecution.
+De plus, cette m\'ethode rendrait une utilisation normale de RRDtool au service Web.
+
+La suite concernerait les attentes pour les emplois du temps et le catalogue logiciel.
+En effet, la gestion des emplois du temps est susceptible d'\'evoluer vers une notation plus lisible des salles par le service responsable de la cr\'eation des emplois du temps.
+Cela permettrait un suivi de toutes les salles informatiques au lieu de seulement certaines actuellement situ\'ees \`a la \textit{School of Electronics and Computer Science}.
+Pour le catalogue de logiciel, le principe est un peu le m\^eme.
+Ne concernant que la \textit{School of Electronics and Computer Science}, il serait int\'eressant de trouver une fa\c{c}on simple de r\'ecup\'erer les informations sur la configuration logicielle des autres salles.
+Par exemple, si une partie de la base de donn\'ees permettant de construire cette configuration, en amont, pouvait \^etre disponible, l'extraction des donn\'ees s'en verrait simplifi\'ee et plus compl\`ete du fait qu'elle serait effective pour toutes les salles surveill\'ees par Nagios.
+
+Il pourrait aussi \^etre impl\'ement\'e une s\'erie de petites fonctions permettant d'effectuer des modifications d'informations, quand le service Web est en maintenance, sur les diff\'erentes tables.
+Par exemple l'ajout d'une salle avec l'aide d'une interface Web.
+
+Nagios surveille actuellement les salles informatiques de l'Universit\'e, cependant, il est possible de lui faire surveiller les imprimantes et d'ajouter les services adapt\'es comme la gestion du niveau d'encre et du papier.
+Un \'etudiant recherchant une imprimante de libre obtiendrait les salles correspondantes.
+Avec cela, il serait possible d'avoir un statut complet d'une salle informatique.
+
+Il serait aussi int\'eressant d'ajouter des fonctions au service Web pour retourner les informations sur la surveillance des salles sous forme d'un flux RSS$^*$ pour \^etre exploit\'ees de fa\c{c}on diff\'erente par un client.
 
 
-\section{Bilan humain}
+\section{Bilan personnel}
 
-\section{Bilan p\'edagogique}
+D'un point de vue humain, ce stage m'a beaucoup apport\'e, sp\'ecialement au niveau de la langue.
+Je me suis rendu compte combien il est difficile au d\'ebut de communiquer convenablement avec quelqu'un.
+Le m\^eme cycle se r\'ep\`ete : on essaye de traduire ce que l'on entend, ensuite on r\'efl\'echi \`a la r\'eponse en fran\c{c}ais, on la traduit rapidement et on la dit plus ou moins bien.
+C'est compliqu\'e de se d\'efaire de ce cycle mais apr\`es quelques mois, j'ai pu ressentir beaucoup plus de facilit\'e \`a communiquer avec les membres du CPC.
+
+De plus, je suis vraiment content d'avoir pu effectu\'e mon stage dans une ville si cosmopolite comme Londres.
+J'ai pu y d\'ecouvrir une vie un peu diff\'erente de celle que je connaissais.
+Durant les quatre mois, j'ai r\'esid\'e dans une r\'esidence \'etudiante o\`u j'ai partag\'e une chambre avec un croate, de ce fait, je n'avais pas d'autre choix que de parler anglais avec lui.
+C'\'etait d'autant plus le cas que la majorit\'e des r\'esidents n'\'etaient pas anglais, mais venaient d'un peu partout dans le monde.
+Chose qui je pense m'a beaucoup fait progresser notamment dans le parl\'e, tout en gardant quand m\^eme un fort accent fran\c{c}ais.
+
+Concernant le cadre du stage, j'ai beaucoup appr\'eci\'e la prise en charge de M. DELAITRE qui s'est beaucoup impliqu\'e dans ce projet, tant dans la partie service Web que dans la partie affichage.
+J'ai r\'eellement aim\'e la libert\'e d'action qu'il m'a laiss\'e dans le projet tout en fixant les objectifs qu'il voulait voir accompli.
+
+La collaboration avec Yacine MAGHEZZI s'est tr\`es bien pass\'ee.
+Nous avons du beaucoup discut\'e 'un avec l'autre concernant le retour d'informations du service Web.
+Mon objectif \'etait vraiment de lui facilit\'e un maximum le travail pour qu'il ne se concentre que sur la partie affichage.
+
+D'un point de vue p\'edagogique, ce stage fut vraiment tr\`es riches en nouvelles connaissances.
+J'ai pu y d\'ecouvrir les services Web que je ne connaissais pas auparavant ainsi que des outils qui m'\'etaient totalement inconnus comme NetBeans et GlassFish.
+J'avoue avoir des appr\'ehensions quand on me parle de technologie du Web mais le projet que m'a confi\'e Thierry DELAITRE m'a vraiment passionn\'e du d\'ebut \`a la fin du stage.
+J'ai pu r\'eutiliser beaucoup de mes acquis avec le d\'eveloppement Java, les int\'eractions avec les bases de donn\'ees ou encore la manipulation de fichiers XML.
+
+
 
 \clearpage
