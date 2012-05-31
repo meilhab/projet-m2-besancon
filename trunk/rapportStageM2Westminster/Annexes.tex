@@ -106,23 +106,23 @@ Enfin, ce diagramme sera d\'ecoup\'e en diff\'erentes parties pour plus de visib
 
 \subsubsection{Description des tables}
 
-{\YuukouII} est compos\'e de 14 tables :
+\noindent {\YuukouII} est compos\'e de 14 tables :
 
 \begin{itemize}
-	\item \textsf{yuukou\_rooms} : contient la description d'une salle;
-	\item \textsf{yuukou\_resources} : contient la description d'un ordinateur appartenant \`a une salle particuli\`ere;
-	\item \textsf{yuukou\_users} : contient la description d'un utilisateur;
-	\item \textsf{yuukou\_last} : contient un historique de toutes les connexions pass\'ees sur un ordinateur
-	\item \textsf{yuukou\_who} : contient un historique de toutes les connexions en cours sur un ordinateur
-	\item \textsf{yuukou\_mapping\_location} : contient les informations sur le diff\'erents campus de l'Universit\'e, le but \'etant de faire un lien avec la localisation de la table \textsf{yuukou\_rooms} et la description compl\`ete de cette localisation contenu dans la table de \textit{mapping};
-	\item \textsf{yuukou\_mapping\_room} : contient les diff\'erentes correspondances entre le nom des salles tel qu'elle sont appel\'ees dans {\YuukouII} et le nom des salles r\'ecup\'er\'ees avec les emplois du temps;
-	\item \textsf{yuukou\_timetables} : contient les diff\'erentes informations concernant un \'el\'ement de l'emploi du temps;
-	\item \textsf{yuukou\_settings} : contient les diff\'erents informations de configuration de \YuukouII;
-	\item \textsf{yuukou\_groups} : contient la description d'un groupe de logiciels;
-	\item \textsf{yuukou\_software} : contient la description d'un logiciel;
-	\item \textsf{yuukou\_groups\_software} : contient les diff\'erents liens entre un groupe de logiciels et tous les logiciels le composant;
-	\item \textsf{yuukou\_rooms\_groups} : contient les diff\'erents liens entre une salle et tous les groupes de logiciels la composant;
-	\item \textsf{yuukou\_roms\_software} : contient les diff\'erents liens entre une salle et tous les logiciels, n'appartenant pas \`a un groupe de logiciels, la composant.
+	\item[\textbf{\textsf{yuukou\_rooms}}] contient la description d'une salle;
+	\item[\textbf{\textsf{yuukou\_resources}}] contient la description d'un ordinateur appartenant \`a une salle particuli\`ere;
+	\item[\textbf{\textsf{yuukou\_users}}] contient la description d'un utilisateur;
+	\item[\textbf{\textsf{yuukou\_last}}] contient un historique de toutes les connexions pass\'ees sur un ordinateur
+	\item[\textbf{\textsf{yuukou\_who}}] contient un historique de toutes les connexions en cours sur un ordinateur
+	\item[\textbf{\textsf{yuukou\_mapping\_location}}] contient les informations sur le diff\'erents campus de l'Universit\'e, le but \'etant de faire un lien avec la localisation de la table \textsf{yuukou\_rooms} et la description compl\`ete de cette localisation contenu dans la table de \textit{mapping};
+	\item[\textbf{\textsf{yuukou\_mapping\_room}}] contient les diff\'erentes correspondances entre le nom des salles tel qu'elle sont appel\'ees dans {\YuukouII} et le nom des salles r\'ecup\'er\'ees avec les emplois du temps;
+	\item[\textbf{\textsf{yuukou\_timetables}}] contient les diff\'erentes informations concernant un \'el\'ement de l'emploi du temps;
+	\item[\textbf{\textsf{yuukou\_settings}}] contient les diff\'erents informations de configuration de \YuukouII;
+	\item[\textbf{\textsf{yuukou\_groups}}] contient la description d'un groupe de logiciels;
+	\item[\textbf{\textsf{yuukou\_software}}] contient la description d'un logiciel;
+	\item[\textbf{\textsf{yuukou\_groups\_software}}] contient les diff\'erents liens entre un groupe de logiciels et tous les logiciels le composant;
+	\item[\textbf{\textsf{yuukou\_rooms\_groups}}] contient les diff\'erents liens entre une salle et tous les groupes de logiciels la composant;
+	\item[\textbf{\textsf{yuukou\_roms\_software}}] contient les diff\'erents liens entre une salle et tous les logiciels, n'appartenant pas \`a un groupe de logiciels, la composant.
 	
 \end{itemize}
 
@@ -132,11 +132,9 @@ Enfin, ce diagramme sera d\'ecoup\'e en diff\'erentes parties pour plus de visib
 La figure~\ref{annexe:modeleGeneral} pr\'esente la structure g\'en\'erale du projet \YuukouII.
 Elle s'articule en diff\'erentes sous-parties : la partie archivage, logicielle, emploi du temps, mapping et configuration.
 
-\clearpage
-
 \begin{figure}[!ht]
 	\centering
-	\includegraphics[scale=0.35]{modeleGeneral.png}
+	\includegraphics[scale=0.40]{modeleGeneral.png}
 	\caption{Structure g\'en\'erale de la base de donn\'ees}
 	\label{annexe:modeleGeneral}
 
@@ -159,7 +157,7 @@ La partie archivage a pour r\^ole le stockage des donn\'ees concernant d'une par
 
 \subsubsection{Partie logicielle}
 
-La partie logicielle a pour r\^ole de lier les informations de configuration logicielle avec les salles informatiques de l'universit\'e.
+La partie logicielle a pour r\^ole de lier les informations de configuration logicielle avec les salles informatiques de l'Universit\'e.
 
 \clearpage
 
@@ -225,6 +223,8 @@ Le code JSON~\ref{annexe:getsitesinformation} correspond au retour de l'appel \`
 	\label{annexe:getsitesinformation}
 
 \end{figure}
+
+\clearpage
 
 Le code JSON~\ref{annexe:getlistrooms} correspond au retour de l'appel \`a la fonction \textbf{getListRooms ()} du service Web.
 

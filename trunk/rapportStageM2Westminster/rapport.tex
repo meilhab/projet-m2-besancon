@@ -27,6 +27,7 @@
 \usepackage{extensions/picins} %image avec texte a ct
 \usepackage[toc,page]{extensions/appendix}
 \usepackage{extensions/subfig}
+\usepackage{enumitem}
 
 \usepackage{fancyhdr} % Pour les entetes de page
 \usepackage[
@@ -86,6 +87,10 @@
 	keywordstyle=\color{darkblue}, 
 	captionpos=b
 }
+
+\newenvironment{longdescription}
+	{\begin{description}[style=unboxed]}
+	{\end{description}}
 
 \renewcommand{\labelitemi}{---}
 \renewcommand{\labelitemii}{$\star$}

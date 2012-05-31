@@ -11,13 +11,13 @@
 \subsection{Pr\'esentation}
 
 Le terme Yuukou comme abord\'e dans l'introduction de ce rapport, vient du japonais \Yuukou{} et signifie validit\'e, disponibilit\'e, efficacit\'e.
-C'est un syst\`eme permettant la r\'ecup\'eration des informations depuis les serveurs LDAP\protect\footnote{\textit{Lightweight Directory Access Protocol}}$^*$ de l'universit\'e afin de comprendre et construire l'infrastructure des ressources et ainsi de voir sa facilit\'e d'utilisation. 
+C'est un syst\`eme permettant la r\'ecup\'eration des informations depuis les serveurs LDAP\protect\footnote{\textit{Lightweight Directory Access Protocol}}$^*$ de l'Universit\'e afin de comprendre et construire l'infrastructure des ressources et ainsi de voir sa facilit\'e d'utilisation. 
 L'architecture du syst\`eme utilise un processus d'apprentissage simple pour d\'eduire et maintenir la structure \`a jour avec un minimum de r\'eglages initiaux.
 \Yuukou{} a \'et\'e cr\'e\'e pour montrer l'utilisation des salles informatique et conserver un historique des informations sur le campus de New Cavendish.
 
 \subsection{Fonctionnement}
 
-Le but principal de \Yuukou{} est d'afficher l'occupation des salles informatiques et ce, le plus proche possible d'un syst\'eme fonctionnant en temps r\'eel.
+Le but principal de \Yuukou{} est d'afficher l'occupation des salles informatiques et ce, le plus proche possible d'un syst\`eme fonctionnant en temps r\'eel.
 Pour ce faire, l'application a \'et\'e divis\'ee en deux parties  comme le montre la figure~\ref{figure:yuukouFonctionnement}.
 
 \clearpage
@@ -32,16 +32,16 @@ Pour ce faire, l'application a \'et\'e divis\'ee en deux parties  comme le montr
 
 \subsubsection{Premi\`ere partie}
 
-La premi\`ere partie est un programme \'ecrit en Perl$^*$ qui r\'ecup\`ere les informations de connexion des utilisateurs depuis un serveur LDAP$^*$ et qui se charge de construire, modifier ou mettre \`a jour l'architecture r\'eseau de l'universit\'e tout en stockant les informations dans une base de donn\'ees relationnelle de type MySQL.
+La premi\`ere partie est un programme \'ecrit en Perl$^*$ qui r\'ecup\`ere les informations de connexion des utilisateurs depuis un serveur LDAP$^*$ et qui se charge de construire, modifier ou mettre \`a jour l'architecture r\'eseau de l'Universit\'e tout en stockant les informations dans une base de donn\'ees relationnelle de type MySQL.
 
-Le robot de \Yuukou{} offre deux fonctionnalites : il permet de mettre \`a jour les donn\'ees de connexion via le serveur LDAP$^*$ toutes les cinq minutes environ pour une utilisation normale, et de mettre \`a jour le statut des ressources (ordinateurs) toutes les demi-heures l\`a aussi pour une utilisation normale.
+Le robot de \Yuukou{} offre deux fonctionnalit\'es : il permet de mettre \`a jour les donn\'ees de connexion via le serveur LDAP$^*$ toutes les cinq minutes environ pour une utilisation normale, et de mettre \`a jour le statut des ressources (ordinateurs) toutes les demi-heures l\`a aussi pour une utilisation normale.
 
 \subsubsection{Deuxi\`eme partie}
 
 La seconde partie est un ensemble de pages Web \'ecrites en PHP\protect\footnote{\textit{Personal Home Page} ou \textit{PHP: Hypertext Preprocessor}}$^*$ et h\'eberg\'ees sur un serveur Web permettant de pr\'esenter les donn\'ees collect\'ees \`a l'utilisateur final.
 Ces pages sont de deux types : les pages publiques et les pages priv\'ees.
 
-Les pages publiques sont accessibles par tous les utilisateurs de l'universit\'e le d\'esirant.
+Les pages publiques sont accessibles par tous les utilisateurs de l'Universit\'e le d\'esirant.
 Les pages priv\'ees, quant \`a elles, ne sont accessibles qu'aux administrateurs.
 
 \subsubsection{Les pages publiques}
@@ -49,7 +49,7 @@ Les pages priv\'ees, quant \`a elles, ne sont accessibles qu'aux administrateurs
 \noindent Les pages publiques permettent l'affichage des pages suivantes :
 
 \begin{itemize}
-	\item une page contenant tous les campus et salles informatique actuellement utilis\'ees;
+	\item une page contenant tous les campus et salles informatiques actuellement utilis\'ees;
 	\item une page par campus avec les salles informatique actuellement utilis\'ees;
 	\item une page par campus et d\'epartement avec les salles informatique actuellement utilis\'ees.
 
@@ -58,7 +58,7 @@ Les pages priv\'ees, quant \`a elles, ne sont accessibles qu'aux administrateurs
 \vspace{0.20cm}
 
 Les pages publiques offrent une vision g\'en\'erale de chaque salle : le nombre de ressources totales, disponibles, occup\'ees par un utilisateur et dans un \'etat inconnu.
-Il est \`a noter que chacunes des pr\'ec\'edentes pages peut \^etre affich\'ees sur un \'ecran plasma pr\'esent dans les diff\'erents b\^atiments de l'universit\'e.
+Il est \`a noter que chacunes des pr\'ec\'edentes pages peut \^etre affich\'ees sur un \'ecran plasma pr\'esent dans les diff\'erents b\^atiments de l'Universit\'e.
 La figure~\ref{figure:yuukouPublic} donne un exemple de page publique.
 
 \subsubsection{Les pages priv\'ees}
@@ -81,7 +81,7 @@ La figure~\ref{figure:yuukouPublic} donne un exemple de page publique.
 
 \vspace{0.20cm}
 
-La figure~\ref{figure:yuukouAdmin} donne un exemple des fonctionnalit\'es suppl\'ementaires auxquelles un administrateur \`a acc\`es.
+La figure~\ref{figure:yuukouAdmin} donne un exemple des fonctionnalit\'es suppl\'ementaires auxquelles un administrateur a acc\`es.
 
 \clearpage
 
@@ -110,13 +110,13 @@ Le support des Macintosh n'\'etant pas pris en compte.
 
 \subsection{Changement vers \YuukouII}
 
-L'universit\'e souhaite reprendre le principe du projet \Yuukou, cependant elle est confront\'ee \`a diff\'erents probl\`emes.
-Le premier \'etant que les personnes qui ont d\'evelopp\'e le projet ont quitt\'e l'universit\'e. 
+L'Universit\'e souhaite reprendre le principe du projet \Yuukou, cependant elle est confront\'ee \`a diff\'erents probl\`emes.
+Le premier \'etant que les personnes qui ont d\'evelopp\'e le projet ont quitt\'e l'Universit\'e. 
 Ce qui signifierait, pour la personne ou l'\'equipe en charge d'\'eventuellement reprendre le projet, de prendre du temps pour se former \`a Perl, comprendre tout ce qui a \'et\'e d\'ej\`a r\'ealis\'e et ensuite seulement commencer \`a d\'evelopper.
 Actuellement de nombreux projets sont en cours et il n'est pas possible pour une \'equipe de passer du temps sur l'existant.
 
 Un autre probl\`eme est les changements importants, du point de vue infrastructure, qui sont en train d'\^etre mis en place.
-En effet, l'universit\'e qui utilisait eDirectory$^*$ de Novell pour g\'erer ses annuaires LDAP$^*$ a commenc\'e \`a migrer toutes ses donn\'ees vers le syst\`eme Active Directory$^*$ de Microsoft qui est cens\'e \^etre plus efficace. Ce changement rendrait \Yuukou{} obsol\`ete.
+En effet, l'Universit\'e qui utilisait eDirectory$^*$ de Novell pour g\'erer ses annuaires LDAP$^*$ a commenc\'e \`a migrer toutes ses donn\'ees vers le syst\`eme Active Directory$^*$ de Microsoft qui est cens\'e \^etre plus efficace. Ce changement rendrait \Yuukou{} obsol\`ete.
 
 Point suivant, la volont\'e de donner acc\`es aux informations sur les salles pas seulement en utilisant un navigateur Internet, mais aussi et surtout en utilisant un \textit{smartphone} (IPhone ou Android par exemple) ou une tablette (IPad par exemple), chose que l'ancien logiciel ne peut pas fournir.
 De ce fait, un \'etudiant aurait \`a tout moment les informations sur les salles via son smartphone ou sa tablette, si tant est qu'il ait l'un ou l'autre.
@@ -133,20 +133,20 @@ De ce fait, un \'etudiant aurait \`a tout moment les informations sur les salles
 
 \vspace{0.20cm}
 
-C'est en consid\'erant tous ces points qu'il a \'et\'e d\'ecid\'e d'abandonner le projet \Yuukou{} afin de pouvoir mettre en place \YuukouII{} qui r\'epondrait aux attentes de l'universit\'e.
+C'est en consid\'erant tous ces points qu'il a \'et\'e d\'ecid\'e d'abandonner le projet \Yuukou{} afin de pouvoir mettre en place \YuukouII{} qui r\'epondrait aux attentes de l'Universit\'e.
 
 \section{Le projet \YuukouII}
 
 
 \YuukouII{} a pour but de combler les lacunes de \Yuukou{} et d'aller plus loin en termes de fonctionnalit\'e qu'il peut offrir. 
-Dans son fonctionnement g\'en\'eral, il doit permettre de donner \`a un \'etudiant ou toute personne travaillant \`a l'universit\'e et cherchant \`a utiliser un ordinateur, une vue globale des ressources qui sont disponibles actuellement.
+Dans son fonctionnement g\'en\'eral, il doit permettre de donner \`a un \'etudiant ou toute personne travaillant \`a l'Universit\'e et cherchant \`a utiliser un ordinateur, une vue globale des ressources qui sont disponibles actuellement.
 Les donn\'ees devant \^etre bien s\^ur exactes afin que la personne n'ait pas de mauvaise surprise en se rendant dans une salle qu'elle pensait libre.
 L'affichage pourra se faire via un smartphone, une tablette ou encore un navigateur Internet.
 
 \noindent Le but du stage est : 
 
 \begin{itemize}
-	\item la conception d'un logiciel permettant la r\'ecup\'eration de donn\'ees concernant les connexions sur les diff\'erentes ressources de l'universit\'e et cela en temps r\'eel;
+	\item la conception d'un logiciel permettant la r\'ecup\'eration de donn\'ees concernant les connexions sur les diff\'erentes ressources de l'Universit\'e et cela en temps r\'eel;
 	\item la gestion de la persistance de ces donn\'ees;
 	\item la cr\'eation d'un maximum de fonctionnalit\'es retournant les informations utiles dans le but d'\^etre exploit\'ees pour l'affichage sur les diff\'erents supports.
 
