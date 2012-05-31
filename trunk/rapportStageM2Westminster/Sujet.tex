@@ -13,7 +13,7 @@
 Le terme Yuukou comme abord\'e dans l'introduction de ce rapport, vient du japonais \Yuukou{} et signifie validit\'e, disponibilit\'e, efficacit\'e.
 C'est un syst\`eme permettant la r\'ecup\'eration des informations depuis les serveurs LDAP\protect\footnote{\textit{Lightweight Directory Access Protocol}}$^*$ de l'Universit\'e afin de comprendre et construire l'infrastructure des ressources et ainsi de voir sa facilit\'e d'utilisation. 
 L'architecture du syst\`eme utilise un processus d'apprentissage simple pour d\'eduire et maintenir la structure \`a jour avec un minimum de r\'eglages initiaux.
-\Yuukou{} a \'et\'e cr\'e\'e pour montrer l'utilisation des salles informatique et conserver un historique des informations sur le campus de New Cavendish.
+\Yuukou{} a \'et\'e cr\'e\'e pour montrer l'utilisation des salles informatiques et conserver un historique des informations sur le campus de New Cavendish.
 
 \subsection{Fonctionnement}
 
@@ -34,7 +34,7 @@ Pour ce faire, l'application a \'et\'e divis\'ee en deux parties  comme le montr
 
 La premi\`ere partie est un programme \'ecrit en Perl$^*$ qui r\'ecup\`ere les informations de connexion des utilisateurs depuis un serveur LDAP$^*$ et qui se charge de construire, modifier ou mettre \`a jour l'architecture r\'eseau de l'Universit\'e tout en stockant les informations dans une base de donn\'ees relationnelle de type MySQL.
 
-Le robot de \Yuukou{} offre deux fonctionnalit\'es : il permet de mettre \`a jour les donn\'ees de connexion via le serveur LDAP$^*$ toutes les cinq minutes environ pour une utilisation normale, et de mettre \`a jour le statut des ressources (ordinateurs) toutes les demi-heures l\`a aussi pour une utilisation normale.
+Le robot de \Yuukou{} offre deux fonctionnalit\'es : il permet de mettre \`a jour les donn\'ees de connexion via le serveur LDAP$^*$ toutes les cinq minutes environ pour une utilisation normale, et de mettre \`a jour le statut des ressources (ordinateurs) toutes les demi-heures, l\`a aussi pour une utilisation normale.
 
 \subsubsection{Deuxi\`eme partie}
 
@@ -50,8 +50,8 @@ Les pages priv\'ees, quant \`a elles, ne sont accessibles qu'aux administrateurs
 
 \begin{itemize}
 	\item une page contenant tous les campus et salles informatiques actuellement utilis\'ees;
-	\item une page par campus avec les salles informatique actuellement utilis\'ees;
-	\item une page par campus et d\'epartement avec les salles informatique actuellement utilis\'ees.
+	\item une page par campus avec les salles informatiques actuellement utilis\'ees;
+	\item une page par campus et d\'epartement avec les salles informatiques actuellement utilis\'ees.
 
 \end{itemize}
 
@@ -73,7 +73,7 @@ La figure~\ref{figure:yuukouPublic} donne un exemple de page publique.
 		\item liste des ressources \'eteintes;
 		\item une fen\^etre permettant d'avoir des informations sur un utilisateur actuellement connect\'e \`a une ressource (identifiant, nom, photo, heure de connexion et dur\'ee de la session);
 		\item possibilit\'e d'ajouter des commentaires sur les utilisateurs;
-		\item liens vers les statistiques des salles informatique.
+		\item liens vers les statistiques des salles informatiques.
 
 	\end{itemize}
 
@@ -111,15 +111,15 @@ Le support des Macintosh n'\'etant pas pris en compte.
 \subsection{Changement vers \YuukouII}
 
 L'Universit\'e souhaite reprendre le principe du projet \Yuukou, cependant elle est confront\'ee \`a diff\'erents probl\`emes.
-Le premier \'etant que les personnes qui ont d\'evelopp\'e le projet ont quitt\'e l'Universit\'e. 
-Ce qui signifierait, pour la personne ou l'\'equipe en charge d'\'eventuellement reprendre le projet, de prendre du temps pour se former \`a Perl, comprendre tout ce qui a \'et\'e d\'ej\`a r\'ealis\'e et ensuite seulement commencer \`a d\'evelopper.
+Le premier \'etant que les personnes ayant d\'evelopp\'e le projet ont quitt\'e l'Universit\'e. 
+Ce qui signifierait, pour la personne ou l'\'equipe en charge d'\'eventuellement reprendre le projet, de prendre du temps pour se former \`a Perl$^*$, comprendre tout ce qui a \'et\'e d\'ej\`a r\'ealis\'e et ensuite seulement, commencer \`a d\'evelopper.
 Actuellement de nombreux projets sont en cours et il n'est pas possible pour une \'equipe de passer du temps sur l'existant.
 
 Un autre probl\`eme est les changements importants, du point de vue infrastructure, qui sont en train d'\^etre mis en place.
 En effet, l'Universit\'e qui utilisait eDirectory$^*$ de Novell pour g\'erer ses annuaires LDAP$^*$ a commenc\'e \`a migrer toutes ses donn\'ees vers le syst\`eme Active Directory$^*$ de Microsoft qui est cens\'e \^etre plus efficace. Ce changement rendrait \Yuukou{} obsol\`ete.
 
-Point suivant, la volont\'e de donner acc\`es aux informations sur les salles pas seulement en utilisant un navigateur Internet, mais aussi et surtout en utilisant un \textit{smartphone} (IPhone ou Android par exemple) ou une tablette (IPad par exemple), chose que l'ancien logiciel ne peut pas fournir.
-De ce fait, un \'etudiant aurait \`a tout moment les informations sur les salles via son smartphone ou sa tablette, si tant est qu'il ait l'un ou l'autre.
+Point suivant, la volont\'e de donner acc\`es aux informations sur les salles, pas seulement en utilisant un navigateur Internet, mais aussi et surtout en utilisant un \textit{smartphone} (IPhone ou autres par exemple) ou une tablette (IPad par exemple), chose que l'ancien logiciel ne peut pas fournir.
+De ce fait, un \'etudiant aurait \`a tout moment les informations sur les salles via son \textit{smartphone} ou sa tablette, si tant est qu'il ait l'un ou l'autre.
 
 \noindent \`A ces pr\'ec\'edents probl\`emes, d'autres viennent s'ajouter :
 
@@ -138,10 +138,10 @@ C'est en consid\'erant tous ces points qu'il a \'et\'e d\'ecid\'e d'abandonner l
 \section{Le projet \YuukouII}
 
 
-\YuukouII{} a pour but de combler les lacunes de \Yuukou{} et d'aller plus loin en termes de fonctionnalit\'e qu'il peut offrir. 
+\YuukouII{} a pour but de combler les lacunes de \Yuukou{} et d'aller plus loin en termes de fonctionnalit\'es qu'il peut offrir. 
 Dans son fonctionnement g\'en\'eral, il doit permettre de donner \`a un \'etudiant ou toute personne travaillant \`a l'Universit\'e et cherchant \`a utiliser un ordinateur, une vue globale des ressources qui sont disponibles actuellement.
 Les donn\'ees devant \^etre bien s\^ur exactes afin que la personne n'ait pas de mauvaise surprise en se rendant dans une salle qu'elle pensait libre.
-L'affichage pourra se faire via un smartphone, une tablette ou encore un navigateur Internet.
+L'affichage pourra se faire via un \textit{smartphone}, une tablette ou encore un navigateur Internet.
 
 \noindent Le but du stage est : 
 

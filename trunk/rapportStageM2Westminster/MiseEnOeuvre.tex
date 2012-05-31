@@ -3,11 +3,11 @@
 Une fois le sujet pos\'e et la notion de service Web comprise, plusieurs recherches ont \'et\'e n\'ecessaires afin de pouvoir commencer le projet en lui-m\^eme.
 C'est seulement ensuite que la phase de d\'eveloppement a pu commencer.
 Le premier point traitera de la phase de recherche sur les outils et les choix qui ont \'et\'e pris pour le projet.
-Ensuite un second point abordera la m\'ethode utilis\'ee pour acc\`eder aux informations indispensables au fonctionnement du service Web.
-Les deux points suivant seront consacr\'es au fonctionnement et aux fonctionnalit\'e qu'offre le service Web.
-Le premier de ces deux points permettra de d\'ecouvrir le cycle qui permet de r\'ecup\'erer les informations de Nagios et des les archiver, le deuxi\`eme, les m\'ethodes auxquelles un client peut acc\'eder pour r\'ecup\'erer une partie ou toutes les informations archiv\'ees par le service Web.
-Suite \`a cela, un point aura pour but d'expliquer l'organisation du travail qui a \'et\'e adopt\'ee tout au long du d\'eveloppement du service Web.
-Une vue sur comment est exploit\'ee le service Web sera faite ensuite et montrera des captures d'\'ecran de ce qui a \'et\'e r\'ealis\'e.
+Ensuite un second point abordera la m\'ethode utilis\'ee pour acc\'eder aux informations indispensables au fonctionnement du service Web.
+Les deux points suivant seront consacr\'es au fonctionnement et aux fonctionnalit\'es qu'offre le service Web.
+Le premier de ces deux points permettra de d\'ecouvrir le cycle qui permet de r\'ecup\'erer les informations de Nagios et de les archiver, le deuxi\`eme, les m\'ethodes auxquelles un client peut acc\'eder pour r\'ecup\'erer une partie ou toutes les informations archiv\'ees par le service Web.
+Suite \`a cela, un autre point aura pour but d'expliquer l'organisation du travail qui a \'et\'e adopt\'ee tout au long du d\'eveloppement du service Web.
+Une vue sur comment est exploit\'e le service Web sera faite ensuite et montrera des captures d'\'ecran de ce qui a \'et\'e r\'ealis\'e.
 Enfin, un dernier point permettra de voir les principaux probl\`emes qui ont \'et\'e rencontr\'es lors du stage.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -15,7 +15,7 @@ Enfin, un dernier point permettra de voir les principaux probl\`emes qui ont \'e
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Recherches}
 
-Une fois la notion de service Web acquise, il a fallu se concentrer sur la fa\c{c}on et les diff\'erents outils \`a utiliser afin de d\'evelopper le projet.
+Apr\`es avoir compris comment fonctionne un service Web, il a fallu se concentrer sur les diff\'erents outils et la fa\c{c}on de les utiliser afin de d\'evelopper le projet.
 La r\'eflexion se portera d'abord sur une architecture du projet dont le but est de se faire une id\'ee de comment toutes les pi\`eces peuvent s'articuler les unes avec les autres.
 Ensuite il sera fait une description des outils utilis\'es durant le projet.
 Enfin les choix techniques pris lors du stage seront d\'ecrit.
@@ -47,17 +47,17 @@ Les figures~\ref{figure:architectureProjetServiceWeb} et~\ref{figure:architectur
 Basiquement Nagios sert \`a surveiller les ressources auxquelles il lui est permis d'acc\'eder.
 De ce fait, il doit garder des traces des informations qu'il r\'ecup\`ere.
 Ces informations sont stock\'ees dans un fichier.
-C'est pourquoi un module existe sp\'ecialement pour acc\'eder aux informations contenues dans ce fichier. 
-Le module \textit{MK Livestatus} permet \`a l'aide d'un langage de requ\^etes qui lui est propre, de r\'ecup\'erer les informations que garde Nagios.
+Cependant, il existe un module qui est directement int\'egr\'e dans le processus de fonctionnement de Nagios et qui offre une grande rapidit\'e dans l'envoi d'informations.
+Le module \textit{MK Livestatus} permet, \`a l'aide d'un langage de requ\^etes qui lui est propre, de r\'ecup\'erer les informations que garde Nagios.
 
 Le service Web doit permettre, dans un premier temps, de r\'ecup\'erer toutes les informations utiles pour un archivage des donn\'ees.
-Elles sont stock\'ees dans une base de donn\'ees MySQL.
+Elles seront ensuite stock\'ees dans une base de donn\'ees MySQL.
 \noindent Ces informations sont :
 
 \begin{itemize}
 	\item les donn\'ees r\'ecup\'er\'ees via le module \textit{MK Livestatus}, la r\'ecup\'eration doit \^etre faite \`a intervalles r\'eguliers;
 	\item les diff\'erents emplois du temps de toutes les salles que Nagios surveille, la r\'ecup\'eration doit \^etre faite une fois par jour;
-	\item les donn\'ees sur un utilisateur inconnu (nom, pr\'enom, r\^ole : \'etudiant par exemple, photo) via un serveur LDAP.
+	\item les donn\'ees sur un utilisateur inconnu (nom, pr\'enom, r\^ole : \'etudiant par exemple, photo) via un serveur LDAP$^*$.
 
 \end{itemize}
 
@@ -68,10 +68,11 @@ La r\'eflexion doit ainsi se porter sur le contenu des diff\'erentes m\'ethodes 
 Le but \'etant un affichage le plus rapide possible des informations demand\'ees.
 
 L'utilisateur doit s'authentifier via un \textit{Servlet}$^*$ qui communique avec LDAP$^*$ et qui donne un acc\`es \`a l'application.
-Le reste de la communication est s\'ecuris\'ee comme expliqu\'e dans le \S~\ref{section:securisation}.
+Le reste de la communication sera s\'ecuris\'ee comme expliqu\'e dans le \S~\ref{section:securisation}.
 
 Le dernier point est de choisir un format pour les donn\'ees qui seront \'echang\'ees entre le service Web et l'application cliente.
-C'est sur cette partie que Yacine MAGHEZZI est intervenu durant son stage.
+
+C'est sur la partie affichage que Yacine MAGHEZZI est intervenu durant son stage.
 
 \subsection{Nagios}
 \label{section:nagios}
@@ -96,7 +97,7 @@ C'est actuellement la solution de surveillance la plus efficace du march\'e.
 Nagios a \'et\'e cr\'e\'e en 1999 et portait initialement le nom de \textit{NetSaint Network Monitor}.
 Il est \'ecrit en C et est con\c{c}u pour un environnement Unix.
 Le projet a \'et\'e maintenu jusqu'en 2002 avant de changer de nom pour devenir Nagios en r\'eponse \`a une contestation judiciaire par les propri\'etaires d'une marque similaire.
-N.A.G.I.O.S. est l'acronyme r\'ecursif de \og{}\textit{Nagios Ain't Gonna Insist On Sainthood}\fg{} o\`u Sainthood est une r\'ef\'erence \`a \textit{NetSaint}.
+N.A.G.I.O.S. est l'acronyme r\'ecursif de \og{}\textit{Nagios Ain't Gonna Insist On Sainthood}\fg{} o\`u \textit{Sainthood} est une r\'ef\'erence \`a \textit{NetSaint}.
 
 Maintenant connu sous le nom de Nagios XI, Nagios est un logiciel libre sous la licence GNU GPL V2. 
 Il est disponible sur son site Internet\cite{biblio:siteNagios} en version 3.2.1.
@@ -119,27 +120,27 @@ Ces v\'erifications peuvent \^etre la charge d'utilisation du CPU\protect\footno
 Dans le cadre de la v\'erification de l'infrastructure, deux types de machines sont observ\'ees : les ordinateurs dot\'es de Windows et les ordinateurs dot\'es de Macintosh.
 
 Nagios \'etant install\'e et fonctionnel depuis un peu plus d'un an sur le site de New Cavendish, les greffons pour observer les deux types de machines ont d\'ej\`a \'et\'e d\'evelopp\'es.
-Pour les machines fonctionnant sous Windows, le greffon est en fait l'appel \`a la commande Unix \textit{Winexe} qui permet l'ex\'ecution de commandes \`a distance sur des machines Windows.
-Pour les machines fonctionnant sous Macintosh, le greffon effectue une connexion SSH\protect\footnote{\textit{SecureShell}}, offrant une connexion s\'ecuris\'ee sur une machine distante pour ensuite ex\'ecuter la commande Unix \textit{who} permettant l'obtention de l'utilisateur connect\'e.
+Pour les machines fonctionnant sous Windows, le greffon est en fait l'appel \`a la commande Unix \textsf{Winexe} qui permet l'ex\'ecution de commandes \`a distance sur des machines Windows.
+Pour les machines fonctionnant sous Macintosh, le greffon effectue une connexion SSH\protect\footnote{\textit{SecureShell}}, offrant une connexion s\'ecuris\'ee sur une machine distante pour ensuite ex\'ecuter la commande Unix \textsf{who} permettant l'obtention de l'utilisateur connect\'e.
 Pour les machines b\'en\'eficiant d'un double \textit{boot} (d'un d\'emarrage de l'ordinateur permettant de choisir entre deux syst\`emes d'exploitation) Windows-Unix, seul le syst\`eme Windows est surveill\'e.
 La configuration actuelle de Nagios ne permet pas de r\'ecup\'erer avec exactitude l'utilisateur connect\'e sur le syst\`eme Unix.
 Il est juste possible de savoir que l'ordinateur est occup\'e, mais pas par qui.
 
 La configuration de Nagios s'articule entre diff\'erents concepts : les \textit{hosts}, les \textit{hostgroups} les \textit{services}.
-Un \textit{host} repr\'esente un ordinateur, cet ordinateur poss\`ede des \textit{services} comme le service \textsf{check\_whoisloggedin} permettant de savoir si un utilisateur est actuellement connect\'e sur ladite machine.
-Il faut enfin partie d'un groupe d'ordinateurs \textit{hostgroups} qui repr\'esente une salle informatique au sein de l'Universit\'e.
+Un \textit{host} repr\'esente un ordinateur, cet ordinateur poss\`ede des \textit{services} comme le \textit{service} \textsf{check\_whoisloggedin} permettant de savoir si un utilisateur est actuellement connect\'e sur ladite machine. Ces \textit{services} sont donc les greffons de Nagios.
+Les \textit{hosts} font enfin partie d'un groupe d'ordinateurs \textit{hostgroups} qui repr\'esente une salle informatique au sein de l'Universit\'e.
 
 \subsubsection{\og{}\textit{Monitoring}\fg{} \`a l'Universit\'e}
 
-Initialement, Nagios surveillait juste les machines se situant sur le campus de New Cavendish, soit 31 salles PC seulement machines.
-Actuellement, ce sont 102 salles qui sont sous la surveillance de Nagios, soit 99 salles utilisant Windows soit 1920 PC, 3 salles utilisant des Macintosh soit 63 MAC, pour un total de 1983 machines \`a travers toute l'Universit\'e : la grande majorit\'e des ordinateurs de l'Universit\'e.
+Initialement, Nagios surveillait juste les machines se situant sur le campus de New Cavendish, soit 31 salles PC, soit environ un peu plus de 600 machines.
+Actuellement, ce sont 102 salles qui sont sous la surveillance de Nagios, soit 99 salles utilisant Windows soit 1920 PC, 3 salles utilisant des Macintosh soit 63 MAC, pour un total de 1983 machines \`a travers toute l'Universit\'e. Cela repr\'esente la grande majorit\'e des ordinateurs de l'Universit\'e.
 Il faut noter que seuls les Macintosh de New Cavendish sont sous surveillance, les autres n\'ecessitant d'\^etre list\'es et des acc\`es diff\'erents.
 De ce fait, le nombre de machines devrait augmenter par la suite.
 
 \subsubsection{Vue sur la surveillance de Nagios}
 
 Les figures~\ref{figure:nagiosGeneral} et~\ref{figure:nagiosCG24}  donnent un aper\c{c}u de l'interface graphique de configuration mais aussi de suivi de Nagios.
-La figure~\ref{figure:nagiosGeneral} offre une vue d'ensemble sur tous les  \textit{hosts} de tous les \textit{hostgroups} surveill\'es.
+La figure~\ref{figure:nagiosGeneral} offre une vue d'ensemble sur tous les \textit{hosts} appartenant \`a tous les \textit{hostgroups} surveill\'es.
 La figure~\ref{figure:nagiosCG24}, quant \`a elle, offre une vue pour un \textit{hostgroup} sp\'ecifique : la salle pourtant le nom \textsf{e-cg24}.
 
 \clearpage
@@ -174,7 +175,7 @@ NetBeans est un IDE\protect\footnote{\textit{Integrated Development Environment}
 Il est \'ecrit en Java et fonctionne sous Windows, Mac OS, Linux, Solaris et d'autres plates-formes du moment qu'elles poss\`edent une JVM\protect\footnote{\textit{Java Virtual Machine}}$^*$ compatible.
 
 NetBeans permet de d\'evelopper et d\'eployer rapidement des applications graphiques Swing, des Applets, des JSP/Servlets et des architectures J2EE\protect\footnote{\textit{Java Platform, Enterprise Edition}}.
-Il poss\`ede toutes les fonctionnalit\'es recherch\'ees dans un IDE$^*$ moderne (coloration syntaxique, refactoring, d\'ebogueur, \ldots) et ajoute, dans le cas d'un d\'eveloppement d'un service Web comme pour ce projet, un support avec la derni\`ere version de GlassFish, permettant notamment de faire des {\og}deploy on save{\fg}, de d\'eployer les applications Web sur un serveur distant et de contr\^oler le serveur (suivre la sortie de logs, d\'emarrer, arr\^eter le serveur). 
+Il poss\`ede toutes les fonctionnalit\'es recherch\'ees dans un IDE$^*$ moderne (coloration syntaxique, refactoring, d\'ebogueur, \ldots) et ajoute, dans le cas d'un d\'eveloppement d'un service Web comme pour ce projet, un support avec la derni\`ere version de GlassFish, permettant notamment de faire des {\og}\textit{deploy on save}{\fg}, de d\'eployer les applications Web sur un serveur distant et de contr\^oler le serveur (suivre la sortie de logs, d\'emarrer, arr\^eter le serveur). 
 Il donne acc\`es \`a une gestion simple du serveur d'application GlassFish qui sera utilis\'e dans le projet.
 Sa premi\`ere version date de 1996 et portait le nom Xelfi. 
 Il est disponible sur son site Internet\cite{biblio:siteNetbeans} en version 7.1.2.
@@ -189,7 +190,7 @@ Il est disponible sur son site Internet\cite{biblio:siteNetbeans} en version 7.1
 
 \end{figure}
 
-GlassFish est un serveur d'application \textit{open source} d\'evelopp\'e par Sun Microsystems pour les plates-formes Java EE\protect\footnote{\textit{Java Platform, Entreprise Edition}} 5 et 6, et est maintenant maintenu par Oracle Corporation.
+GlassFish est un serveur d'application \textit{open source} d\'evelopp\'e par Sun Microsystems pour les plates-formes Java EE 5 et 6, et est maintenant maintenu par Oracle Corporation.
 Il dispose de nombreux outils pour faciliter le d\'eveloppement, le d\'eploiement et la maintenance d'application.
 Un de ses avantages est qu'il est particuli\`erement bien int\'egr\'e \`a NetBeans, ce qui permet un d\'eploiement tr\`es rapide des applications ainsi qu'une trace d'ex\'ecution lors du fonctionnement.
 GlassFish est disponible sur son site Internet\cite{biblio:siteGlassfish} en version 3.1.2.
@@ -206,7 +207,7 @@ Le but \'etant de g\'en\'erer des statistiques d'utilisation des salles informat
 	
 \end{figure}
 
-MySQL est le Syst\`eme de Gestion de Base de Donn\'ees (SGBD) la plus populaire qui fonctionne comme un serveur fournissant un acc\`es multi-utilisateurs \`a des bases de donn\'ees de type SQL$^*$.
+MySQL est le Syst\`eme de Gestion de Base de Donn\'ees (SGBD) le plus populaire qui fonctionne comme un serveur fournissant un acc\`es multi-utilisateurs \`a des bases de donn\'ees de type SQL$^*$.
 Il a \'et\'e cr\'e\'e par MySQL AB en 1995, rachet\'e par Sun Microsystems et est maintenant maintenu par Oracle.
 Il pr\'esente les avantages d'\^etre \textit{open source}, gratuit, fiable, rapide et facile \`a utiliser.
 Il est tr\`es souvent utilis\'e avec le langage de cr\'eation de pages Web dynamique PHP$^*$.
@@ -215,8 +216,8 @@ MySQL est disponible sur son site Internet\cite{biblio:siteMySQL} en version 5.5
 
 \subsection{L'acc\`es aux donn\'ees des tables}
 
-Par souci de performance, \cad, limiter les acc\`es multiples \`a la base de donn\'ees mais aussi faciliter la manipulation des donn\'ees lors des traitements, le design pattern$^*$ \textit{Data Access Object} (DAO) a \'et\'e utilis\'e.
-Un Data Access Object, ou objet d'acc\`es aux donn\'ees en fran\c{c}ais, est un objet qui constitue une repr\'esentation en m\'emoire des donn\'ees d'une base de donn\'ees.
+Par souci de performance, \cad, limiter les acc\`es multiples \`a la base de donn\'ees mais aussi faciliter la manipulation des donn\'ees lors des traitements, le \textit{design pattern}$^*$ \textit{Data Access Object} (DAO) a \'et\'e utilis\'e.
+Un \textit{Data Access Object}, ou objet d'acc\`es aux donn\'ees en fran\c{c}ais, est un objet qui constitue une repr\'esentation en m\'emoire des donn\'ees d'une base de donn\'ees.
 En Java, un DAO est une classe repr\'esentant une table dont les attributs sont les champs de la table comme le montre la figure~\ref{figure:dao}.
 Des classes repr\'esentant des listes sont g\'en\'eralement d\'evelopp\'ees pour contenir les DAO et simplifier l'acc\`es aux donn\'ees.
 
@@ -259,8 +260,6 @@ info1 @ info2 @ info3 @ info4
 
 \end{figure}
 
-Pour r\'ecup\'erer les informations de cet exemple, il suffit de parcourir le fichier en stockant les informations contenues entre les \textbf{@}.
-
 Cependant cette m\'ethode est assez contraignante et oblige \`a parcourir l'ensemble du fichier alors qu'un seul type d'information peut \^etre utile.
 Ce qui signifie une perte de temps plus ou moins significative en fonction de la taille du fichier re\c{c}u.
 
@@ -286,11 +285,11 @@ Ce qui peut s'av\'erer plus ou moins compliqu\'e voir impossible dans d'autres l
 
 \subsubsection{XML}
 
-eXtensible Markup Language ou XML est un m\'eta langage pour r\'ealiser du balisage g\'en\'erique permettant de mettre en forme les documents. XML a connu un grand succ\`es depuis sa cr\'eation.
+eXtensible Markup Language ou XML est un m\'eta langage pour r\'ealiser du balisage g\'en\'erique permettant de mettre en forme des documents. XML a connu un grand succ\`es depuis sa cr\'eation.
 Il est utilis\'e en particulier pour g\'erer la configuration, le stockage des donn\'ees, l'\'echange d'informations et bien d'autres fonctions encore.
 La figure~\ref{code:exempleXML} donne un exemple de document XML pouvant \^etre facilement converti en une arborescence DOM$^*$.
 
-\vspace{0.20cm}
+\clearpage
 
 \begin{figure}[!ht]
 	\lstinputlisting[language=XML]{codes/Exemple.xml}
@@ -309,9 +308,9 @@ XML offre une solution structur\'ee et tr\`es simple \`a comprendre pour l'envoi
 
 \subsubsection{JSON}
 
-JavaScript Object Notation ou JSON est un format l\'eger d'\'echange de donn\'ees texte.
+\textit{JavaScript Object Notation} ou JSON est un format l\'eger d'\'echange de donn\'ees texte.
 Il utilise la notation des objets JavaScript pour transmettre de l'information structur\'ee.
-Il est aussi souvent utili\'e pour simplifier et all\'eger les acc\`es \`a des services Web depuis les navigateurs.
+Il est aussi souvent utilis\'e pour simplifier et all\'eger les acc\`es \`a des services Web depuis les navigateurs.
 La figure~\ref{code:exempleJSON} donne un exemple de fichier JSON reprenant le m\^eme arbre que le document XML de la figure~\ref{code:exempleXML}.
 
 \clearpage
@@ -328,14 +327,14 @@ C'est un langage d'\'echange de donn\'ees id\'eal.
 
 Cependant, \`a la diff\'erence XML, les fichier JSON ne peuvent pas \^etre v\'erifi\'es avec certitude.
 Il existe certes quelques outils, mais ils sont tr\`es peu utilis\'es et requi\`erent une \'ecriture manuelle. 
-Chose qui peut entrainer des erreurs humaines sur les fichiers de v\'erifications.
+Chose qui peut entra\^iner des erreurs humaines sur les fichiers de v\'erifications.
 
 \subsubsection{Choix du format}
 
 Le choix du format de retour des donn\'ees s'est port\'e sur l'utilisation de JSON.
-Le but du client, qui demande des informations au service Web, est de recevoir les donn\'ees le plus rapidement possible afin d'avoir \`a les afficher dans la foul\'ee.
+Le but du client, qui demande des informations au service Web, est de recevoir les donn\'ees le plus rapidement possible afin de pouvoir les afficher dans la foul\'ee.
 De ce fait, le \textit{parsing} d'un texte contenant des balises \`a certains endroits s'av\`ere inadapt\'e, notamment pour r\'ecup\'erer un seul type d'information.
-L'envoi d'un objet s\'erialisable Java est, quant \`a lui trop restrictif. Le choix a donc \'et\'e de choisir entre XML ou JSON.
+L'envoi d'un objet s\'erialisable Java est, quant \`a lui, trop restrictif. Le choix a donc \'et\'e entre XML ou JSON.
 
 XML offre un format de donn\'ees verbeux et prend beaucoup d'espace. 
 De plus un document XML peut \^etre valid\'e via l'utilisation de DTD\protect\footnote{\textit{Document Type Definition}}, document permettant de d\'ecrire un mod\`ele de document XML, ou de XSD\protect\footnote{\textit{XML Schema Definition}}, langage de description de format de document XML permettant de d\'efinir la structure et le type de contenu d'un document XML.
@@ -383,7 +382,7 @@ JSON se base sur deux structures de donn\'ees universelles dans pratiquement tou
 	Les valeurs sont s\'epar\'ees par \textsf{, (virgule)};
 	\item une \textit{valeur} :\\Soit une \textsf{cha\^ine de caract\`eres} entre guillemets, soit un \textsf{nombre}, soit \textsf{true} ou \textsf{false} ou \textsf{null}, soit un \textsf{objet}, soit un \textsf{tableau}.
 	Ces structures peuvent \^etre imbriqu\'ees;
-	\item une \textit{cha\^ine de caract\`eres} :\\Suite caract\'eres Unicode (z\'ero ou plus), entre guillemets, et utilisant les \'echappements avec antislash. 
+	\item une \textit{cha\^ine de caract\`eres} :\\Suite de caract\`eres Unicode (z\'ero ou plus), entre guillemets, et utilisant les \'echappements avec antislash. 
 	Un caract\`ere est repr\'esent\'e par une cha\^ine d'un seul caract\`ere.
 
 \end{itemize}
@@ -395,8 +394,8 @@ JSON se base sur deux structures de donn\'ees universelles dans pratiquement tou
 \section{Communication avec Nagios}
 
 Nagios offre la surveillance d'un grand ensemble de machines dans l'Universit\'e. 
-Cependant s'il n'y a aucune mani\`ere de r\'ecup\'erer ces informations, il n'aurait aucune utilit\'e dans le projet.
-Ainsi un module a \'et\'e d\'evelopp\'e, son but \'etant de pouvoir interroger Nagios et obtenir ses r\'eponses le plus rapidement et simplement possible.
+Cependant s'il n'y a aucune mani\`ere de r\'ecup\'erer ces informations, il n'aurait aucune utilit\'e de son utilisation dans le projet.
+Ainsi un module existe et son but est de pouvoir interroger Nagios et obtenir ses r\'eponses le plus rapidement et simplement possible.
 
 \subsection{Le module MKLivestatus}
 \label{section:moduleMKLivestatus}
@@ -411,16 +410,16 @@ Ce module est directement charg\'e dans le processus de Nagios et \`a chaque nou
 Les avantages \'etant une mise \`a jour imm\'ediate de l'information et une simplicit\'e et rapidit\'e d'acc\`es aux bases de donn\'ees pour les applications.
 Mais d'un autre cot\'e, la mise en place de ce syst\`eme est complexe, elle n\'ecessite une administration humaine de la base de donn\'ees, la consommation CPU est significative juste pour garder la base \`a jour et son entretien r\'egulier peut bloquer Nagios pendant un moment (cela d\'epend de la taille de l'infrastructure).
 
-Le module MKLivestatus reprend le principe de NDO dans l'int\'egration directe dans le processus Nagios, cependant, la diff\'erence de taille est qu'il ouvre juste une socket de communication par laquelle les donn\'ees peuvent \^etre retrouv\'ees \`a la demande.
+Le module MKLivestatus reprend le principe de NDO dans l'int\'egration directe dans le processus Nagios, cependant, la diff\'erence de taille est qu'il ouvre juste une socket de communication par laquelle les donn\'ees peuvent \^etre retourn\'ees \`a la demande.
 La socket ouverte par d\'efaut par MKLivestatus est une socket UNIX$^*$, mais il est possible de configurer une socket Internet classique sur un port choisi et accessible seulement par certaines machines.
 Par cette socket, il est possible d'envoyer une requ\^ete vers une cible sp\'ecifique comme un service, une machine, un ensemble de machines, \ldots{}
-La r\'eponse est imm\'ediate et les donn\'ees renvoy\'ees ont \'et\'e directement lu dans les structures de donn\'ees internes de Nagios.
+La r\'eponse est imm\'ediate et les donn\'ees renvoy\'ees ont \'et\'e directement lues dans les structures de donn\'ees internes de Nagios.
 
 \noindent MKLivestatus offre donc de nombreux avantages :
 
 \begin{itemize}
 	\item consommation CPU non mesurable, juste une petite consommation lors de l'ex\'ecution d'une requ\^ete;
-	\item pas d'ecritures sur le disque;
+	\item pas d'\'ecritures sur le disque;
 	\item acc\`es aux donn\'ees beaucoup plus rapide qu'avec un \textit{parsing} du fichier \textsf{status.dat} ou l'ex\'ecution de requ\^etes SQL$^*$.
 	\item pas de configuration, d'administration ou autre, tout est install\'e automatiquement.
 
@@ -434,21 +433,21 @@ MKLivestatus est disponible sur le site Internet\cite{biblio:siteMklivestatus} d
 
 \subsubsection{\'Ecriture des requ\^etes avec LQL}
 
-LQL, Livestatus Query Language, prononc\'e \og Liquel\fg, est un langage sp\'ecialement con\c{c}u pour communiquer avec le module MKLivestatus via une socket.
+LQL, \textit{Livestatus Query Language}, prononc\'e \og Liquel\fg, est un langage sp\'ecialement con\c{c}u pour communiquer avec le module MKLivestatus via une socket.
 Il ressemble un peu au langage SQL$^*$.
 
 \noindent Chaque requ\^ete consiste en :
 
 \begin{itemize}
 	\item une commande commen\c{c}ant par le mot cl\'e \textsf{GET} suivit du nom de la \textit{table};
-	\item un nombre arbitraire de lignes d'en-t\^ete consistant en un mot cl\'e, un double-point et une liste d'arguments;
+	\item un nombre arbitraire de lignes d'en-t\^ete consistant en un mot-cl\'e, un double-point et une liste d'arguments;
 	\item une ligne vide ou une fin de transmission (pour fermer la proc\'edure d'envoi sur la socket).
 
 \end{itemize}
 
 \vspace{0.20cm}
 
-Tous les mots cl\'es sont sensibles \`a la casse. 
+Tous les mots-cl\'es sont sensibles \`a la casse. 
 La version actuelle de Livestatus donne acc\`es \`a seize tables dont voici les principales :
 
 \begin{itemize}
@@ -485,7 +484,7 @@ Si une requ\^ete est pass\'ee sans param\^etres, toutes les colonnes seront reto
 Comme vu dans au \S~\ref{section:moduleMKLivestatus}, il existe deux mani\`eres d'acc\'eder \`a la socket de MKLivestatus.
 La premi\`ere m\'ethode est avec une socket UNIX$^*$. 
 Pour ce faire, MKLivestatus fournit pendant son installation un petit utilitaire appel\'e \textsf{unixcat} permettant de communiquer avec une socket UNIX$^*$.
-Sous forme d'une commande shell, cet utilitaire envoit toutes les donn\'ees lu par l'entr\'ee standard (stdin) \`a la socket et \'ecrit sur la sortie standard (stdout) tout ce qu'il re\c{c}oit de la socket.
+Sous forme d'une commande shell, cet utilitaire envoit toutes les donn\'ees lues par l'entr\'ee standard (stdin) \`a la socket et \'ecrit sur la sortie standard (stdout) tout ce qu'il re\c{c}oit de la socket.
 Voici un exemple d'ex\'ecution en utilisant la commande \textsf{unixcat} : 
 
 \begin{center}
@@ -534,7 +533,7 @@ Chaque r\'eponse contient 1983 lignes.
 Apr\`es 100 requ\^etes, il est visible qu'utiliser une socket UNIX$^*$, pour une ex\'ecution syst\`eme est presque deux fois plus rapide que l'utilisation d'une socket Internet.
 Cependant, l'application ne n\'ecessite pas l'ex\'ecution de nombreuses requ\^etes simultan\'ees.
 Une seule sera effectu\'ee \`a chaque cycle comme d\'ecrit au \S~\ref{section:cyclePrincipal}.
-De ce fait, l'utilisation d'une socket Internet convient dans la r\'ecup\'eration des informations de Nagios.
+De ce fait, l'utilisation d'une socket Internet convient dans la r\'ecup\'eration des informations de Nagios et \'evite l'installation de biblioth\`eques JNI.
 
 \subsubsection{R\'ecup\'eration de l'information}
 
@@ -597,7 +596,7 @@ Ainsi, la salle \textsf{4111} se trouvant sur le campus de New Cavendish sera id
 \noindent Les ordinateurs sont nomm\'ees en suivant la m\^eme logique :
 
 \begin{center}
-	\textsf{abr\'eviation du lieu---nom de la salle---type ordinateur---numero ordinateur}
+	\textsf{abr\'eviation du lieu---nom de la salle---type ordinateur---num\'ero ordinateur}
 	
 \end{center}
 
@@ -633,7 +632,7 @@ La figure~\ref{figure:cyclePrincipal} permet de voir les diff\'erentes \'etapes 
 
 Dans un premier temps, \`a la premi\`ere ex\'ecution du cycle, les diff\'erents \textit{scripts} \'ecris en LQL Nagios sont charg\'es en m\'emoire.
 Ensuite, une v\'erification de la coh\'erence des donn\'ees contenues dans les tables permettant de g\'erer l'archivage des donn\'ees est effectu\'ee.
-Cette v\'erification a pour but de s'assurer que il n'y a pas des donn\'ees absurdes de connexion : les donn\'ees de connexion dont dat\'ees de plus de 6 heures pour la table \textsf{yuukou\_who} et les donn\'ees de connexion dont la diff\'erence entre la date de d\'ebut de connexion et la date de fin de connexion est de plus de 6 heures elle aussi.
+Cette v\'erification a pour but de s'assurer que il n'y a pas des donn\'ees absurdes de connexion : les donn\'ees de connexion dat\'ees de plus de 6 heures pour la table \textsf{yuukou\_who} et les donn\'ees de connexion dont la diff\'erence entre la date de d\'ebut de connexion et la date de fin de connexion est de plus de 6 heures elle aussi.
 Si de telles donn\'ees sont trouv\'ees, elles sont automatiquement effac\'ees de la table auxquelles elles appartiennent.
 
 L'\'etape suivante entre dans le d\'ebut du cycle \`a proprement parler.
