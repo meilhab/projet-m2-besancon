@@ -8,7 +8,7 @@ Ces informations sont ensuite trait\'ees par le service Web qui se charge de rem
 
 \subsubsection{R\'ecup\'eration des salles}
 
-La requ\^ete~\ref{annexe:nagiosGetHostGroups} permet de r\'ecup\'erer les salles que Nagios surveille.
+La requ\^ete~\ref{annexe:nagiosGetHostGroups} permet d'interroger Nagios afin de r\'ecup\'erer les salles qu'il surveille.
 Ces salles sont appel\'ees \textit{hostgroups} et contiennent des machines appel\'ees \textit{hosts}.
 Parmi ces \textit{hostgroups}, les imprimantes, serveurs et autres ressources sont exclues pour ne retenir que les salles.
 La socket Nagios retournera alors le nom de la salle, le nombre de machines qu'elle contient, et la liste des machines qui font partie du groupe.
@@ -24,7 +24,7 @@ La socket Nagios retournera alors le nom de la salle, le nombre de machines qu'e
 
 \subsubsection{R\'ecup\'eration des machines}
 
-La requ\^ete~\ref{annexe:nagiosGetResources} permet de r\'ecup\'erer toutes les machines qui peuvent poss\'eder un utilisateur de connect\'e.
+La requ\^ete~\ref{annexe:nagiosGetResources} permet d'interroger Nagios afin de r\'ecup\'erer toutes les machines qui peuvent poss\'eder un utilisateur de connect\'e.
 En fait, il est demand\'e la r\'ecup\'eration de tous les services ayant acc\`es \`a l'information \textsf{check\_whoisloggedin}.
 Cette information permet de r\'ecup\'erer l'identifiant de la personne connect\'e \`a une machine, si tant est qu'une personne y est connect\'ee.
 Il y a pour chaque machine, un service portant ce nom, cela revient donc \`a demander tous les ordinateurs.
@@ -39,8 +39,8 @@ La socket Nagios retournera alors le nom de la machine, son adresse IP, le \text
 
 \subsubsection{R\'ecup\'eration de tous les utilisateurs connect\'es}
 
-La requ\^ete~\ref{annexe:nagiosGetUsersLogged} permet de r\'ecup\'erer seulement la liste des utilisateurs connect\'es sur les machines sous surveillance.
-Il est demand\'e la r\'ecup\'eration de tous les services parmi lesquels il n'est gard\'e que ceux qui peuvent avoir un utilisateur de connect\'e.
+La requ\^ete~\ref{annexe:nagiosGetUsersLogged} permet d'interroger Nagios afin de r\'ecup\'erer seulement la liste des utilisateurs connect\'es sur les machines sous surveillance.
+Il est demand\'e la r\'ecup\'eration de tous les services parmi lesquels il n'est gard\'e que ceux sur lesquels un utilisateur peut se connecter.
 De plus, les messages de Nagios concernant un \'eventuel probl\`eme dans la r\'ecup\'eration de l'information sont \'ecart\'es.
 Seul les utilisateurs \og corrects\fg{} sont gard\'es.
 
@@ -57,8 +57,8 @@ Seul les utilisateurs \og corrects\fg{} sont gard\'es.
 \label{chapterAnnexe:reponseLQLNagios}
 
 Cette annexe permet une vue sur les informations qui sont retourn\'ees par une requ\^ete LQL.
-Les informations se pr\'esentent toujours sous la m\^eme forme : une ligne qui est compos\'ee des diff\'erentes colonnes demand\'ees dans la requ\^etes.
-Les colonnes sont s\'epar\'ees par un \textsf{; (point-virgule)}.
+Les informations se pr\'esentent toujours sous la m\^eme forme : une ligne qui est compos\'ee des diff\'erentes colonnes demand\'ees dans la requ\^ete.
+Les colonnes sont s\'epar\'ees par un \textsf{";" (point-virgule)}.
 
 \subsubsection{Retour lors d'une r\'ecup\'eration des salles}
 
@@ -110,7 +110,7 @@ Enfin, ce diagramme sera d\'ecoup\'e en diff\'erentes parties pour plus de visib
 
 \begin{itemize}
 	\item[\textbf{\textsf{yuukou\_rooms}}] contient les descriptions des salles informatiques;
-	\item[\textbf{\textsf{yuukou\_resources}}] contient les descriptiosn des ordinateurs appartenant \`a une salle particuli\`ere;
+	\item[\textbf{\textsf{yuukou\_resources}}] contient les descriptions des ordinateurs appartenant \`a une salle particuli\`ere;
 	\item[\textbf{\textsf{yuukou\_users}}] contient les descriptions des utilisateurs;
 	\item[\textbf{\textsf{yuukou\_last}}] contient les historiques de toutes les connexions pass\'ees sur les ordinateurs;
 	\item[\textbf{\textsf{yuukou\_who}}] contient les historiques de toutes les connexions en cours sur les ordinateurs;
@@ -172,7 +172,7 @@ La partie logicielle a pour r\^ole de lier les informations de configuration log
 
 \subsubsection{Partie emploi du temps}
 
-La partie emploi du temps a pour r\^ole de lier les informations d'emploi du temps \`a une salle en passant par une table de mapping faisant le lien entre le nom d'une salle dans {\YuukouII} et le nom d'une salle utilis\'e par les services centraux informatique lors de la g\'en\'eration des l'emplois du temps.
+La partie emploi du temps a pour r\^ole de lier les informations d'emploi du temps \`a une salle en passant par une table de mapping faisant le lien entre le nom d'une salle dans {\YuukouII} et le nom d'une salle utilis\'e par les services centraux informatiques lors de la g\'en\'eration des emplois du temps.
 
 \clearpage
 
