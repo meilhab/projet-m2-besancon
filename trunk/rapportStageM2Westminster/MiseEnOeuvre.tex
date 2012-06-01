@@ -8,7 +8,7 @@ Les deux points suivants seront consacr\'es au fonctionnement et aux fonctionnal
 Le premier de ces deux points permettra de d\'ecouvrir le cycle qui permet de r\'ecup\'erer les informations de Nagios et de les archiver, ainsi que les m\'ethodes auxquelles un client peut acc\'eder pour r\'ecup\'erer une partie ou toutes les informations archiv\'ees par le service Web.
 Le deuxi\`eme de ces deux points expliquera les diff\'erentes fonctionnalit\'es dont {\YuukouII} b\'en\'eficie.
 Suite \`a cela, un autre point aura pour but d'expliquer l'organisation du travail qui a \'et\'e adopt\'ee tout au long du d\'eveloppement du service Web.
-Une vue sur comment est exploit\'e le service Web sera faite ensuite et montrera des captures d'\'ecrans de ce qui a \'et\'e r\'ealis\'e.
+Une vue expliquant comment est exploit\'e le service Web sera faite ensuite et montrera des captures d'\'ecrans de ce qui a \'et\'e r\'ealis\'e.
 Enfin, un dernier point permettra de voir les principaux probl\`emes qui ont \'et\'e rencontr\'es lors du stage.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -19,12 +19,12 @@ Enfin, un dernier point permettra de voir les principaux probl\`emes qui ont \'e
 Apr\`es avoir compris comment fonctionne un service Web, il a fallu se concentrer sur les diff\'erents outils et la fa\c{c}on de les utiliser afin de d\'evelopper le projet.
 La r\'eflexion se portera d'abord sur une architecture du projet dont le but est de se faire une id\'ee de comment toutes les pi\`eces peuvent s'articuler les unes avec les autres.
 Ensuite il sera fait une description des outils utilis\'es durant le projet.
-Enfin les choix techniques pris lors du stage seront d\'ecrit.
+Enfin les choix techniques op\'er\'es lors du stage seront d\'ecrits.
 
 \subsection{Architecture du projet}
 \label{section:architectureProjet}
 
-Le premier travail a \'et\'e la r\'eflexion sur comment mettre en place une solution pouvant communiquer avec Nagios dont une description sera faite au \S~\ref{section:nagios}.
+Le premier travail a \'et\'e la r\'eflexion \`a propos de la mise en place une solution pouvant communiquer avec Nagios dont une description sera faite au \S~\ref{section:nagios}.
 Les figures~\ref{figure:architectureProjetServiceWeb} et~\ref{figure:architectureProjetAffichage} pr\'esentent le fruit des recherches qui ont \'et\'e faites sur la mise en place du projet \YuukouII.
 
 \begin{figure}[!ht]
@@ -117,18 +117,19 @@ Il est disponible sur son site Internet\cite{biblio:siteNagios} en version 3.2.1
 \vspace{0.20cm}
 
 \`A la base, Nagios est un moteur d'ordonnancement de v\'erifications diverses et vari\'ees dont les v\'erifications sont effectu\'ees via des greffons.
-Ces v\'erifications peuvent \^etre la charge d'utilisation du CPU\protect\footnote{\textit{Central Processing Unit} ou processeur en fran\c{c}ais}, l'espace disque utilis\'e ou encore qui est connect\'e actuellement.
+Ces v\'erifications peuvent \^etre la charge d'utilisation du CPU\protect\footnote{\textit{Central Processing Unit} ou processeur en fran\c{c}ais}, l'espace disque utilis\'e ou encore les utilisateurs actuellement connect\'es.
 Dans le cadre de la v\'erification de l'infrastructure, deux types de machines sont observ\'ees : les ordinateurs dot\'es de Windows et les ordinateurs dot\'es de Macintosh.
 
 Nagios \'etant install\'e et fonctionnel depuis un peu plus d'un an sur le site de New Cavendish, les greffons pour observer les deux types de machines ont d\'ej\`a \'et\'e d\'evelopp\'es.
-Pour les machines fonctionnant sous Windows, le greffon est en fait l'appel \`a la commande Unix \textsf{Winexe} qui permet l'ex\'ecution de commandes \`a distance sur des machines Windows.
+Pour les machines fonctionnant sous Windows, le greffon est en fait l'appel \`a la commande Unix \textsf{winexe} qui permet l'ex\'ecution de commandes \`a distance sur des machines Windows.
 Pour les machines fonctionnant sous Macintosh, le greffon effectue une connexion SSH\protect\footnote{\textit{SecureShell}}, offrant une connexion s\'ecuris\'ee sur une machine distante pour ensuite ex\'ecuter la commande Unix \textsf{who} permettant l'obtention de l'utilisateur connect\'e.
 Pour les machines b\'en\'eficiant d'un double \textit{boot} (d'un d\'emarrage de l'ordinateur permettant de choisir entre deux syst\`emes d'exploitation) Windows-Unix, seul le syst\`eme Windows est surveill\'e.
 La configuration actuelle de Nagios ne permet pas de r\'ecup\'erer avec exactitude l'utilisateur connect\'e sur le syst\`eme Unix.
 Il est juste possible de savoir que l'ordinateur est occup\'e, mais pas par qui.
 
 La configuration de Nagios s'articule entre diff\'erents concepts : les \textit{hosts}, les \textit{hostgroups} les \textit{services}.
-Un \textit{host} repr\'esente un ordinateur, cet ordinateur poss\`ede des \textit{services} comme le \textit{service} \textsf{check\_whoisloggedin} permettant de savoir si un utilisateur est actuellement connect\'e sur ladite machine. Ces \textit{services} sont donc les greffons de Nagios.
+Un \textit{host} repr\'esente un ordinateur, cet ordinateur poss\`ede des \textit{services} comme le \textit{service} \textsf{check\_whoisloggedin} permettant de savoir si un utilisateur est actuellement connect\'e sur ladite machine. 
+Ces \textit{services} sont donc les greffons de Nagios.
 Les \textit{hosts} font enfin partie d'un groupe d'ordinateurs \textit{hostgroups} qui repr\'esente une salle informatique au sein de l'Universit\'e.
 
 \subsubsection{\og{}\textit{Monitoring}\fg{} \`a l'Universit\'e}
@@ -244,7 +245,7 @@ La base de donn\'ees peut \^etre d\'ecoup\'ee en diff\'erentes grandes parties.
 La partie archivage a pour but de conserver les donn\'ees dans le temps.
 Pour ce faire, elle est compos\'ee de deux tables centrales de sauvegarde d'informations.
 La premi\`ere est la table \textsf{yuukou\_who}, son but est de simuler la commande UNIX \textsf{who}.
-Cette commande permet de donner tous les utilisateur connect\'es sur la machine o\`u elle est ex\'ecut\'ee.
+Cette commande permet de donner tous les utilisateurs connect\'es sur la machine o\`u elle est ex\'ecut\'ee.
 De ce fait, si elle est port\'ee au niveau de Nagios et du projet, la table contiendra tous les utilisateurs connect\'es sur un ordinateur et depuis quand ils le sont.
 La deuxi\`eme table est \textsf{yuukou\_last}, son but est aussi de simuler une commande UNIX, la commande \textsf{last}.
 Cette commande permet de donner la liste de toutes les derniers utilisateurs sur la machine sur laquelle elle est ex\'ecut\'ee.
@@ -320,11 +321,11 @@ La figure~\ref{code:exempleJava} donne un exemple de classe Java s\'erialisable 
 
 L'objet contiendrait toutes les donn\'ees utiles et celles-ci seraient facilement accessibles.
 Le probl\`eme venant avec cette solution est que les objets doivent \^etre r\'ecup\'er\'es par une JVM$^*$.
-Ce qui peut s'av\'erer plus ou moins compliqu\'e voir impossible dans d'autres langages de programmation que Java.
+Ce qui peut s'av\'erer plus ou moins compliqu\'e voire impossible dans d'autres langages de programmation que Java.
 
 \subsubsection{XML}
 
-eXtensible Markup Language ou XML est un m\'eta langage pour r\'ealiser du balisage g\'en\'erique permettant de mettre en forme des documents. XML a connu un grand succ\`es depuis sa cr\'eation.
+eXtensible Markup Language ou XML est un m\'eta-langage pour r\'ealiser du balisage g\'en\'erique permettant de mettre en forme des documents. XML a connu un grand succ\`es depuis sa cr\'eation.
 Il est utilis\'e en particulier pour g\'erer la configuration, le stockage des donn\'ees, l'\'echange d'informations et bien d'autres fonctions encore.
 La figure~\ref{code:exempleXML} donne un exemple de document XML pouvant \^etre facilement converti en une arborescence DOM$^*$.
 
@@ -364,7 +365,7 @@ La figure~\ref{code:exempleJSON} donne un exemple de fichier JSON reprenant le m
 JSON offre l'avantage d'\^etre ind\'ependant du langage utilis\'e, il est l\'eger et simple \`a utiliser.
 C'est un langage d'\'echange de donn\'ees id\'eal.
 
-Cependant, \`a la diff\'erence XML, les fichier JSON ne peuvent pas \^etre v\'erifi\'es avec certitude.
+Cependant, \`a la diff\'erence XML, les fichiers JSON ne peuvent pas \^etre v\'erifi\'es avec certitude.
 Il existe certes quelques outils, mais ils sont tr\`es peu utilis\'es et requi\`erent une \'ecriture manuelle. 
 Chose qui peut entra\^iner des erreurs humaines sur les fichiers de v\'erifications.
 
@@ -376,7 +377,7 @@ De ce fait, le \textit{parsing} d'un texte contenant des balises \`a certains en
 L'envoi d'un objet s\'erialisable Java est, quant \`a lui, trop restrictif. Le choix a donc \'et\'e entre XML ou JSON.
 
 XML offre un format de donn\'ees verbeux et prend beaucoup d'espace. 
-De plus un document XML peut \^etre valid\'e via l'utilisation de DTD\protect\footnote{\textit{Document Type Definition}}, document permettant de d\'ecrire un mod\`ele de document XML, ou de XSD\protect\footnote{\textit{XML Schema Definition}}, langage de description de format de document XML permettant de d\'efinir la structure et le type de contenu d'un document XML.
+De plus un document XML peut \^etre valid\'e via l'utilisation de DTD\protect\footnote{\textit{Document Type Definition}}, document permettant de d\'ecrire un mod\`ele de document XML, ou de XML Schema, langage de description de format de document XML permettant de d\'efinir la structure et le type de contenu d'un document XML.
 
 JSON offre un format de fichier plus simple que XML, facilement compr\'ehensible.
 Pour compl\'eter, les fichiers JSON, \`a arbre \'egal, seront toujours plus petits que l'\'equivalent XML et pr\'esenteront l'avantage d'\^etre plus rapidement \textit{pars\'es}.
@@ -391,7 +392,7 @@ Cependant, les donn\'ees ne peuvent pas \^etre v\'erifi\'ees dans un fichier JSO
 Une courte description de ce qu'est JSON a d\'ej\`a \'et\'e faite au \S~\ref{section:formatRetour}.
 Pour reprendre ce qui a d\'ej\`a \'et\'e dit, JSON est un format l\'eger d'\'echange de donn\'ees qui est apparu en 2002.
 Il est facile \`a \'ecrire et comprendre pour des humains.
-Il est bas\'e sur un sous-ensemble du langage de programmation JavaScript et est compl\`etement ind\'ependant de tout langage, tout en poss\`edant des conventions famili\`eres aux langages descendant du C (C++, C\#, Java, JavaScript, \ldots).
+Il est fond\'e sur un sous-ensemble du langage de programmation JavaScript et est compl\`etement ind\'ependant de tout langage, tout en poss\`edant des conventions famili\`eres aux langages descendant du C (C++, C\#, Java, JavaScript, \ldots).
 Ces propri\'et\'es font de JSON un langage d'\'echange de donn\'ees id\'eal.
 
 Cependant, il ne supporte pas les espaces de noms au contraire d'XML.
@@ -443,7 +444,7 @@ Ainsi un module existe et son but est de pouvoir interroger Nagios et obtenir se
 Le module MKLivestatus permet un acc\`es imm\'ediat au statut de Nagios ainsi qu'\`a ses donn\'ees de logs.
 Avant le module, une fa\c{c}on classique de r\'ecup\'erer les informations importantes \'etait de \textit{parser} le fichier \textsf{status.dat}, qui est cr\'e\'e automatique par Nagios \`a chacun de ses cycles.
 Ce fichier contient toutes les informations concernant les services et les machines que Nagios surveille.
-\textit{Parser} ce fichier s'av\`ere d\'elicat, surtout pour extaire quelques informations.
+\textit{Parser} ce fichier s'av\`ere d\'elicat, surtout pour extraire quelques informations.
 Il existe bien une mani\`ere alternative de r\'ecup\'erer ces informations avec le module NDO.
 Ce module est directement charg\'e dans le processus de Nagios et \`a chaque nouveau cycle, il envoie les mises \`a jour via une socket UNIX$^*$ \`a un processus auxiliaire qui se charge de mettre \`a jour une base de donn\'ees.
 
@@ -524,7 +525,7 @@ Si une requ\^ete est pass\'ee sans param\^etres, toutes les colonnes seront reto
 Comme vu dans au \S~\ref{section:moduleMKLivestatus}, il existe deux mani\`eres d'acc\'eder \`a la socket de MKLivestatus.
 La premi\`ere m\'ethode est avec une socket UNIX$^*$. 
 Pour ce faire, MKLivestatus fournit pendant son installation un petit utilitaire appel\'e \textsf{unixcat} permettant de communiquer avec une socket UNIX$^*$.
-Sous forme d'une commande shell, cet utilitaire envoit toutes les donn\'ees lues par l'entr\'ee standard (stdin) \`a la socket et \'ecrit sur la sortie standard (stdout) tout ce qu'il re\c{c}oit de la socket.
+Sous forme d'une commande shell, cet utilitaire envoit toutes les donn\'ees lues par l'entr\'ee standard (\texttt{stdin}) \`a la socket et \'ecrit sur la sortie standard (\texttt{stdout}) tout ce qu'il re\c{c}oit de la socket.
 Voici un exemple d'ex\'ecution en utilisant la commande \textsf{unixcat} : 
 
 \begin{center}
@@ -583,7 +584,7 @@ Nagios retourne les informations sous une forme bien sp\'ecifique :
 \begin{itemize}
 	\item une ligne correspond \`a une ligne de la table demand\'ee;
 	\item la ligne contient toutes les colonnes de la table ou seulement celles demand\'ees dans la requ\^ete.
-	Chaque colonne est s\'epar\'ee d'une autre par un \textsf{; (point-virgule)}.
+	Chaque colonne est s\'epar\'ee d'une autre par un \textsf{";" (point-virgule)}.
 
 \end{itemize}
 
@@ -690,7 +691,7 @@ Ici aussi, si une donn\'ee de connexion d\'epasse les 6 heures, elle sera ignor\
 
 Suite \`a ce traitement, une v\'erification est effectu\'ee sur tous les ordinateurs connus.
 En effet, un ordinateur poss\`ede un statut particulier : fonctionnel, \'eteint ou en attente d'effacement.
-Ce statut est fix\'e d'une part avec l'\'etape de traitement des r\'esultats pr\'ec\'edente, au d'autre part avec l'\'etape actuelle.
+Ce statut est fix\'e d'une part avec l'\'etape pr\'ec\'edente des r\'esultats, d'autre part avec l'\'etape actuelle.
 Si le statut d'un ordinateur reste \'eteint pendant une semaine, son statut change et passe \`a : en attente d'effacement.
 
 Une v\'erification des emplois du temps est ensuite effectu\'ee.
@@ -713,7 +714,7 @@ Si un cycle date de 5 heures, alors il ne faut pas tenir compte des informations
 \label{section:fonctionsPubliques}
 
 Ces fonctions sont accessibles par tous les utilisateurs appartenant \`a l'Universit\'e.
-Elles ne retournent aucunes informations pouvant porter atteinte aux utilisateurs ou pouvant donner acc\`es \`a l'administration du service Web.
+Elles ne retournent aucune information pouvant porter atteinte aux utilisateurs ou pouvant donner acc\`es \`a l'administration du service Web.
 
 \begin{description}
 	\item[\textbf{healthForRoom (String idRoom)}] retourne toutes les informations concernant une salle : emploi du temps, nombre d'utilisateurs, description de la salle, {\ldots} Cette fonction donne des informations d\'etaill\'ees sur une salle informatique;
@@ -753,7 +754,7 @@ Tout lancement de cycle est impossible ensuite;
 \subsection{Retour des fonctions}
 \label{section:retourFonction}
 
-\'Etant dans un cadre de travail collaboratif comme le traitera le \S~\ref{section:travailequipe}, il est n\'ecessaire d'adopter de la rigueur dans le retour d'information.
+\'Etant dans un cadre de travail collaboratif comme expliqu\'e au \S~\ref{section:travailequipe}, il est n\'ecessaire d'adopter de la rigueur dans le retour d'information.
 Encore plus du fait qu'en JSON, le fichier ne peut pas \^etre v\'erifi\'e comme un fichier XML et son sch\'ema.
 C'est pourquoi, deux mani\`eres sp\'ecifiques ont \'et\'e choisies pour retourner les informations : le cas o\`u les informations ont \'et\'e correctement transmises et le cas o\`u elles ne l'ont pas \'et\'e.
 Des exemples de retours concrets sont disponibles en annexe~\ref{chapterAnnexe:exempleJSON}.
@@ -860,13 +861,13 @@ La figure~\ref{figure:rrdTool} pr\'esente un exemple de graphe d'utilisation des
 
 \subsubsection{Les flux RSS de l'Universit\'e}
 
-Pouvoir donner le statut d'une salle informatique a un \'etudiant est un point cl\'e du service Web.
+Pouvoir donner le statut d'une salle informatique \`a un \'etudiant est un point cl\'e du service Web.
 En effet, donner la disponibilit\'e d'une salle sans prendre en compte le fait qu'un cours puisse s'y d\'erouler n'est pas suffisant.
 Il est ainsi n\'ecessaire de savoir l'occupation d'une salle : le nombre d'ordinateurs libres, mais aussi si l'emploi du temps de cette salle permet de venir y travailler.
 
 L'Universit\'e met \`a disposition 4 flux RSS$^*$ contenant toutes les informations sur l'occupation des salles.
 Ces 4 flux correspondent aux 4 grands campus de l'Universit\'e : Harrow, New Canvendish, Marylebone et Regent.
-Ils pr\'esentent l'avantage d'\^etre \'ecris en XML, de ce fait, le contenu des flux peut \^etre r\'ecup\'er\'e.
+Ils pr\'esentent l'avantage d'\^etre \'ecrits en XML, de ce fait, le contenu des flux peut \^etre r\'ecup\'er\'e.
 Les informations permettant d'identifier un \'ev\`enement sont extraites \`a l'aide d'un \textit{parseur} de type DOM$^*$.
 Chaque \'ev\`enement est ensuite ajout\'e dans la base de donn\'ees.
 
@@ -877,15 +878,15 @@ Cela vient du fait que les flux existent depuis longtemps, de ce fait, les \'equ
 Une table interm\'ediaire a donc \'et\'e cr\'e\'ee pour faire la relation entre une salle de {\YuukouII} et une salle de l'emploi du temps.
 Cependant, le nommage ambigu des salles dans les diff\'erents flux d'emploi du temps fait que seules quelques salles ont une correspondance dans le projet.
 Une discussion a eu lieu \`a ce sujet dans le but d'adopter un syst\`eme logique permettant de faire une correspondance plus facile avec toutes les salles surveill\'ees.
-Mais la mise en place d'un tel syst\`eme n'est pas pr\'evu dans l'imm\'ediat.
+Mais la mise en place d'un tel syst\`eme n'est pas pr\'evue dans l'imm\'ediat.
 
 \subsection{Catalogue logiciels des salles}
 \label{section:catalogueLogiciel}
 
-Un des objectifs final de {\YuukouII} est de fournir \`a \'etudiant une liste des logiciels pouvant \^etre utilis\'es dans chaque salle.
+Un des objectifs de {\YuukouII} est de fournir \`a \'etudiant une liste des logiciels pouvant \^etre utilis\'es dans chaque salle.
 Le but \'etant, qu'un \'etudiant, voulant travailler dans une salle libre sur un logiciel sp\'ecifique comme Visual Studio, puisse trouver rapidement les salles qui correspondent \`a ses attentes.
 
-Il existe un \textit{MediaWiki} mettant \`a disposition des membres de l'Universit\'e, des informations sur les salles telles que : une photo de la salle, une description, les responsables et la configuration logicielle de la salle.
+Il existe un \textit{MediaWiki} mettant \`a disposition des membres de l'Universit\'e, des informations sur les salles telles qu'une photo de la salle, une description, les responsables et la configuration logicielle de la salle.
 Un \textit{MediaWiki} est un logiciel permettant de r\'ealiser des sites Internet de type wiki$^*$. 
 Il s'agit d'un syst\`eme de gestion de contenu de sites Web qui rend les pages Web librement modifiables par tous les visiteurs autoris\'es.
 Le site Web \textit{Wikip\'edia} (\url{http://fr.wikipedia.org/wiki/Wikip\%C3\%A9dia:Accueil\_principal}) a \'et\'e d\'evelopp\'e avec \textit{MediaWiki}.
@@ -898,7 +899,7 @@ Cependant, il est \`a noter que le \textit{MediaWiki} ne concerne que quelques s
 \subsection{Migration des donn\'ees}
 \label{section:migrationDonnees}
 
-Pendant le d\'eveloppement du projet, vue la quantit\'e de donn\'ees contenues dans la table \textsf{yuukou\_last} (environ 50 000 \`a 60 000 entr\'ees par mois), la question de l'archivage de ses donn\'ees s'est pos\'ee.
+Pendant le d\'eveloppement du projet, vu la quantit\'e de donn\'ees contenues dans la table \textsf{yuukou\_last} (environ 50 000 \`a 60 000 entr\'ees par mois), la question de l'archivage de ses donn\'ees s'est pos\'ee.
 Une m\'ethode a donc \'et\'e recherch\'ee en consid\'erant le fait que les donn\'ees archiv\'ees peuvent \^etre r\'eutilis\'ees lors de l'ex\'ecution de quelques m\'ethodes par le client.
 
 Une solution a \'et\'e trouv\'ee : le d\'eplacement \`a chaque d\'ebut de mois des donn\'ees dans une nouvelle table.
@@ -946,7 +947,7 @@ Cette organisation comporte une machine de d\'eveloppement et deux serveurs comm
 \end{figure}
 
 Le serveur principal poss\`ede un syst\`eme d'exploitation Debian version 6.0.5 (\textit{Squeeze}) et h\'eberge le service Web dans une version stable ainsi que tous les outils n\'ecessaire \`a son fonctionnement comme le serveur de gestion de base de donn\'ees (SGBD) MySQL, une version de Java \`a jour, le serveur d'application GlassFish mais aussi Nagios.
-La faible consommation CPU de Nagios dans la surveillance des machines de l'Universit\'e fait, qu'actuellement, il peut \^etre h\'eberg\'e sur le m\^eme serveur que le service Web.
+La faible consommation CPU de Nagios dans la surveillance des machines de l'Universit\'e fait qu'actuellement il peut \^etre h\'eberg\'e sur le m\^eme serveur que le service Web.
 Le serveur principal h\'eberge aussi le gestionnaire de versions subversion (SVN) sur lequel est constamment maintenu le projet.
 Il est accessible sur le r\'eseau sous le nom de domaine \textsf{yuukou-ws.wmin.ac.uk}.
 
@@ -1057,7 +1058,7 @@ Il est apparu pendant le stage que les diff\'erents services de l'Universit\'e n
 Cela s'est fait ressentir dans la mise en place de la gestion des emplois du temps.
 Effectivement, les noms des salles entre {\YuukouII} et ceux dans les emplois du temps n'avaient rien \`a voir.
 Certes, certaines pouvaient \^etre devin\'ees, elles ont \'et\'e de ce fait trait\'ees.
-Mais pour d'autres cela s'av\'erait impossible, surtout si on consid\`ere que plusieurs personnes s'occupent des emplois du temps et que ces personnes appliquent chacun une m\'ethode de nommage plus ou moins diff\'erentes les unes des autres.
+Mais pour d'autres cela s'av\'erait impossible, surtout si on consid\`ere que plusieurs personnes s'occupent des emplois du temps et que chacune de ces personnes applique chacun une m\'ethode de nommage plus ou moins personnelle.
 Une r\'eunion a eu lieu pendant le stage avec l'\'equipe en charge afin d'aborder ce point.
 Au final, un nouveau syst\`eme d'identification des salles devrait \^etre mis en place, mais le service \'etant occup\'e, il n'y a pas de date dans la mise en fonction d'une telle mesure.
 Lorsque ce syst\`eme sera appliqu\'e, la liste des nouveaux noms de salles sera communiqu\'ee, ce qui rendra cette partie pleinement fonctionnelle.
