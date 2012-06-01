@@ -53,11 +53,11 @@ Seul les utilisateurs \og corrects\fg{} sont gard\'es.
 
 \end{figure}
 
-\chapter{Retour de requ\^ete LQL}
+\chapter{Retours de requ\^ete LQL}
 \label{chapterAnnexe:reponseLQLNagios}
 
 Cette annexe permet une vue sur les informations qui sont retourn\'ees par une requ\^ete LQL.
-Les informations se pr\'esentent toujours sous la m\^eme forme : une ligne est compos\'e des diff\'erentes colonnes demand\'ees dans la requ\^etes.
+Les informations se pr\'esentent toujours sous la m\^eme forme : une ligne qui est compos\'ee des diff\'erentes colonnes demand\'ees dans la requ\^etes.
 Les colonnes sont s\'epar\'ees par un \textsf{; (point-virgule)}.
 
 \subsubsection{Retour lors d'une r\'ecup\'eration des salles}
@@ -109,20 +109,20 @@ Enfin, ce diagramme sera d\'ecoup\'e en diff\'erentes parties pour plus de visib
 \noindent {\YuukouII} est compos\'e de 14 tables :
 
 \begin{itemize}
-	\item[\textbf{\textsf{yuukou\_rooms}}] contient la description d'une salle;
-	\item[\textbf{\textsf{yuukou\_resources}}] contient la description d'un ordinateur appartenant \`a une salle particuli\`ere;
-	\item[\textbf{\textsf{yuukou\_users}}] contient la description d'un utilisateur;
-	\item[\textbf{\textsf{yuukou\_last}}] contient un historique de toutes les connexions pass\'ees sur un ordinateur
-	\item[\textbf{\textsf{yuukou\_who}}] contient un historique de toutes les connexions en cours sur un ordinateur
-	\item[\textbf{\textsf{yuukou\_mapping\_location}}] contient les informations sur le diff\'erents campus de l'Universit\'e, le but \'etant de faire un lien avec la localisation de la table \textsf{yuukou\_rooms} et la description compl\`ete de cette localisation contenu dans la table de \textit{mapping};
-	\item[\textbf{\textsf{yuukou\_mapping\_room}}] contient les diff\'erentes correspondances entre le nom des salles tel qu'elle sont appel\'ees dans {\YuukouII} et le nom des salles r\'ecup\'er\'ees avec les emplois du temps;
+	\item[\textbf{\textsf{yuukou\_rooms}}] contient les descriptions des salles informatiques;
+	\item[\textbf{\textsf{yuukou\_resources}}] contient les descriptiosn des ordinateurs appartenant \`a une salle particuli\`ere;
+	\item[\textbf{\textsf{yuukou\_users}}] contient les descriptions des utilisateurs;
+	\item[\textbf{\textsf{yuukou\_last}}] contient les historiques de toutes les connexions pass\'ees sur les ordinateurs;
+	\item[\textbf{\textsf{yuukou\_who}}] contient les historiques de toutes les connexions en cours sur les ordinateurs;
+	\item[\textbf{\textsf{yuukou\_mapping\_location}}] contient les informations sur les diff\'erents campus de l'Universit\'e, le but \'etant de faire un lien avec la localisation de la table \textsf{yuukou\_rooms} et la description compl\`ete de cette localisation contenue dans la table de \textit{mapping};
+	\item[\textbf{\textsf{yuukou\_mapping\_room}}] contient les diff\'erentes correspondances entre le nom des salles telles qu'elles sont appel\'ees dans {\YuukouII} et le nom des salles r\'ecup\'er\'ees avec les emplois du temps;
 	\item[\textbf{\textsf{yuukou\_timetables}}] contient les diff\'erentes informations concernant un \'el\'ement de l'emploi du temps;
-	\item[\textbf{\textsf{yuukou\_settings}}] contient les diff\'erents informations de configuration de \YuukouII;
-	\item[\textbf{\textsf{yuukou\_groups}}] contient la description d'un groupe de logiciels;
-	\item[\textbf{\textsf{yuukou\_software}}] contient la description d'un logiciel;
-	\item[\textbf{\textsf{yuukou\_groups\_software}}] contient les diff\'erents liens entre un groupe de logiciels et tous les logiciels le composant;
-	\item[\textbf{\textsf{yuukou\_rooms\_groups}}] contient les diff\'erents liens entre une salle et tous les groupes de logiciels la composant;
-	\item[\textbf{\textsf{yuukou\_roms\_software}}] contient les diff\'erents liens entre une salle et tous les logiciels, n'appartenant pas \`a un groupe de logiciels, la composant.
+	\item[\textbf{\textsf{yuukou\_settings}}] contient les diff\'erentes informations de configuration de \YuukouII;
+	\item[\textbf{\textsf{yuukou\_groups}}] contient les descriptions des groupes de logiciels;
+	\item[\textbf{\textsf{yuukou\_software}}] contient les descriptions des logiciels;
+	\item[\textbf{\textsf{yuukou\_groups\_software}}] contient les diff\'erents liens entre un groupe de logiciels et tous les logiciels les composant;
+	\item[\textbf{\textsf{yuukou\_rooms\_groups}}] contient les diff\'erents liens entre les salles et tous les groupes de logiciels les composant;
+	\item[\textbf{\textsf{yuukou\_roms\_software}}] contient les diff\'erents liens entre les salles et tous les logiciels, n'appartenant pas \`a un groupe de logiciels, les composant.
 	
 \end{itemize}
 
@@ -172,7 +172,7 @@ La partie logicielle a pour r\^ole de lier les informations de configuration log
 
 \subsubsection{Partie emploi du temps}
 
-La partie emploi du temps a pour r\^ole de lier les informations d'emploi du temps \`a une salle en passant par une table de mapping faisant le lien entre le nom d'une salle dans {\YuukouII} et le nom d'une salle utilis\'e par les services centraux informatique lors de la g\'en\'eration de l'emploi du temps.
+La partie emploi du temps a pour r\^ole de lier les informations d'emploi du temps \`a une salle en passant par une table de mapping faisant le lien entre le nom d'une salle dans {\YuukouII} et le nom d'une salle utilis\'e par les services centraux informatique lors de la g\'en\'eration des l'emplois du temps.
 
 \clearpage
 
@@ -186,7 +186,7 @@ La partie emploi du temps a pour r\^ole de lier les informations d'emploi du tem
 
 \subsubsection{Partie \textit{mapping} avec les salles}
 
-La partie \textit{mapping} avec les salles \`a pour but de faire le lien entre la localisation d'une salle et les informations concernant cette localisation.
+La partie \textit{mapping} avec les salles a pour r\^ole de faire le lien entre la localisation d'une salle et les informations concernant cette localisation.
 
 \begin{figure}[!ht]
 	\centering
