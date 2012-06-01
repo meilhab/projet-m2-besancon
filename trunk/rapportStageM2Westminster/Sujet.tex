@@ -34,7 +34,7 @@ Pour ce faire, l'application a \'et\'e divis\'ee en deux parties  comme le montr
 
 La premi\`ere partie est un programme \'ecrit en Perl$^*$ qui r\'ecup\`ere les informations de connexion des utilisateurs depuis un serveur LDAP$^*$ et qui se charge de construire, modifier ou mettre \`a jour l'architecture r\'eseau de l'Universit\'e tout en stockant les informations dans une base de donn\'ees relationnelle de type MySQL.
 
-Le robot de \Yuukou{} offre deux fonctionnalit\'es : il permet de mettre \`a jour les donn\'ees de connexion via le serveur LDAP$^*$ toutes les cinq minutes environ pour une utilisation normale, et de mettre \`a jour le statut des ressources (ordinateurs) toutes les demi-heures, l\`a aussi pour une utilisation normale.
+Le robot de \Yuukou{} offre deux fonctionnalit\'es : il permet de mettre \`a jour les donn\'ees de connexion \textit{via} le serveur LDAP$^*$ toutes les cinq minutes environ pour une utilisation normale, et de mettre \`a jour le statut des ressources (ordinateurs) toutes les demi-heures, l\`a aussi pour une utilisation normale.
 
 \subsubsection{Deuxi\`eme partie}
 
@@ -66,7 +66,7 @@ La figure~\ref{figure:yuukouPublic} donne un exemple de page publique.
 \noindent Les pages priv\'ees permettent l'affichage des pages suivantes :
 
 \begin{itemize}
-	\item une page d'identification via LDAP$^*$ pour l'administrateur;
+	\item une page d'identification \textit{via} LDAP$^*$ pour l'administrateur;
 	\item toutes les pages publiques mais b\'en\'eficiant de fonctionnalit\'es suppl\'ementaires :
 
 	\begin{itemize}
@@ -119,7 +119,7 @@ Un autre probl\`eme est les changements importants, du point de vue infrastructu
 En effet, l'Universit\'e qui utilisait eDirectory$^*$ de Novell pour g\'erer ses annuaires LDAP$^*$ a commenc\'e \`a migrer toutes ses donn\'ees vers le syst\`eme Active Directory$^*$ de Microsoft qui est cens\'e \^etre plus efficace. Ce changement rendrait \Yuukou{} obsol\`ete.
 
 Point suivant, la volont\'e de donner acc\`es aux informations sur les salles, pas seulement en utilisant un navigateur Internet, mais aussi et surtout en utilisant un \textit{smartphone} (IPhone ou autres par exemple) ou une tablette (IPad par exemple), chose que l'ancien logiciel ne peut pas fournir.
-De ce fait, un \'etudiant aurait \`a tout moment les informations sur les salles via son \textit{smartphone} ou sa tablette, si tant est qu'il ait l'un ou l'autre.
+De ce fait, un \'etudiant aurait \`a tout moment les informations sur les salles \textit{via} son \textit{smartphone} ou sa tablette, si tant est qu'il ait l'un ou l'autre.
 
 \noindent \`A ces pr\'ec\'edents probl\`emes, d'autres viennent s'ajouter :
 
@@ -141,7 +141,7 @@ C'est en consid\'erant tous ces points qu'il a \'et\'e d\'ecid\'e d'abandonner l
 \YuukouII{} a pour but de combler les lacunes de \Yuukou{} et d'aller plus loin en termes de fonctionnalit\'es qu'il peut offrir. 
 Dans son fonctionnement g\'en\'eral, il doit permettre de donner \`a un \'etudiant ou toute personne travaillant \`a l'Universit\'e et cherchant \`a utiliser un ordinateur, une vue globale des ressources qui sont disponibles actuellement.
 Les donn\'ees devant \^etre bien s\^ur exactes afin que la personne n'ait pas de mauvaise surprise en se rendant dans une salle qu'elle pensait libre.
-L'affichage pourra se faire via un \textit{smartphone}, une tablette ou encore un navigateur Internet.
+L'affichage pourra se faire \textit{via} un \textit{smartphone}, une tablette ou encore un navigateur Internet.
 
 \noindent Le but du stage est : 
 
