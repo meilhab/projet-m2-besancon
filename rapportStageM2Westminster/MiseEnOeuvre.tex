@@ -56,9 +56,9 @@ Elles seront ensuite stock\'ees dans une base de donn\'ees MySQL.
 \noindent Ces informations sont :
 
 \begin{itemize}
-	\item les donn\'ees r\'ecup\'er\'ees via le module \textit{MK Livestatus}, la r\'ecup\'eration doit \^etre faite \`a intervalles r\'eguliers;
+	\item les donn\'ees r\'ecup\'er\'ees \textit{via} le module \textit{MK Livestatus}, la r\'ecup\'eration doit \^etre faite \`a intervalles r\'eguliers;
 	\item les diff\'erents emplois du temps de toutes les salles que Nagios surveille, la r\'ecup\'eration doit \^etre faite une fois par jour;
-	\item les donn\'ees sur un utilisateur inconnu (nom, pr\'enom, r\^ole : \'etudiant par exemple, photo) via un serveur LDAP$^*$.
+	\item les donn\'ees sur un utilisateur inconnu (nom, pr\'enom, r\^ole : \'etudiant par exemple, photo) \textit{via} un serveur LDAP$^*$.
 
 \end{itemize}
 
@@ -68,7 +68,7 @@ Dans un deuxi\`eme temps, le service Web doit pouvoir retourner ces informations
 La r\'eflexion doit ainsi se porter sur le contenu des diff\'erentes m\'ethodes auxquelles un utilisateur pourra avoir acc\`es (en fonction qu'il soit administrateur ou non).
 Le but \'etant un affichage le plus rapide possible des informations demand\'ees.
 
-L'utilisateur doit s'authentifier via un \textit{Servlet}$^*$ qui communique avec LDAP$^*$ et qui donne un acc\`es \`a l'application.
+L'utilisateur doit s'authentifier \textit{via} un \textit{Servlet}$^*$ qui communique avec LDAP$^*$ et qui donne un acc\`es \`a l'application.
 Le reste de la communication sera s\'ecuris\'ee comme expliqu\'e dans le \S~\ref{section:securisation}.
 
 Le dernier point est de choisir un format pour les donn\'ees qui seront \'echang\'ees entre le service Web et l'application cliente.
@@ -116,7 +116,7 @@ Il est disponible sur son site Internet\cite{biblio:siteNagios} en version 3.2.1
 
 \vspace{0.20cm}
 
-\`A la base, Nagios est un moteur d'ordonnancement de v\'erifications diverses et vari\'ees dont les v\'erifications sont effectu\'ees via des greffons.
+\`A la base, Nagios est un moteur d'ordonnancement de v\'erifications diverses et vari\'ees dont les v\'erifications sont effectu\'ees \textit{via} des greffons.
 Ces v\'erifications peuvent \^etre la charge d'utilisation du CPU\protect\footnote{\textit{Central Processing Unit} ou processeur en fran\c{c}ais}, l'espace disque utilis\'e ou encore les utilisateurs actuellement connect\'es.
 Dans le cadre de la v\'erification de l'infrastructure, deux types de machines sont observ\'ees : les ordinateurs dot\'es de Windows et les ordinateurs dot\'es de Macintosh.
 
@@ -177,7 +177,7 @@ NetBeans est un IDE\protect\footnote{\textit{Integrated Development Environment}
 Il est \'ecrit en Java et fonctionne sous Windows, Mac OS, Linux, Solaris et d'autres plates-formes du moment qu'elles poss\`edent une JVM\protect\footnote{\textit{Java Virtual Machine}}$^*$ compatible.
 
 NetBeans permet de d\'evelopper et d\'eployer rapidement des applications graphiques Swing, des Applets, des JSP/Servlets et des architectures J2EE\protect\footnote{\textit{Java Platform, Enterprise Edition}}.
-Il poss\`ede toutes les fonctionnalit\'es recherch\'ees dans un IDE$^*$ moderne (coloration syntaxique, refactoring, d\'ebogueur, \ldots) et ajoute, dans le cas d'un d\'eveloppement d'un service Web comme pour ce projet, un support avec la derni\`ere version de GlassFish, permettant notamment de faire des {\og}\textit{deploy on save}{\fg}, de d\'eployer les applications Web sur un serveur distant et de contr\^oler le serveur (suivre la sortie de logs, d\'emarrer, arr\^eter le serveur). 
+Il poss\`ede toutes les fonctionnalit\'es recherch\'ees dans un IDE$^*$ moderne (coloration syntaxique, refactoring, d\'ebogueur, \ldots) et ajoute, dans le cas d'un d\'eveloppement d'un service Web comme pour ce projet, un support avec la derni\`ere version de GlassFish, permettant notamment de faire des {\og}\textit{deploy on save}{\fg}, de d\'eployer les applications Web sur un serveur distant et de contr\^oler le serveur (suivre la sortie de \textit{logs}, d\'emarrer, arr\^eter le serveur). 
 Il donne acc\`es \`a une gestion simple du serveur d'application GlassFish qui sera utilis\'e dans le projet.
 Sa premi\`ere version date de 1996 et portait le nom Xelfi. 
 Il est disponible sur son site Internet\cite{biblio:siteNetbeans} en version 7.1.2.
@@ -377,7 +377,7 @@ De ce fait, le \textit{parsing} d'un texte contenant des balises \`a certains en
 L'envoi d'un objet s\'erialisable Java est, quant \`a lui, trop restrictif. Le choix a donc \'et\'e entre XML ou JSON.
 
 XML offre un format de donn\'ees verbeux et prend beaucoup d'espace. 
-De plus un document XML peut \^etre valid\'e via l'utilisation de DTD\protect\footnote{\textit{Document Type Definition}}, document permettant de d\'ecrire un mod\`ele de document XML, ou de XML Schema, langage de description de format de document XML permettant de d\'efinir la structure et le type de contenu d'un document XML.
+De plus un document XML peut \^etre valid\'e \textit{via} l'utilisation de DTD\protect\footnote{\textit{Document Type Definition}}, document permettant de d\'ecrire un mod\`ele de document XML, ou de XML Schema, langage de description de format de document XML permettant de d\'efinir la structure et le type de contenu d'un document XML.
 
 JSON offre un format de fichier plus simple que XML, facilement compr\'ehensible.
 Pour compl\'eter, les fichiers JSON, \`a arbre \'egal, seront toujours plus petits que l'\'equivalent XML et pr\'esenteront l'avantage d'\^etre plus rapidement \textit{pars\'es}.
@@ -441,19 +441,19 @@ Ainsi un module existe et son but est de pouvoir interroger Nagios et obtenir se
 \subsection{Le module MKLivestatus}
 \label{section:moduleMKLivestatus}
 
-Le module MKLivestatus permet un acc\`es imm\'ediat au statut de Nagios ainsi qu'\`a ses donn\'ees de logs.
+Le module MKLivestatus permet un acc\`es imm\'ediat au statut de Nagios ainsi qu'\`a ses donn\'ees de \textit{logs}.
 Avant le module, une fa\c{c}on classique de r\'ecup\'erer les informations importantes \'etait de \textit{parser} le fichier \textsf{status.dat}, qui est cr\'e\'e automatique par Nagios \`a chacun de ses cycles.
 Ce fichier contient toutes les informations concernant les services et les machines que Nagios surveille.
 \textit{Parser} ce fichier s'av\`ere d\'elicat, surtout pour extraire quelques informations.
 Il existe bien une mani\`ere alternative de r\'ecup\'erer ces informations avec le module NDO.
-Ce module est directement charg\'e dans le processus de Nagios et \`a chaque nouveau cycle, il envoie les mises \`a jour via une socket UNIX$^*$ \`a un processus auxiliaire qui se charge de mettre \`a jour une base de donn\'ees.
+Ce module est directement charg\'e dans le processus de Nagios et \`a chaque nouveau cycle, il envoie les mises \`a jour \textit{via} une \textit{socket} UNIX$^*$ \`a un processus auxiliaire qui se charge de mettre \`a jour une base de donn\'ees.
 
 Les avantages \'etant une mise \`a jour imm\'ediate de l'information et une simplicit\'e et rapidit\'e d'acc\`es aux bases de donn\'ees pour les applications.
 Mais d'un autre cot\'e, la mise en place de ce syst\`eme est complexe, elle n\'ecessite une administration humaine de la base de donn\'ees, la consommation CPU est significative juste pour garder la base \`a jour et son entretien r\'egulier peut bloquer Nagios pendant un moment (cela d\'epend de la taille de l'infrastructure).
 
-Le module MKLivestatus reprend le principe de NDO dans l'int\'egration directe dans le processus Nagios, cependant, la diff\'erence de taille est qu'il ouvre juste une socket de communication par laquelle les donn\'ees peuvent \^etre retourn\'ees \`a la demande.
-La socket ouverte par d\'efaut par MKLivestatus est une socket UNIX$^*$, mais il est possible de configurer une socket Internet classique sur un port choisi et accessible seulement par certaines machines.
-Par cette socket, il est possible d'envoyer une requ\^ete vers une cible sp\'ecifique comme un service, une machine, un ensemble de machines, \ldots{}
+Le module MKLivestatus reprend le principe de NDO dans l'int\'egration directe dans le processus Nagios, cependant, la diff\'erence de taille est qu'il ouvre juste une \textit{socket} de communication par laquelle les donn\'ees peuvent \^etre retourn\'ees \`a la demande.
+La \textit{socket} ouverte par d\'efaut par MKLivestatus est une \textit{socket} UNIX$^*$, mais il est possible de configurer une \textit{socket} Internet classique sur un port choisi et accessible seulement par certaines machines.
+Par cette \textit{socket}, il est possible d'envoyer une requ\^ete vers une cible sp\'ecifique comme un service, une machine, un ensemble de machines, \ldots{}
 La r\'eponse est imm\'ediate et les donn\'ees renvoy\'ees ont \'et\'e directement lues dans les structures de donn\'ees internes de Nagios.
 
 \noindent MKLivestatus offre donc de nombreux avantages :
@@ -474,7 +474,7 @@ MKLivestatus est disponible sur le site Internet\cite{biblio:siteMklivestatus} d
 
 \subsubsection{\'Ecriture des requ\^etes avec LQL}
 
-LQL, \textit{Livestatus Query Language}, prononc\'e \og Liquel\fg, est un langage sp\'ecialement con\c{c}u pour communiquer avec le module MKLivestatus via une socket.
+LQL, \textit{Livestatus Query Language}, prononc\'e \og Liquel\fg, est un langage sp\'ecialement con\c{c}u pour communiquer avec le module MKLivestatus \textit{via} une \textit{socket}.
 Il ressemble un peu au langage SQL$^*$.
 
 \noindent Chaque requ\^ete consiste en :
@@ -482,7 +482,7 @@ Il ressemble un peu au langage SQL$^*$.
 \begin{itemize}
 	\item une commande commen\c{c}ant par le mot cl\'e \textsf{GET} suivit du nom de la \textit{table};
 	\item un nombre arbitraire de lignes d'en-t\^ete consistant en un mot-cl\'e, un double-point et une liste d'arguments;
-	\item une ligne vide ou une fin de transmission (pour fermer la proc\'edure d'envoi sur la socket).
+	\item une ligne vide ou une fin de transmission (pour fermer la proc\'edure d'envoi sur la \textit{socket}).
 
 \end{itemize}
 
@@ -522,10 +522,10 @@ Les \textit{scripts} Nagios utilis\'es tout au long du stage sont disponibles en
 Comme pour une base de donn\'ees SQL$^*$, toutes les tables poss\`edent un nombre de colonnes.
 Si une requ\^ete est pass\'ee sans param\^etres, toutes les colonnes seront retourn\'ees dans l'ordre alphab\'etique.
 
-Comme vu dans au \S~\ref{section:moduleMKLivestatus}, il existe deux mani\`eres d'acc\'eder \`a la socket de MKLivestatus.
-La premi\`ere m\'ethode est avec une socket UNIX$^*$. 
-Pour ce faire, MKLivestatus fournit pendant son installation un petit utilitaire appel\'e \textsf{unixcat} permettant de communiquer avec une socket UNIX$^*$.
-Sous forme d'une commande shell, cet utilitaire envoit toutes les donn\'ees lues par l'entr\'ee standard (\texttt{stdin}) \`a la socket et \'ecrit sur la sortie standard (\texttt{stdout}) tout ce qu'il re\c{c}oit de la socket.
+Comme vu dans au \S~\ref{section:moduleMKLivestatus}, il existe deux mani\`eres d'acc\'eder \`a la \textit{socket} de MKLivestatus.
+La premi\`ere m\'ethode est avec une \textit{socket} UNIX$^*$. 
+Pour ce faire, MKLivestatus fournit pendant son installation un petit utilitaire appel\'e \textsf{unixcat} permettant de communiquer avec une \textit{socket} UNIX$^*$.
+Sous forme d'une commande shell, cet utilitaire envoit toutes les donn\'ees lues par l'entr\'ee standard (\texttt{stdin}) \`a la \textit{socket} et \'ecrit sur la sortie standard (\texttt{stdout}) tout ce qu'il re\c{c}oit de la \textit{socket}.
 Voici un exemple d'ex\'ecution en utilisant la commande \textsf{unixcat} : 
 
 \begin{center}
@@ -533,18 +533,18 @@ Voici un exemple d'ex\'ecution en utilisant la commande \textsf{unixcat} :
 
 \end{center}
 
-La seconde mani\`ere consiste en l'ouverture d'une socket Internet sur un port pr\'ed\'efini.
+La seconde mani\`ere consiste en l'ouverture d'une \textit{socket} Internet sur un port pr\'ed\'efini.
 Avec cela, il est possible d'acc\'eder depuis le r\'eseau de l'Universit\'e au serveur h\'ebergeant Nagios.
-Il suffit ensuite d'envoyer via la commande UNIX \textsf{netcat}, qui permet d'ouvrir des sockets serveurs et clientes, un fichier contenant la requ\^ete LQL :
+Il suffit ensuite d'envoyer \textit{via} la commande UNIX \textsf{netcat}, qui permet d'ouvrir des \textit{socket}s serveurs et clientes, un fichier contenant la requ\^ete LQL :
 
 \begin{center}
 	\textsf{cat requete | netcat yuukou-ws.wmin.ac.uk 6557}.
 
 \end{center}
 
-Dans le cadre du projet, l'utilisation d'une socket UNIX$^*$ en Java n\'ecessite l'installation de biblioth\`eques de type JNI\protect\footnote{\textit{Java Native Interface}}.
+Dans le cadre du projet, l'utilisation d'une \textit{socket} UNIX$^*$ en Java n\'ecessite l'installation de biblioth\`eques de type JNI\protect\footnote{\textit{Java Native Interface}}.
 Ce sont en fait des biblioth\`eques qui permettent l'int\'egration du code \'ecrit en Java avec du code \'ecrit dans un autre langage tel le C ou le C++.
-Cette installation est plus ou moins complexe et n\'ecessite une certaine configuration du serveur, ainsi, il est plus simple d'ouvrir une socket Internet plut\^ot que d'essayer la configuration d'une socket UNIX$^*$ avec JNI.
+Cette installation est plus ou moins complexe et n\'ecessite une certaine configuration du serveur, ainsi, il est plus simple d'ouvrir une \textit{socket} Internet plut\^ot que d'essayer la configuration d'une \textit{socket} UNIX$^*$ avec JNI.
 De plus, au point de vue rapidit\'e, l'avantage de MKLivestatus est d'\^etre directement int\'egr\'e dans Nagios, de ce fait, les requ\^etes sont trait\'ees imm\'ediatement.
 
 Le tableau~\ref{table:comparatifTemps} montre un comparitif des temps d'ex\'ecution mesur\'es avec la commande UNIX \textsf{time} pour 100 requ\^etes.
@@ -571,10 +571,10 @@ Chaque r\'eponse contient 1983 lignes.
 
 \end{table}
 
-Apr\`es 100 requ\^etes, il est visible qu'utiliser une socket UNIX$^*$, pour une ex\'ecution syst\`eme est presque deux fois plus rapide que l'utilisation d'une socket Internet.
+Apr\`es 100 requ\^etes, il est visible qu'utiliser une \textit{socket} UNIX$^*$, pour une ex\'ecution syst\`eme est presque deux fois plus rapide que l'utilisation d'une \textit{socket} Internet.
 Cependant, l'application ne n\'ecessite pas l'ex\'ecution de nombreuses requ\^etes simultan\'ees.
 Une seule sera effectu\'ee \`a chaque cycle comme d\'ecrit au \S~\ref{section:cyclePrincipal}.
-De ce fait, l'utilisation d'une socket Internet convient dans la r\'ecup\'eration des informations de Nagios et \'evite l'installation de biblioth\`eques JNI.
+De ce fait, l'utilisation d'une \textit{socket} Internet convient dans la r\'ecup\'eration des informations de Nagios et \'evite l'installation de biblioth\`eques JNI.
 
 \subsubsection{R\'ecup\'eration de l'information}
 
@@ -820,7 +820,7 @@ Les sites Internet b\'en\'eficiant de ce protocole sont reconnaissables du fait 
 
 \subsubsection{Mise en place}
 
-La mise en place d'un protocole SSL sur un service Web via NetBeans et GlassFish est tr\`es simple une fois que la d\'emarche suivante est connue.
+La mise en place d'un protocole SSL sur un service Web \textit{via} NetBeans et GlassFish est tr\`es simple une fois que la d\'emarche suivante est connue.
 Il faut cependant disposer de plusieurs fichiers : une autorit\'e de certification et un couple cl\'e priv\'e - cl\'e publique tous deux fournis par l'Universit\'e.
 \`A partir de ces deux fichiers, un certificat de s\'ecurit\'e est g\'en\'er\'e.
 Ensuite l'autorit\'e de certification et le nouveau certificat sont ajout\'es \`a la configuration de GlassFish.
@@ -977,7 +977,7 @@ Apr\`es son arriv\'ee et sa premi\`ere connexion au service Web, M. MAGHEZZI a c
 C'est \`a ce moment que le dialogue s'est vraiment mis en place.
 
 \'Etant dans le m\^eme bureau que M. MAGHEZZI, la communication se d\'eroulait principalement oralement, il \'etait inform\'e directement et m\^eme en avance par rapport au d\'eploiement d'une nouvelle version du service Web.
-Pour les autres acteurs du projet, un mail \'etait envoy\'e, celui-ci contenant tr\`es souvent des structures de retour JSON contenant le sch\'ema d'une structure de retour de tous les cas possibles pour une m\'ethode sp\'ecifique du service Web.
+Pour les autres acteurs du projet, un \textit{mail} \'etait envoy\'e, celui-ci contenant tr\`es souvent des structures de retour JSON contenant le sch\'ema d'une structure de retour de tous les cas possibles pour une m\'ethode sp\'ecifique du service Web.
 
 \subsection{Tests du service Web}
 
@@ -1005,13 +1005,13 @@ Cette application pr\'esente, en fonction de diff\'erents niveaux de s\'ecurit\'
 Un utilisateur normal, comme un \'etudiant, aura une vue sur la disponibilit\'e des salles informatiques.
 Il pourra voir toutes les salles, leur disponibilit\'e (ordinateurs disponibles, occup\'es, \'eteints, salle disponible ou occup\'ee par un \'ev\`enement de l'emploi du temps), les filtrer par lieu, ou encore par type d'ordinateur (PC ou MAC).
 
-Un membre des \'equipes techniques de l'Universit\'e (staff) aura une vue sur la disponibilit\'e des salles informatiques en plus d'une vue sur le mat\'eriel.
+Un membre des \'equipes techniques de l'Universit\'e (\textit{staff}) aura une vue sur la disponibilit\'e des salles informatiques en plus d'une vue sur le mat\'eriel.
 Il aura acc\`es \`a des graphiques, des r\'esum\'es sur la disponibilit\'e des salles mais aussi \`a des informations suppl\'ementaires sur les salles (informations sur les utilisateurs connect\'es et historiques des ordinateurs).
 
 La figure~\ref{figure:exempleIPhone} donne trois vues diff\'erentes sur ce que l'application d'affichage des donn\'ees du service Web propose.
 Les figures sont des captures d'\'ecrans prises \`a l'aide d'un \'emulateur d'IPhone.
 Il est \`a noter que les figures suivantes ont \'et\'e prises en s'authentifiant avec un compte utilisateur.
-Comme pr\'ec\'edemment annonc\'e, les staffs b\'en\'eficieront, dans certaines pages, de plus d'options.
+Comme pr\'ec\'edemment annonc\'e, les \textit{staffs} b\'en\'eficieront, dans certaines pages, de plus d'options.
 
 \begin{figure}[!ht]
 	\centering
