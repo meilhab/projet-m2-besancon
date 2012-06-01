@@ -4,10 +4,11 @@ Une fois le sujet pos\'e et la notion de service Web comprise, plusieurs recherc
 C'est seulement ensuite que la phase de d\'eveloppement a pu commencer.
 Le premier point traitera de la phase de recherche sur les outils et les choix qui ont \'et\'e pris pour le projet.
 Ensuite un second point abordera la m\'ethode utilis\'ee pour acc\'eder aux informations indispensables au fonctionnement du service Web.
-Les deux points suivant seront consacr\'es au fonctionnement et aux fonctionnalit\'es qu'offre le service Web.
-Le premier de ces deux points permettra de d\'ecouvrir le cycle qui permet de r\'ecup\'erer les informations de Nagios et de les archiver, le deuxi\`eme, les m\'ethodes auxquelles un client peut acc\'eder pour r\'ecup\'erer une partie ou toutes les informations archiv\'ees par le service Web.
+Les deux points suivants seront consacr\'es au fonctionnement et aux fonctionnalit\'es qu'offre le service Web.
+Le premier de ces deux points permettra de d\'ecouvrir le cycle qui permet de r\'ecup\'erer les informations de Nagios et de les archiver, ainsi que les m\'ethodes auxquelles un client peut acc\'eder pour r\'ecup\'erer une partie ou toutes les informations archiv\'ees par le service Web.
+Le deuxi\`eme de ces deux points expliquera les diff\'erentes fonctionnalit\'es dont {\YuukouII} b\'en\'eficie.
 Suite \`a cela, un autre point aura pour but d'expliquer l'organisation du travail qui a \'et\'e adopt\'ee tout au long du d\'eveloppement du service Web.
-Une vue sur comment est exploit\'e le service Web sera faite ensuite et montrera des captures d'\'ecran de ce qui a \'et\'e r\'ealis\'e.
+Une vue sur comment est exploit\'e le service Web sera faite ensuite et montrera des captures d'\'ecrans de ce qui a \'et\'e r\'ealis\'e.
 Enfin, un dernier point permettra de voir les principaux probl\`emes qui ont \'et\'e rencontr\'es lors du stage.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -234,6 +235,44 @@ Lorsqu'il sera n\'ecessaire d'effectuer des traitements r\'ep\'et\'es sur les do
 Dans le cadre du projet, les chargements sont effectu\'es lorsqu'un client appelle une m\'ethode du service Web. 
 Les donn\'ees sont charg\'ees dans une liste, elles sont ensuite trait\'ees puis retourn\'ees au client.
 
+\subsection{Gestion de la base de donn\'ees}
+
+La base de donn\'ees a \'evolu\'e tout au long du projet en fonction des fonctionnalit\'es qui ont \'et\'e demand\'ees.
+L'annexe~\ref{chapterAnnexe:baseDeDonnees} permet d'avoir une description des diff\'erentes tables composant la base de donn\'ees, une vue g\'en\'erale de ce \`a quoi elle ressemble, et des vues d\'ecoup\'ees des diff\'erentes parties.
+
+La base de donn\'ees peut \^etre d\'ecoup\'ee en diff\'erentes grandes parties.
+La partie archivage a pour but de conserver les donn\'ees dans le temps.
+Pour ce faire, elle est compos\'ee de deux tables centrales de sauvegarde d'informations.
+La premi\`ere est la table \textsf{yuukou\_who}, son but est de simuler la commande UNIX \textsf{who}.
+Cette commande permet de donner tous les utilisateur connect\'es sur la machine o\`u elle est ex\'ecut\'ee.
+De ce fait, si elle est port\'ee au niveau de Nagios et du projet, la table contiendra tous les utilisateurs connect\'es sur un ordinateur et depuis quand ils le sont.
+La deuxi\`eme table est \textsf{yuukou\_last}, son but est aussi de simuler une commande UNIX, la commande \textsf{last}.
+Cette commande permet de donner la liste de toutes les derniers utilisateurs sur la machine sur laquelle elle est ex\'ecut\'ee.
+De ce fait, si elle est port\'ee au niveau de Nagios et du projet, la table contiendra toutes les connexions des utilisateurs sur un ordinateur, l'heure de d\'ebut et de fin et la cause de la d\'econnexion. En fait, elle contiendra les donn\'ees de la table \textsf{yuukou\_who} et ajoutant les informations du temps de fin de connexion et la cause de la d\'econnexion.
+
+La partie logicielle a pour but de stocker la configuration logicielle de chaque salle informatique.
+La r\'ecup\'eration de cette configuration est expliqu\'ee au \S~\ref{section:catalogueLogiciel}.
+Cette partie est compos\'ee de plusieurs tables.
+Une salle informatique peut avoir des groupes de logiciels, \textsf{yuukou\_rooms\_groups} et aussi des logiciels ind\'ependants de tout groupe, \textsf{yuukou\_rooms\_software}.
+Un groupe de logiciels contient des logiciels, \textsf{yuukou\_groups\_software}.
+Les descriptions des groupes et logiciels sont contenues dans les tables \textsf{yuukou\_groups} et \textsf{yuukou\_software}.
+Avec ces tables, il est possible de facilement reconstruire la configuration logicielle d'une salle.
+
+La partie emploi du temps a pour but de stocker tous \'ev\`enements des diff\'erents emplois du temps de l'Universit\'e.
+La r\'ecup\'eration de cette configuration est expliqu\'ee au \S~\ref{section:emploiDuTemps}.
+Cette partie est compos\'ees de trois tables.
+La premi\`ere table est celle contenant toutes les salles \textsf{yuukou\_rooms}, la deuxi\`eme contenant tous les \'ev\`enements \textsf{yuukou\_timetables}.
+Pour la derni\`ere table \textsf{yuukou\_mapping\_room}, son r\^ole est de faire le lien entre les noms des salles dans Nagios et les noms des salles qui sont utilis\'ees pour l'emploi du temps.
+En effet, la g\'en\'eration des emplois du temps est effectu\'ee par un service de l'Universit\'e.
+De ce fait, ce service utilise un syst\`eme pour nommer les salles qui lui est propre.
+Il est donc n\'ecessaire de pouvoir relier un \'ev\`enement \`a une salle \`a l'aide de cette derni\`ere table.
+
+La partie \textit{mapping} avec les salles a pour but de faire le lien entre une description compl\`ete d'un lieu et la description courte qui est donn\'e dans la description d'une salle dans la table \textsf{yuukou\_rooms}.
+Les informations concernant les diff\'erents lieux sont contenues dans la table \textsf{yuukou\_mapping\_location}.
+
+La derni\`ere partie, configuration, a pour but de g\'erer les diff\'erents param\`etres permettant la gestion de cycle lors du fonctionnement du service Web. 
+Les explications concernant ce qu'est un cycle se trouvent au \S~\ref{section:cyclePrincipal}.
+
 \subsection{Le format de retour}
 \label{section:formatRetour}
 
@@ -248,7 +287,7 @@ La premi\`ere est de transmettre un document texte basique, celui-ci format\'e d
 Ce qui aurait comme avantage de pouvoir \^etre r\'ecup\'er\'e par un client utilisant n'importe quel langage.
 La figure~\ref{code:exemplePlaintext} repr\'esente un exemple de fichier qu'il est facile de \textit{parser}, il suffit de r\'ecup\'erer les informations se trouvant entre les arobases.
 
-\clearpage
+\vspace{0.20cm}
 
 \begin{figure}[!ht]
 	\begin{lstlisting}[language=plaintext]
@@ -289,7 +328,7 @@ eXtensible Markup Language ou XML est un m\'eta langage pour r\'ealiser du balis
 Il est utilis\'e en particulier pour g\'erer la configuration, le stockage des donn\'ees, l'\'echange d'informations et bien d'autres fonctions encore.
 La figure~\ref{code:exempleXML} donne un exemple de document XML pouvant \^etre facilement converti en une arborescence DOM$^*$.
 
-\clearpage
+\vspace{0.20cm}
 
 \begin{figure}[!ht]
 	\lstinputlisting[language=XML]{codes/Exemple.xml}
@@ -386,6 +425,7 @@ JSON se base sur deux structures de donn\'ees universelles dans pratiquement tou
 	Un caract\`ere est repr\'esent\'e par une cha\^ine d'un seul caract\`ere.
 
 \end{itemize}
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -619,7 +659,7 @@ Suite \`a ces deux grandes parties, il sera vu la fa\c{c}on dont les information
 
 C'est en quelque sorte le moteur du projet.
 Il collecte des informations de Nagios, et effectue diverses op\'erations sur la base de donn\'ees pour la maintenir \`a jour.
-Un cycle est lanc\'e toutes les minutes et dure entre 5 et 7 secondes pour ajouter, retirer ou mettre \`a jour les informations sur les 1983 ordinateurs surveill\'es par Nagios ainsi que le nombre variable d'utilisateurs qui sont connect\'es sur cesdits ordinateurs.
+Un cycle est lanc\'e toutes les minutes et dure entre 5 et 7 secondes pour ajouter, retirer ou mettre \`a jour les informations sur les 1983 ordinateurs surveill\'es par Nagios ainsi que le nombre variable d'utilisateurs qui sont connect\'es sur ces dits ordinateurs.
 La figure~\ref{figure:cyclePrincipal} permet de voir les diff\'erentes \'etapes qui composent le cycle principal du service Web.
 
 \begin{figure}[!ht]
@@ -630,27 +670,27 @@ La figure~\ref{figure:cyclePrincipal} permet de voir les diff\'erentes \'etapes 
 	
 \end{figure}
 
-Dans un premier temps, \`a la premi\`ere ex\'ecution du cycle, les diff\'erents \textit{scripts} \'ecris en LQL Nagios sont charg\'es en m\'emoire.
+Dans un premier temps, \`a la premi\`ere ex\'ecution du cycle, les diff\'erents \textit{scripts} \'ecris en LQL sont charg\'es en m\'emoire.
 Ensuite, une v\'erification de la coh\'erence des donn\'ees contenues dans les tables permettant de g\'erer l'archivage des donn\'ees est effectu\'ee.
-Cette v\'erification a pour but de s'assurer que il n'y a pas des donn\'ees absurdes de connexion : les donn\'ees de connexion dat\'ees de plus de 6 heures pour la table \textsf{yuukou\_who} et les donn\'ees de connexion dont la diff\'erence entre la date de d\'ebut de connexion et la date de fin de connexion est de plus de 6 heures elle aussi.
+Cette v\'erification a pour but de s'assurer qu'il n'y a pas des donn\'ees absurdes de connexion : les donn\'ees de connexion dat\'ees de plus de 6 heures pour la table \textsf{yuukou\_who} et les donn\'ees de connexion dont la diff\'erence entre la date de d\'ebut de connexion et la date de fin de connexion est de plus de 6 heures pour la table \textsf{yuukou\_last}.
 Si de telles donn\'ees sont trouv\'ees, elles sont automatiquement effac\'ees de la table auxquelles elles appartiennent.
 
 L'\'etape suivante entre dans le d\'ebut du cycle \`a proprement parler.
 Elle a pour objectif de v\'erifier si des donn\'ees de la table \textsf{yuukou\_last} ont besoin d'\^etre d\'eplac\'ees.
-Des explications sur la migration des donn\'ees se trouvent au\S~\ref{section:migrationDonnees}.
+Des explications sur la migration des donn\'ees se trouvent au \S~\ref{section:migrationDonnees}.
 
-Suite \`a cette v\'erification, les \textit{scripts} Nagios sont envoy\'es et les informations r\'ecup\'er\'ees sont transmises \`a l'\'etape de traitements des donn\'ees Nagios.
+Suite \`a cette v\'erification, les \textit{scripts} LQL sont envoy\'es et les informations r\'ecup\'er\'ees sont transmises \`a l'\'etape de traitements des donn\'ees Nagios.
 
 Cette \'etape commence par ajouter les machines qui n'existent pas dans la base de donn\'ees.
 Ensuite, ce sont les utilisateurs qui sont trait\'es.
 S'ils n'existent pas dans la base de donn\'ees, une recherche LDAP$^*$ est effectu\'ee pour obtenir les informations les concernant (nom, pr\'enom, photo, r\^ole).
-Ils sont ensuite \`a leur tour, ajout\'es dans la table correspondante.
+Ils sont ensuite, \`a leur tour, ajout\'es dans la table correspondante.
 Le couple ordinateur - utilisateur est ensuite ajout\'e, mis \`a jour ou retir\'e des tables d'archivage.
 Ici aussi, si une donn\'ee de connexion d\'epasse les 6 heures, elle sera ignor\'ee.
 
 Suite \`a ce traitement, une v\'erification est effectu\'ee sur tous les ordinateurs connus.
 En effet, un ordinateur poss\`ede un statut particulier : fonctionnel, \'eteint ou en attente d'effacement.
-Ce statut est maintenant d'une part avec l'\'etape de traitement des r\'esultats pr\'ec\'edente, au d'autre part avec l'\'etape actuelle.
+Ce statut est fix\'e d'une part avec l'\'etape de traitement des r\'esultats pr\'ec\'edente, au d'autre part avec l'\'etape actuelle.
 Si le statut d'un ordinateur reste \'eteint pendant une semaine, son statut change et passe \`a : en attente d'effacement.
 
 Une v\'erification des emplois du temps est ensuite effectu\'ee.
@@ -676,7 +716,7 @@ Ces fonctions sont accessibles par tous les utilisateurs appartenant \`a l'Unive
 Elles ne retournent aucunes informations pouvant porter atteinte aux utilisateurs ou pouvant donner acc\`es \`a l'administration du service Web.
 
 \begin{description}
-	\item[\textbf{healthForRoom (String idRoom)}] retourne toutes les informations concernant une salle : emploi du temps, nombre d'utilisateur, description de la salle, {\ldots} Cette fonction donne des informations d\'etaill\'ees sur une salle informatique;
+	\item[\textbf{healthForRoom (String idRoom)}] retourne toutes les informations concernant une salle : emploi du temps, nombre d'utilisateurs, description de la salle, {\ldots} Cette fonction donne des informations d\'etaill\'ees sur une salle informatique;
 	\item[\textbf{healthForAllRooms ()}] retourne des informations simplifi\'ees concernant l'ensemble des salles surveill\'ees, cette fonction donne une vue d'ensemble de l'occupation des salles;
 	\item[\textbf{getListRooms ()}] retourne la liste de toutes les salles;
 	\item[\textbf{getSitesInformation ()}] retourne les informations concernant les diff\'erents campus de l'Universit\'e;
@@ -690,8 +730,8 @@ Ces fonctions sont un compl\'ement aux fonctions publiques.
 Elles permettent un contr\^ole sur le cycle principal du service Web et des informations retourn\'ees plus compl\`etes.
 
 \begin{longdescription}
-	\item[\textbf{launchCycle ()}] permet dans lancer le cycle du service Web
-	\item[\textbf{checkConfigHealth ()}] compare les diff\'erences entre la table des salles informations (\textsf{yuukou\_rooms}) et la configuration dans Nagios, et retourne les diff\'erences;
+	\item[\textbf{launchCycle ()}] permet dans lancer le cycle du service Web;
+	\item[\textbf{checkConfigHealth ()}] compare les diff\'erences entre la table des salles informatiques (\textsf{yuukou\_rooms}) et la configuration dans Nagios, et retourne les diff\'erences;
 	\item[\textbf{who ()}] retourne la liste de tous les utilisateurs connect\'es, sur quel ordinateur et depuis quand (\textsf{yuukou\_who});
 	\item[\textbf{lastDefault ()}] retourne la table compl\`ete \textsf{yuukou\_last};
 	\item[\textbf{last (int numberDays)}] retourne la table \textsf{yuukou\_last} mais pour un nombre de jours d\'efinis;
@@ -699,9 +739,9 @@ Elles permettent un contr\^ole sur le cycle principal du service Web et des info
 	\item[\textbf{searchHistoryResource (String idResource, boolean who, boolean last, int numberLast)}] retourne l'historique d'utilisation en cours (who) et pass\'e (last) d'un ordinateur, possibilit\'e de fixer le nombre d'informations retourn\'e;
 	\item[\textbf{getGraphWithRequestUsingJson (String rqtLabel, String label, String startTime, String endTime, String addToRqt, int factor)}] retourne un flux d'octets contenant une image g\'en\'er\'ee \`a partir de la fr\'equence d'utilisation des salles informatiques entre un temps de d\'ebut et de fin (\textit{startTime} et \textit{endTime}), les donn\'ees servant \`a construire le graphe sont aussi retourn\'ees. L'\'echelle du graphe peut \^etre fix\'e avec \textit{factor} : heures, semaines, mois, ann\'ees.
 Il est possible de personnalis\'er la requ\^ete (\textit{addToRqt}), de personnaliser la l\'egende (\textit{label}) et de choisir l'\'el\'ement recherch\'e (\textit{rqtLabel});
-	\item[\textbf{healthResourcesReportForAllRooms ()}] retourne l\'etat des ordinateurs de toutes les salles informatiques surveill\'ees;
+	\item[\textbf{healthResourcesReportForAllRooms ()}] retourne l'\'etat des ordinateurs de toutes les salles informatiques surveill\'ees;
 	\item[\textbf{healthResourcesReportForRoom (String idRoom)}] retourne l'\'etat des ordinateurs d'une salle sp\'ecifique;
-	\item[\textbf{actualiseLDAPInfo ()}] permet d'actualiser les donn\'ees LDAP des utilisateurs qui sont inconnus dans la base de donn\'ees;
+	\item[\textbf{actualiseLDAPInfo ()}] permet d'actualiser les donn\'ees LDAP$^*$ des utilisateurs qui sont inconnus dans la base de donn\'ees;
 	\item[\textbf{isCycleRunning ()}] donne l'\'etat du cycle, s'il est en cours ou non;
 	\item[\textbf{askMaintenance ()}] si le cycle n'est pas en cours, modifie la table de configuration pour stopper le cycle \`a sa prochaine it\'eration.
 Tout lancement de cycle est impossible ensuite;
@@ -710,12 +750,12 @@ Tout lancement de cycle est impossible ensuite;
 
 \end{longdescription}
 
-\subsection{Retours des fonctions}
+\subsection{Retour des fonctions}
 \label{section:retourFonction}
 
 \'Etant dans un cadre de travail collaboratif comme le traitera le \S~\ref{section:travailequipe}, il est n\'ecessaire d'adopter de la rigueur dans le retour d'information.
 Encore plus du fait qu'en JSON, le fichier ne peut pas \^etre v\'erifi\'e comme un fichier XML et son sch\'ema.
-C'est pourquoi, deux mani\'eres sp\'ecifiques ont \'et\'e choisies pour retourner les informations : le cas o\`u les informations on \'et\'e correctement transmises et le cas o\`u elles ne l'ont pas \'et\'e.
+C'est pourquoi, deux mani\`eres sp\'ecifiques ont \'et\'e choisies pour retourner les informations : le cas o\`u les informations ont \'et\'e correctement transmises et le cas o\`u elles ne l'ont pas \'et\'e.
 Des exemples de retours concrets sont disponibles en annexe~\ref{chapterAnnexe:exempleJSON}.
 
 \subsubsection{Retour de fonction pour une ex\'ecution correcte}
@@ -733,7 +773,7 @@ Le bout de code JSON~\ref{figure:structureSansErreurJSON} montre un exemple de s
 
 \subsubsection{Retour de fonction pour une ex\'ecution incorrecte}
 
-Le bout de code JSON~\ref{figure:structureAvecErreurJSON} montre un exemple de structure de retour lorsqu'une erreur est d\'etect\'ees pendant l'ex\'ecution d'une m\'ethode du service Web.
+Le bout de code JSON~\ref{figure:structureAvecErreurJSON} montre un exemple de structure de retour lorsqu'une erreur est d\'etect\'ee pendant l'ex\'ecution d'une m\'ethode du service Web.
 
 \begin{figure}[!ht]
 	\centering
@@ -749,44 +789,6 @@ Le bout de code JSON~\ref{figure:structureAvecErreurJSON} montre un exemple de s
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Fonctionnalit\'es en place}
 
-\subsection{Gestion de la base de donn\'ees}
-
-La base de donn\'ees a \'evolu\'e tout au long du projet en fonction des fonctionnalit\'es qui ont \'et\'e demand\'ees.
-L'annexe~\ref{chapterAnnexe:baseDeDonnees} permet d'avoir une description des diff\'erentes tables composant la base de donn\'ees, une vue g\'en\'erale de ce \`a quoi elle ressemble, et des vues d\'ecoup\'ees des diff\'erentes parties.
-
-La base de donn\'ees peut \^etre d\'ecoup\'ee en diff\'erentes grandes parties.
-La partie archivage a pour but de conserver les donn\'ees dans le temps.
-Pour ce faire, elle est compos\'ee de deux tables centrales de sauvegarde d'informations.
-La premi\`ere est la table \textsf{yuukou\_who}, son but est de simuler la commande UNIX \textsf{who}.
-Cette commande permet de donner tous les utilisateur connect\'es sur la machine o\`u elle est ex\'ecut\'ee.
-De ce fait, si elle est port\'ee au niveau de Nagios et du projet, la table contiendra tous les utilisateurs connect\'es sur un ordinateur et depuis quand ils le sont.
-La deuxi\`eme table est \textsf{yuukou\_last}, son but est aussi de simuler une commande UNIX, la commande \textsf{last}.
-Cette commande permet de donner la liste de toutes les derniers utilisateurs sur la machine sur laquelle elle est ex\'ecut\'ee.
-De ce fait, si elle est port\'ee au niveau de Nagios et du projet, la table contiendra toutes les connexions des utilisateurs sur un ordinateur, l'heure de d\'ebut et de fin et la cause de la d\'econnexion. En fait, elle contiendra les donn\'ees de la table \textsf{yuukou\_who} et ajoutant les informations du temps de fin de connexion et la cause de la d\'econnexion.
-
-La partie logicielle a pour but de stocker la configuration logicielle de chaque salle informatique.
-La r\'ecup\'eration de cette configuration est expliqu\'ee au \S~\ref{section:catalogueLogiciel}.
-Cette partie est compos\'ee de plusieurs tables.
-Une salle informatique peut avoir des groupes de logiciels, \textsf{yuukou\_rooms\_groups} et aussi des logiciels ind\'ependants de tout groupe, \textsf{yuukou\_rooms\_software}.
-Un groupe de logiciels contient des logiciels, \textsf{yuukou\_groups\_software}.
-Les descriptions des groupes et logiciels sont contenues dans les tables \textsf{yuukou\_groups} et \textsf{yuukou\_software}.
-Avec ces tables, il est possible de facilement reconstruire la configuration logicielle d'une salle.
-
-La partie emploi du temps a pour but de stocker tous \'ev\`enements des diff\'erents emplois du temps de l'Universit\'e.
-La r\'ecup\'eration de cette configuration est expliqu\'ee au \S~\ref{section:emploiDuTemps}.
-Cette partie est compos\'ees de trois tables.
-La premi\`ere table est celle contenant toutes les salles \textsf{yuukou\_rooms}, la deuxi\`eme contenant tous les \'ev\`enements \textsf{yuukou\_timetables}.
-Pour la derni\`ere table \textsf{yuukou\_mapping\_room}, son r\^ole est de faire le lien entre les noms des salles dans Nagios et les noms des salles qui sont utilis\'ees pour l'emploi du temps.
-En effet, la g\'en\'eration des emplois du temps est effectu\'ee par un service de l'Universit\'e.
-De ce fait, ce service utilise un syst\`eme pour nommer les salles qui lui est propre.
-Il est donc n\'ecessaire de pouvoir relier un \'ev\`enement \`a une salle \`a l'aide de cette derni\`ere table.
-
-La partie \textit{mapping} avec les salles a pour but de faire le lien entre une description compl\`ete d'un lieu et la description courte qui est donn\'e dans la description d'une salle dans la table \textsf{yuukou\_rooms}.
-Les informations concernant les diff\'erents lieux sont contenues dans la table \textit{yuukou\_mapping\_location}.
-
-La derni\`ere partie, configuration, a pour but de g\'erer les diff\'erents param\`etres permettant la gestion de cycle lors du fonctionnement du service Web. 
-Les explications concernant ce qu'est un cycle se trouvent au \S~\ref{section:cyclePrincipal}.
-
 \subsection{S\'ecurisation du service Web}
 \label{section:securisation}
 
@@ -794,12 +796,12 @@ Les explications concernant ce qu'est un cycle se trouvent au \S~\ref{section:cy
 
 La s\'ecurit\'e est un point important dans l'acc\`es \`a un service Web. 
 Les donn\'ees transmises par \YuukouII{} contiennent des informations sur la structure des diff\'erents campus mais aussi des informations sur les \'etudiants (nom, pr\'enom, photo par exemple).
-Il est donc important de limiter l'acc\'es aux donn\'ees mais aussi de s\'ecuriser toutes les communications.
+Il est donc important de limiter l'acc\`es aux donn\'ees mais aussi de s\'ecuriser toutes les communications.
 C'est dans cet optique, qu'il a \'et\'e d\'ecid\'e de mettre en place le protocole SSL entre le service Web et toute application voulant communiquer avec.
 
-Le protocole \textit{Secure Sockets Layer}, ou SSL, est con\c{c}u pour assurer la confidentialit\'e, l'authentification et l'int\'egrit\'es des donn\'ees lorsdes \'echanges entre un client et un serveur Web, sur diff\'erents protocoles de transport (en g\'en\'eral HTTP).
-SSL met en place un chiffrement \`a cl'es publiques, \cad, une combinaise de deux cl\'es : une cl\'e publique servant au chiffrement des donn\'ees et une cl\'e priv\'ee servant au d\'echiffrement.
-Les sites Internet b\'en\'eficiant de ce protocole sont reconnaissables du fait de leurs URL\protect\footnote{\textit{Uniform Resource Locator}} commen\c{c}ant par \textsf{https://} o\`u le 's' signifie \textit{secured}.
+Le protocole \textit{Secure Sockets Layer}, ou SSL, est con\c{c}u pour assurer la confidentialit\'e, l'authentification et l'int\'egrit\'es des donn\'ees lors des \'echanges entre un client et un serveur Web, sur diff\'erents protocoles de transport (en g\'en\'eral HTTP).
+SSL met en place un chiffrement \`a cl\'es publiques, \cad, une combinaison de deux cl\'es : une cl\'e publique servant au chiffrement des donn\'ees et une cl\'e priv\'ee servant au d\'echiffrement.
+Les sites Internet b\'en\'eficiant de ce protocole sont reconnaissables du fait de leurs URL\protect\footnote{\textit{Uniform Resource Locator}} commen\c{c}ant par \url{https://} o\`u le 's' signifie \textit{secured}.
 
 \subsubsection{Fonctionnement}
 
@@ -807,16 +809,17 @@ Les sites Internet b\'en\'eficiant de ce protocole sont reconnaissables du fait 
 
 \begin{enumerate}
 	\item le client fait une demande de connexion s\'ecuris\'ee, il demande donc le certificat garantissant la cl\'e publique du serveur;
-	\item le serveur lui envoie son certificat d'authentification d\'elivr\'e par l'autorit\'e de certification, ce certificat contient la cl\'e publique;
-	\item si l'autorit\'e de certification et le certificat sont valide, alors le client envoie une cl\'e secr\`ete, cr\'e\'ee \`a partir de la cl\'e publique;
-	\item le client et le serveur poss\`ede maintenant une cl\'e secr\`ete qui sera encrypt\'e \`a l'aide d'un algorithme de hachage pour plus de s\'ecurit\'e.
+	\item le serveur lui envoie son certificat d'authentification d\'elivr\'e par l'autorit\'e de certification, ce certificat contient la cl\'e publique.
+	Une autorit\'e de certification est un organisme charg\'e de d\'elivrer des certificats et de leur attribuer une date de validit\'e, ainsi que de les r\'evoquer avant la fin de la date en cas de compromission;
+	\item si l'autorit\'e de certification et le certificat sont valides, alors le client envoie une cl\'e secr\`ete, cr\'e\'ee \`a partir de la cl\'e publique;
+	\item le client et le serveur poss\`ede maintenant une cl\'e secr\`ete qui sera encrypt\'ee \`a l'aide d'un algorithme de hachage pour plus de s\'ecurit\'e.
 	Si la connexion est perdue, une nouvelle cl\'e secr\`ete sera n\'egoci\'ee.
 
 \end{enumerate}
 
 \subsubsection{Mise en place}
 
-La mise en place d'un protocole SSL sur un service Web via NetBeans et GlassFish est tr\`es simple.
+La mise en place d'un protocole SSL sur un service Web via NetBeans et GlassFish est tr\`es simple une fois que la d\'emarche suivante est connue.
 Il faut cependant disposer de plusieurs fichiers : une autorit\'e de certification et un couple cl\'e priv\'e - cl\'e publique tous deux fournis par l'Universit\'e.
 \`A partir de ces deux fichiers, un certificat de s\'ecurit\'e est g\'en\'er\'e.
 Ensuite l'autorit\'e de certification et le nouveau certificat sont ajout\'es \`a la configuration de GlassFish.
@@ -842,6 +845,8 @@ Le but n'\'etait pas une int\'egration parfaite au service Web, mais un aper\c{c
 
 La figure~\ref{figure:rrdTool} pr\'esente un exemple de graphe d'utilisation des salles informatiques de l'Universit\'e \`a l'aide de l'API$^*$ RRD4J pendant une journ\'ee.
 
+\clearpage
+
 \begin{figure}[!ht]
 	\centering
 	\includegraphics[scale=0.5]{exempleRRDtool.jpg}
@@ -850,14 +855,14 @@ La figure~\ref{figure:rrdTool} pr\'esente un exemple de graphe d'utilisation des
 
 \end{figure}
 
-\subsection{Gestion de l'emploi du temps}
+\subsection{Gestion des emplois du temps}
 \label{section:emploiDuTemps}
 
 \subsubsection{Les flux RSS de l'Universit\'e}
 
-Pouvoir donner l'\'etat d'une salle informatique a un \'etudiant est un point cl\'e du service Web.
-En effet, donner l'occupation d'une salle sans prendre en compte le fait qu'un cours puisse s'y d\'erouler n'est pas suffisant.
-Il est ainsi n\'ecessaire de savoir l'occupation d'une salle : le nombre d'ordinateurs libre, mais aussi si l'emploi du temps de cette salle permet de venir y travailler.
+Pouvoir donner le statut d'une salle informatique a un \'etudiant est un point cl\'e du service Web.
+En effet, donner la disponibilit\'e d'une salle sans prendre en compte le fait qu'un cours puisse s'y d\'erouler n'est pas suffisant.
+Il est ainsi n\'ecessaire de savoir l'occupation d'une salle : le nombre d'ordinateurs libres, mais aussi si l'emploi du temps de cette salle permet de venir y travailler.
 
 L'Universit\'e met \`a disposition 4 flux RSS$^*$ contenant toutes les informations sur l'occupation des salles.
 Ces 4 flux correspondent aux 4 grands campus de l'Universit\'e : Harrow, New Canvendish, Marylebone et Regent.
@@ -868,8 +873,8 @@ Chaque \'ev\`enement est ensuite ajout\'e dans la base de donn\'ees.
 \subsubsection{Correspondance des salles}
 
 Les noms des salles informatiques contenus dans les flux RSS$^*$ et ceux pr\'esents dans {\YuukouII} ne sont pas les m\^emes.
-Cela vient du fait que les flux existent depuis longtemps, de ce fait, les \'equipes charg\'ees de leurs maintenance ont adopt\'es leur propre syst\`eme de nommage des salles.
-Un table interm\'ediaire a donc \'et\'e cr\'e\'ee pour faire la relation entre une salle de {\YuukouII} et une salle de l'emploi du temps.
+Cela vient du fait que les flux existent depuis longtemps, de ce fait, les \'equipes charg\'ees de leurs maintenance ont adopt\'e leur propre syst\`eme de nommage des salles.
+Une table interm\'ediaire a donc \'et\'e cr\'e\'ee pour faire la relation entre une salle de {\YuukouII} et une salle de l'emploi du temps.
 Cependant, le nommage ambigu des salles dans les diff\'erents flux d'emploi du temps fait que seules quelques salles ont une correspondance dans le projet.
 Une discussion a eu lieu \`a ce sujet dans le but d'adopter un syst\`eme logique permettant de faire une correspondance plus facile avec toutes les salles surveill\'ees.
 Mais la mise en place d'un tel syst\`eme n'est pas pr\'evu dans l'imm\'ediat.
@@ -887,7 +892,7 @@ Le site Web \textit{Wikip\'edia} (\url{http://fr.wikipedia.org/wiki/Wikip\%C3\%A
 
 Afin de faciliter la gestion de sites Web de ce genre, de nombreuses API$^*$ existent.
 C'est donc en utilisant une de ces API$^*$ que la configuration logicielle de chaque salle a \'et\'e r\'ecup\'er\'ee.
-Les diff\'erents logiciels et groupes de logiciels sont extraits et les diff\'erents liens sont contruits puis ajout\'es \`a la base de donn\'ees.
+Les diff\'erents logiciels et groupes de logiciels sont extraits et les diff\'erents liens sont contruits puis le tout est ajout\'e \`a la base de donn\'ees.
 Cependant, il est \`a noter que le \textit{MediaWiki} ne concerne que quelques salles de la \textit{School of Electronics and Computer Science}.
 
 \subsection{Migration des donn\'ees}
@@ -920,7 +925,7 @@ De cette mani\`ere, les donn\'ees contenues dans la table \textsf{yuukou\_last} 
 \section{Organisation du travail}
 
 Une rigueur dans le d\'eroulement d'un projet permet d'\'eviter de nombreuses difficult\'es.
-C'est d'autant plus le cas quand le projet comprend plusieurs personne comme c'est le cas pour {\YuukouII}.
+C'est d'autant plus vrai quand le projet comprend plusieurs personnes comme c'est le cas pour {\YuukouII}.
 De ce fait, cette partie permet de comprendre comment s'organisait le travail au sein de l'Universit\'e.
 Dans un premier temps sera abord\'ee la gestion du poste de travail, \cad, la strat\'egie de d\'eveloppement.
 Ensuite, le d\'eroulement du travail en \'equipe sera expliqu\'e, le projet \'etant un travail collaboratif entre une partie service Web et une partie affichage.
@@ -942,7 +947,7 @@ Cette organisation comporte une machine de d\'eveloppement et deux serveurs comm
 
 Le serveur principal poss\`ede un syst\`eme d'exploitation Debian version 6.0.5 (\textit{Squeeze}) et h\'eberge le service Web dans une version stable ainsi que tous les outils n\'ecessaire \`a son fonctionnement comme le serveur de gestion de base de donn\'ees (SGBD) MySQL, une version de Java \`a jour, le serveur d'application GlassFish mais aussi Nagios.
 La faible consommation CPU de Nagios dans la surveillance des machines de l'Universit\'e fait, qu'actuellement, il peut \^etre h\'eberg\'e sur le m\^eme serveur que le service Web.
-Le serveur principal h\'eberge aussi le gestionnaire de version subversion (SVN) sur lequel est constamment maintenu le projet.
+Le serveur principal h\'eberge aussi le gestionnaire de versions subversion (SVN) sur lequel est constamment maintenu le projet.
 Il est accessible sur le r\'eseau sous le nom de domaine \textsf{yuukou-ws.wmin.ac.uk}.
 
 Le serveur dit {\og}secondaire{\fg} poss\`ede lui aussi le m\^eme syst\`eme d'exploitation Debian et h\'eberge l'application Web permettant de communiquer avec le service Web.
@@ -957,16 +962,16 @@ La machine de d\'eveloppement poss\`ede un syst\`eme d'exploitation Linux Mint v
 
 Le projet {\YuukouII}, comme \'enonc\'e dans le \S~\ref{section:architectureProjet}, a \'et\'e divis\'e en deux parties.
 La partie service Web, permettant de remplir et maintenir la base de donn\'ees ainsi que de mettre \`a disposition d'un client des m\'ethodes retournant une partie des informations r\'ecup\'er\'ees, et la partie affichage dont le r\^ole est de pr\'esenter les informations \`a un utilisateur lambda.
-La partie affichage fut confi\'ee \`a Yacine MAGHEZZI, \'etudiant en 3\up{i\`eme} ann\'ee de Licence informatique \`a l'Universit\'e de Franche-Comt\'e de Besan\c{c}on, ainsi qu'\`a M. Thierry DELAITRE et Anne-Gaelle COLOM, venus apporter leurs contributions par la suite.
+La partie affichage fut confi\'ee \`a Yacine MAGHEZZI, \'etudiant en troisi\`eme ann\'ee de licence informatique \`a l'Universit\'e de Franche-Comt\'e de Besan\c{c}on, ainsi qu'\`a M. Thierry DELAITRE et Anne-Gaelle COLOM, venus apporter leurs contributions par la suite.
 Le but de ce projet \'etait, \`a l'aide du service Web, de permettre un affichage r\'esumant la disponibilit\'e des laboratoires informatiques dans l'Universit\'e.
 
 Ainsi, \`a chaque red\'eploiement du service Web lors d'une mise \`a jour importante ou d'un ajout de fonctionnalit\'es, il \'etait important de les tenir inform\'e des diff\'erents changements qui ont \'et\'e effectu\'es.
-C'est dans le cadre de ce travail en \'equipe que des structures de retour standard a \'et\'e adopt\'ee (voir \S~\ref{section:retourFonction}).
+C'est dans le cadre de ce travail en \'equipe que le principe des structures de retour standard a \'et\'e adopt\'ee (voir \S~\ref{section:retourFonction}).
 En effet, un minimum de rigueur dans le d\'eveloppement permettait de ne pas avoir de surprises \`a chaque \'etape du projet.
 
 Cependant, la majeure partie de la communication se faisait selon les besoins des diff\'erents d\'eveloppeurs.
-Avant l'arriv\'ee de M. MAGHEZZI, les fonctionnalit\'es et les informations qu'elles retournaient n'\`etaient que limit\'ees.
-Cela \'etant d\^u au fait que elles n'\'etaient exploit\'ees par personne.
+Avant l'arriv\'ee de M. MAGHEZZI, les fonctionnalit\'es et les informations qu'elles retournaient n'\'etaient que limit\'ees.
+Cela \'etant d\^u au fait qu'elles n'\'etaient exploit\'ees par personne.
 Apr\`es son arriv\'ee et sa premi\`ere connexion au service Web, M. MAGHEZZI a commenc\'e \`a exprimer des demandes concernant les \'el\'ements qu'il aimerait voir appara\^itre.
 C'est \`a ce moment que le dialogue s'est vraiment mis en place.
 
@@ -981,9 +986,9 @@ Afin de v\'erifier son bon fonctionnement, un service Web client a \'et\'e mis e
 Ce client ouvre une connexion s\'ecuris\'ee, puis donne acc\`es aux m\'ethodes qu'il est possible de tester sur le service Web.
 Il agit comme l'application permettant l'affichage des donn\'ees du service Web que M. MAGHEZZI a cr\'e\'e, \`a la diff\'erence que les r\'esultats sont affich\'es en texte brut.
 
-Le client donc d\'evelopp\'e en tant que service Web client.
+Le client est donc d\'evelopp\'e en tant que service Web client.
 Les pages Web sont g\'en\'er\'ees gr\^ace \`a des \textit{Servlet}$^*$ Java.
-Il est a not\'e la pr\'esence d'un \textit{Servlet} permettant la gestion du cycle principal.
+Il est \`a noter la pr\'esence d'un \textit{Servlet} permettant la gestion du cycle principal.
 Il offre donc un contr\^ole sur le cycle : d\'emarrage, mise en maintenance et fin de la maintenance.
 
 
@@ -997,14 +1002,14 @@ Cette partie affichage se pr\'esente sous la forme d'une interface homme-machine
 Cette application pr\'esente, en fonction de diff\'erents niveaux de s\'ecurit\'e, diff\'erentes vues.
 
 Un utilisateur normal, comme un \'etudiant, aura une vue sur la disponibilit\'e des salles informatiques.
-Il pourra voir toutes les salles, leur disponibilit\'es (ordinateurs disponibles, occup\'es, \'eteints, salle disponible ou occup\'ee par un \'ev\`enement de l'emploi du temps), les filtrer par lieu, ou encore par type d'ordinateur (PC ou MAC).
+Il pourra voir toutes les salles, leur disponibilit\'e (ordinateurs disponibles, occup\'es, \'eteints, salle disponible ou occup\'ee par un \'ev\`enement de l'emploi du temps), les filtrer par lieu, ou encore par type d'ordinateur (PC ou MAC).
 
-Un membre des \'equipes techniques de l'Universit\'e (staff) aura une vue la disponibilit\'e des salles informatiques en plus d'une vue sur le mat\'eriel.
-Il aura acc\`es \`a des graphiques, des r\'esum\'es de l'occupation des salles mais aussi \`a des informations suppl\'ementaires sur les salles (informations sur les utilisateurs connect\'es et historique des ordinateurs).
+Un membre des \'equipes techniques de l'Universit\'e (staff) aura une vue sur la disponibilit\'e des salles informatiques en plus d'une vue sur le mat\'eriel.
+Il aura acc\`es \`a des graphiques, des r\'esum\'es sur la disponibilit\'e des salles mais aussi \`a des informations suppl\'ementaires sur les salles (informations sur les utilisateurs connect\'es et historiques des ordinateurs).
 
 La figure~\ref{figure:exempleIPhone} donne trois vues diff\'erentes sur ce que l'application d'affichage des donn\'ees du service Web propose.
-Les figures sont des captures d\'ecrans prises \`a l'aide d'un \'emulateur d'IPhone.
-Il est a not\'e que les figures suivantes ont \'et\'e prises en s'authentifiant avec un compte utilisateur.
+Les figures sont des captures d'\'ecrans prises \`a l'aide d'un \'emulateur d'IPhone.
+Il est \`a noter que les figures suivantes ont \'et\'e prises en s'authentifiant avec un compte utilisateur.
 Comme pr\'ec\'edemment annonc\'e, les staffs b\'en\'eficieront, dans certaines pages, de plus d'options.
 
 \begin{figure}[!ht]
@@ -1014,7 +1019,7 @@ Comme pr\'ec\'edemment annonc\'e, les staffs b\'en\'eficieront, dans certaines p
 	\subfloat[Description d'une salle]{\includegraphics[scale=0.30]{phone1.jpg}\label{figure:exempleIPhone:fig2}}
 	\qquad
 	\subfloat[Salles occup\'ees]{\includegraphics[scale=0.30]{phone2.jpg}\label{figure:exempleIPhone:fig3}}
-	\caption{Exemples de captures d'\'ecran sur un IPhone de l'application affichant les informations du service Web}
+	\caption{Exemples de captures d'\'ecrans sur un IPhone de l'application affichant les informations du service Web}
 	\label{figure:exempleIPhone}
 
 \end{figure}
@@ -1043,8 +1048,8 @@ Sont toujours disponibles le type d'ordinateurs dans la salle et leur disponibil
 Durant toute la dur\'ee du projet, de nombreux probl\`emes ont \'et\'e rencontr\'es.
 Ils \'etaient principalement dus au manque de connaissances dans le domaine vis\'e.
 
-Le SSL\protect\footnote{\textit{Secure Sockets Layer}} a \'et\'e difficilement mis en place dans les premiers temps.
-En effet, le manque de connaissance dans les services Web et dans les outils NetBeans et GlassFish ont \'et\'e un frein dans sa mise en place.
+Le SSL a \'et\'e difficilement mis en place dans les premiers temps.
+En effet, le manque de connaissances dans les services Web et dans les outils NetBeans et GlassFish ont \'et\'e un frein dans sa mise en place.
 De plus, la documentation sur le Web est plus ou moins \'evasive et les m\'ethodes sont diverses pour s\'ecuriser un service Web.
 Cependant, avec l'aide de l'Universit\'e, notamment en fournissant les diff\'erents certificats et les instructions, le protocole a pu \^etre mis en fonction.
 
@@ -1053,7 +1058,7 @@ Cela s'est fait ressentir dans la mise en place de la gestion des emplois du tem
 Effectivement, les noms des salles entre {\YuukouII} et ceux dans les emplois du temps n'avaient rien \`a voir.
 Certes, certaines pouvaient \^etre devin\'ees, elles ont \'et\'e de ce fait trait\'ees.
 Mais pour d'autres cela s'av\'erait impossible, surtout si on consid\`ere que plusieurs personnes s'occupent des emplois du temps et que ces personnes appliquent chacun une m\'ethode de nommage plus ou moins diff\'erentes les unes des autres.
-Une r\'eunion a eu lieu pendant le stage avec l\'equipe en charge afin d'aborder ce point.
+Une r\'eunion a eu lieu pendant le stage avec l'\'equipe en charge afin d'aborder ce point.
 Au final, un nouveau syst\`eme d'identification des salles devrait \^etre mis en place, mais le service \'etant occup\'e, il n'y a pas de date dans la mise en fonction d'une telle mesure.
 Lorsque ce syst\`eme sera appliqu\'e, la liste des nouveaux noms de salles sera communiqu\'ee, ce qui rendra cette partie pleinement fonctionnelle.
 
