@@ -112,20 +112,20 @@ Le support des Macintosh n'\'etant pas pris en compte.
 
 L'Universit\'e souhaite reprendre le principe du projet \Yuukou, cependant elle est confront\'ee \`a diff\'erents probl\`emes.
 Le premier \'etant que les personnes ayant d\'evelopp\'e le projet ont quitt\'e l'Universit\'e. 
-Ce qui signifierait, pour la personne ou l'\'equipe en charge d'\'eventuellement reprendre le projet, de prendre du temps pour se former \`a Perl$^*$, comprendre tout ce qui a \'et\'e d\'ej\`a r\'ealis\'e et ensuite seulement, commencer \`a d\'evelopper.
+Ce qui signifierait, pour la personne ou l'\'equipe qui serait en charge de reprendre le projet, de prendre du temps pour se former \`a Perl$^*$, comprendre tout ce qui a \'et\'e d\'ej\`a r\'ealis\'e et ensuite seulement, commencer \`a d\'evelopper.
 Actuellement de nombreux projets sont en cours et il n'est pas possible pour une \'equipe de passer du temps sur l'existant.
 
 Un autre probl\`eme est les changements importants, du point de vue infrastructure, qui sont en train d'\^etre mis en place.
 En effet, l'Universit\'e qui utilisait eDirectory$^*$ de Novell pour g\'erer ses annuaires LDAP$^*$ a commenc\'e \`a migrer toutes ses donn\'ees vers le syst\`eme Active Directory$^*$ de Microsoft qui est cens\'e \^etre plus efficace. Ce changement rendrait \Yuukou{} obsol\`ete.
 
-Point suivant, la volont\'e de donner acc\`es aux informations sur les salles, pas seulement en utilisant un navigateur Internet, mais aussi et surtout en utilisant un \textit{smartphone} (IPhone ou autres par exemple) ou une tablette (IPad par exemple), chose que l'ancien logiciel ne peut pas fournir.
+Point suivant, la volont\'e de donner acc\`es aux informations sur les salles, pas seulement en utilisant un navigateur Internet, mais aussi et surtout en utilisant un \textit{smartphone} (IPhone ou autre par exemple) ou une tablette (IPad par exemple), chose que l'ancien logiciel ne peut pas fournir.
 De ce fait, un \'etudiant aurait \`a tout moment les informations sur les salles \textit{via} son \textit{smartphone} ou sa tablette, si tant est qu'il ait l'un ou l'autre.
 
 \noindent \`A ces pr\'ec\'edents probl\`emes, d'autres viennent s'ajouter :
 
 \begin{itemize}
 	\item les Macintosh ne sont pas pris en compte;
-	\item le logiciel est assez monolithique donc il deviendrait tr\`es difficile et complexe de vouloir l'\'etendre;
+	\item le logiciel est assez monolithique, il deviendrait donc tr\`es difficile et complexe de vouloir l'\'etendre;
 	\item {\Yuukou} ne prend en compte que les donn\'ees en temps r\'eel et ne garde pas un historique;
 	\item son utilisation pr\^ete \`a confusion car il n'a aucun interfa\c{c}age avec l'emploi du temps, de ce fait, quand une salle est pr\'esent\'ee comme libre, il n'y a aucun moyen, avec le logiciel, de savoir si un cours s'y d\'eroule ou non.
 
@@ -140,7 +140,7 @@ C'est en consid\'erant tous ces points qu'il a \'et\'e d\'ecid\'e d'abandonner l
 {\YuukouII} a pour but de combler les lacunes de {\Yuukou} et d'aller plus loin en termes de fonctionnalit\'es qu'il peut offrir. 
 Le projet sera tout d'abord pr\'esent\'e avec les principaux points le composant.
 Ensuite seront abord\'ees les diff\'erentes r\'eflexions que les \'equipes int\'eress\'es par le projet ont effectu\'ees.
-Ces r\'eflexions donneront lieu aux premi\`eres id\'ees qui ont en \'emerg\'ees.
+Ces r\'eflexions donneront lieu aux premi\`eres id\'ees qui en ont \'emerg\'ees.
 Enfin, les principales contraintes techniques du projet seront d\'ecrites.
 
 \subsection{Pr\'esentation du projet}
@@ -210,7 +210,7 @@ Il faudrait des traitements suppl\'ementaires pour pouvoir fixer pr\'ecisement l
 
 \subsection{Premi\`eres approches}
 
-Une solution simple, rapide et fonctionnelle avait d\'ej\`a \'et\'e mise en place afin de \og{}\textit{monitorer}\fg{}, \cad{} surveiller le fonctionnement des diff\'erentes ressources de certaines salles dans l'Universit\'e.
+Une solution simple, rapide et fonctionnelle avait d\'ej\`a \'et\'e mise en place afin de \og{}monitorer\fg{}, \cad{} surveiller le fonctionnement des diff\'erentes ressources de certaines salles dans l'Universit\'e.
 Nagios est une application permettant d'effectuer une surveillance syst\`eme et r\'eseau.
 Il permet de conna\^itre l'\'etat d'une machine ainsi que d'autres informations comme le syst\`eme d'exploitation utilis\'e, la version de Java install\'ee, la charge du processeur, \ldots
 
@@ -233,7 +233,7 @@ En partant de ce logiciel, le projet consiste en la r\'ecup\'eration des donn\'e
 
 Deux des principales contraintes du cahier des charges sont l'utilisation de logiciels libres et du langage de d\'eveloppement Java, tout en me laissant un maximum de libert\'e dans les autres choix.
 
-Durant le stage, un ordinateur m'a \'et\'e fourni avec libre choix sur le syst\`eme d'exploitation.
+Durant le stage, un ordinateur m'a \'et\'e fourni avec un libre choix sur le syst\`eme d'exploitation.
 De ce fait j'ai opt\'e pour un Linux Mint 11 nomm\'e \textit{Katya}, que j'ai l'habitude d'utiliser.
 
 Un autre ordinateur, lui contenant un Debian 6.0.5 nomm\'e \textit{Squeeze}, a \'et\'e mis \`a ma disposition en tant que serveur distant h\'ebergeant le service Web ainsi que les diff\'erents outils n\'ecessaires \`a son fonctionnement.

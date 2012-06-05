@@ -4,14 +4,14 @@
 
 Ce bilan r\'esumera le travail r\'ealis\'e durant le stage.
 Dans une premi\`ere partie, un r\'ecapitulatif du projet sera donn\'e, avec notamment un graphique afin de montrer les fonctionnalit\'es reprises de {\Yuukou} ainsi que les diff\'erentes fonctionnalit\'es qu'apporte {\YuukouII}.
-Ensuite le calendrier des 16 semaines de stage, avec les diff\'erentes t\^aches effectu\'ees semaines apr\`es semaines.
+Ensuite le calendrier des 16 semaines de stage, avec les diff\'erentes t\^aches effectu\'ees semaine apr\`es semaine.
 Il sera suivi par une partie donnant ce qu'apporte le projet \`a l'Universit\'e, les avantages qu'elle peut en tirer.
 Enfin une derni\`ere partie traitera des am\'eliorations qu'il est possible d'apporter au service Web afin d'accro\^itre ses performances et ses fonctionnalit\'es.
 
 \subsection{R\'ecapitulatif du projet}
 
 La figure~\ref{figure:yuukouEtYuukouII} permet de donner une vue d'ensemble sur les principales fonctionnalit\'es dont le projet dispose.
-Les cadres pleins repr\'esentent des fonctionnalit\'es dont le principe a \'et\'e repris de {\Yuukou}, les cadres en pointill\'es, quant \`a eux, repr\'esentent les nouvelles fonctionnalit\'es qu'apporte \YuukouII.
+Les cadres pleins repr\'esentent des fonctionnalit\'es dont les principes ont \'et\'e repris de {\Yuukou}, les cadres en pointill\'es, quant \`a eux, repr\'esentent les nouvelles fonctionnalit\'es qu'apporte \YuukouII.
 
 \clearpage
 
@@ -31,16 +31,16 @@ Certains points ont demand\'e plus de travail que d'autres, comme la conception 
 \begin{description}
 	\item[semaine 1] : arriv\'ee et d\'ecouverte du projet, premier entretien avec l'\'equipe technique et leurs attentes;
 	\item[semaine 2] : d\'ecouverte des services Web et choix des outils utilis\'es;
-	\item[semaine 3 et 4] : Conception de la base de donn\'ees et impl\'ementation du cycle principal de l'application;
+	\item[semaines 3 et 4] : Conception de la base de donn\'ees et impl\'ementation du cycle principal de l'application;
 	\item[semaine 5] : mise en place de l'emploi du temps et d\'ebut mise en place de SSL;
 	\item[semaine 6] : mise en place du syst\`eme JSON et fin de mise en place de SSL;
-	\item[semaine 7 et 8] : d\'eveloppement des m\'ethodes Web;
+	\item[semaines 7 et 8] : d\'eveloppement des m\'ethodes Web;
 	\item[semaine 9] : mise en place de l'architecture finale et d\'eveloppement des m\'ethodes Web;
 	\item[semaine 10] : d\'ebut de r\'edaction du rapport (pr\'esentation et sujet);
 	\item[semaine 11] : d\'eveloppement des m\'ethodes Web;
-	\item[semaine 12 et 13] : r\'ecup\'eration du catalogue de logiciels de M\'ediaWiki;
+	\item[semaines 12 et 13] : r\'ecup\'eration du catalogue de logiciels de M\'ediaWiki;
 	\item[semaine 14] : ajout de m\'ethodes Web et am\'elioration du syst\`eme de chargement de la base de donn\'ees;
-	\item[semaine 15] : e\'edaction du rapport de stage et maintenance des fonctionnalit\'es du service Web;
+	\item[semaine 15] : r\'edaction du rapport de stage et maintenance des fonctionnalit\'es du service Web;
 	\item[semaine 16] : fin d'\'ecriture du rapport de stage.
 
 \end{description}
@@ -49,7 +49,7 @@ Certains points ont demand\'e plus de travail que d'autres, comme la conception 
 
 Le service Web est fonctionnel \`a l'Universit\'e.
 Il dispose d'un cycle principal permettant la r\'ecup\'eration des donn\'ees de Nagios et le stockage dans la base de donn\'ees.
-De nombreuses fonctionnalit\'ees ont \'et\'e d\'evelopp\'ees pour \'etendre les possibilit\'es du service Web.
+De nombreuses fonctionnalit\'es ont \'et\'e d\'evelopp\'ees pour \'etendre les possibilit\'es du service Web.
 Une s\'ecurisation des communications avec la mise en place du protocole SSL.
 Une gestion des emplois du temps en r\'ecup\'erant quotidiennement les diff\'erents emplois du temps des campus de l'Universit\'e.
 Une gestion de la configuration logicielle des salles informatiques avec l'extraction des donn\'ees pr\'esentes sur le \textit{MediaWiki} de la \textit{School of Electronics and Computer Science}.
@@ -57,9 +57,9 @@ Une g\'en\'eration d'un graphe d'utilisation des salles informatiques dans une p
 
 Le service Web dispose de nombreuses fonctions permettant \`a un client de r\'ecup\'erer juste les informations dont il a besoin concernant la disponibilit\'e des salles en temps r\'eel.
 Mais aussi les historiques dans le temps des connexions.
-Il propose aussi une gestion de cycle permettant de l'arr\^eter et de le remettre en marche.
+Il propose aussi une gestion du cycle principal permettant de l'arr\^eter et de le remettre en marche.
 
-L'utilisation de JSON permet la cr\'eation de client ind\'ependamment du langage employ\'e.
+L'utilisation de JSON permet la cr\'eation de clients ind\'ependamment du langage employ\'e.
 Une fois la structure du fichier retourn\'e comprise, il est facile d'extraire les donn\'ees voulues et de les afficher.
 
 Ajout\'e \`a cela la documentation Java (\textit{javadoc}) du service Web afin que dans le futur diff\'erentes am\'eliorations, parmi celles exprim\'ees au \S~\ref{section:amelioration}, soient mises en place.
@@ -93,21 +93,21 @@ Nagios surveille actuellement les salles informatiques de l'Universit\'e, cepend
 Un \'etudiant recherchant une imprimante de libre obtiendrait les salles correspondantes.
 Avec cela, il serait possible d'avoir un statut complet d'une salle informatique.
 
-Il serait aussi int\'eressant d'ajouter des fonctions au service Web pour retourner les informations sur la surveillance des salles sous forme d'un flux RSS$^*$ pouvant \^etre exploit\'e de fa\c{c}on diff\'erente par un client.
+Il serait aussi int\'eressant d'ajouter des fonctions au service Web pour retourner les informations sur la surveillance des salles sous forme d'un flux RSS$^*$ pouvant \^etre exploit\'e de diff\'erentes fa\c{c}ons par un client.
 
 
 \section{Bilan personnel}
 
 D'un point de vue humain, ce stage m'a beaucoup apport\'e, sp\'ecialement au niveau de la langue.
 Je me suis rendu compte combien il est difficile au d\'ebut de communiquer convenablement avec quelqu'un.
-Le m\^eme cycle se r\'ep\`ete : on essaye de traduire ce que l'on entend, ensuite on r\'efl\'echit \`a la r\'eponse en fran\c{c}ais, on la traduit rapidement et on la dit plus ou moins bien.
+Le m\^eme cycle se r\'ep\`ete : on essaye de traduire ce qu'on entend, ensuite on r\'efl\'echit \`a la r\'eponse en fran\c{c}ais, on la traduit rapidement et on la dit plus ou moins bien.
 C'est compliqu\'e de se d\'efaire de ce cycle mais apr\`es quelques mois, j'ai pu ressentir beaucoup plus de facilit\'e \`a communiquer avec les membres du CPC.
 
 De plus, je suis vraiment content d'avoir pu effectuer mon stage dans une ville si cosmopolite que Londres.
 J'ai pu y d\'ecouvrir une vie un peu diff\'erente de celle que je connaissais.
 Durant les quatre mois, j'ai r\'esid\'e dans une r\'esidence \'etudiante o\`u j'ai partag\'e une chambre avec un Croate, de ce fait, je n'avais pas d'autre choix que de parler anglais avec lui.
 C'\'etait d'autant plus le cas que la majorit\'e des r\'esidents n'\'etaient pas anglais, mais venaient d'un peu partout dans le monde.
-Chose qui, je pense, m'a beaucoup fait progresser notamment dans le parl\'e, tout en gardant quand m\^eme un fort accent fran\c{c}ais.
+Chose qui, je pense, m'a beaucoup fait progresser notamment dans la conversation, tout en gardant quand m\^eme un fort accent fran\c{c}ais.
 
 Concernant le cadre du stage, j'ai beaucoup appr\'eci\'e la prise en charge de M. DELAITRE qui s'est beaucoup impliqu\'e dans ce projet, tant dans la partie service Web que dans la partie affichage.
 J'ai r\'eellement aim\'e la libert\'e d'action qu'il m'a laiss\'e dans le projet tout en fixant les objectifs qu'il voulait voir accomplis.
@@ -116,7 +116,7 @@ La collaboration avec les diff\'erents acteurs du projet d'affichage s'est tr\`e
 Nous avons d\^u beaucoup discuter l'un avec l'autre concernant le retour d'informations du service Web.
 Mon objectif \'etait vraiment de faciliter un maximum le travail des autres d\'eveloppeurs pour qu'ils puissent se concentrer essentiellement sur la partie affichage.
 
-D'un point de vue p\'edagogique, ce stage fut vraiment tr\`es riches en nouvelles connaissances.
+D'un point de vue p\'edagogique, ce stage fut vraiment tr\`es riche en nouvelles connaissances.
 J'ai pu y d\'ecouvrir les services Web que je ne connaissais pas auparavant ainsi que des outils qui m'\'etaient totalement inconnus comme NetBeans et GlassFish.
 J'avoue avoir des appr\'ehensions quand on me parle de technologies du Web mais le projet que m'a confi\'e M. Thierry DELAITRE m'a vraiment passionn\'e du d\'ebut \`a la fin du stage.
 J'ai pu r\'eutiliser beaucoup de mes acquis avec le d\'eveloppement Java, les interactions avec les bases de donn\'ees ou encore la manipulation de fichiers XML.
