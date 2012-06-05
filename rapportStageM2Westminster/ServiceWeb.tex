@@ -76,8 +76,7 @@ Le fonctionnement des services Web s'articule autour de trois acteurs principaux
 Les \'etapes impliquant la mise \`a disposition et l'utilisation (consommation) d'un service Web sont les suivantes :
 
 \begin{enumerate}
-	\item le service Web d\'ecrit son service en utilisant WSDL. 
-	Cette d\'efinition est publi\'ee dans l'annuaire UDDI;
+	\item le service Web d\'ecrit son service en utilisant WSDL ; cette d\'efinition est publi\'ee dans l'annuaire UDDI;
 	\item le client envoit une ou plusieurs requ\^etes afin de localiser le service Web \`a l'annuaire et de d\'eterminer comment communiquer avec ce service;
 	\item une partie du fichier WSDL fourni par le service Web est pass\'e au client. 
 	Le client peut maintenant savoir quelles requ\^etes et r\'eponses envoyer au service Web;
@@ -89,12 +88,12 @@ Les \'etapes impliquant la mise \`a disposition et l'utilisation (consommation) 
 \section{L'API JAX-WS}
 
 Java API$^*$ for XML Web Services (JAX-WS) est une API Java permettant de simplifier la cr\'eation, le d\'eveloppement et le d\'eploiement de services Web clients et de services Web prestataires.
-Il fonctionne avec un syst\`eme d'annotations sp\'ecifique du code Java.
+Il fonctionne avec un syst\`eme d'annotations sp\'ecifiques du code Java.
 JAX-WS fait partie de la plate-forme Java EE\protect\footnote{\textit{Java Platform, Entreprise Edition}} de Sun Microsystems.
 Anciennement appel\'ee JAX-RPC\protect\footnote{\textit{Java API for XML-based RPC}}, ce changement de nom intervient lors de l'abandon du style RPC\protect\footnote{\textit{Remote Procedure Call}}, des appels de proc\'edures distantes, pour des services Web de style document, avec une transmission de donn\'ees au format XML d\'efinies dans un sch\'ema XML.
 
 Toute la partie communication de JAX-WS est g\'er\'ee avec des messages de type SOAP \`a travers HTTP.
-L'API$^*$ permet de cacher toute la complexit\'e des messages, le d\'eveloppeur choisit simplement la mani\`ere d'impl\'ementer le service. 
+L'API$^*$ permet de cacher toute la complexit\'e des messages, le d\'eveloppeur choisit simplement la mani\`ere d'implanter le service. 
 Pour cela, il existe deux m\'ethodes : \textit{top-down} et \textit{bottom-up}.
 
 \subsubsection{\textit{Top-down}}
