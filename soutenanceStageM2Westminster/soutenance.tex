@@ -1,0 +1,75 @@
+\documentclass{beamer}
+
+\usepackage[T1]{fontenc}
+\usepackage[latin1]{inputenc}
+\usepackage[frenchb]{babel}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{textpos}
+\usepackage{url}
+
+\usetheme{Warsaw}
+%\usetheme{Antibes}
+
+\setbeamertemplate{navigation symbols}{}
+
+% Personnalisation du footer
+\setbeamertemplate{footline}{
+    \leavevmode%
+    \hbox{\hspace*{-0.09cm}
+    \begin{beamercolorbox}[wd=.4\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}
+        \insertshorttitle
+    \end{beamercolorbox}%
+    \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.25ex,dp=1ex,center]{section in head/foot}%
+        \usebeamerfont{section in head/foot}\insertshortdate
+    \end{beamercolorbox}%
+    \begin{beamercolorbox}[wd=.1\paperwidth,ht=2.25ex,dp=1ex,right]{section in head/foot}%
+        \insertframenumber{} / \inserttotalframenumber\hspace*{2ex}
+    \end{beamercolorbox}}%
+    \vskip0pt%
+}
+
+
+\hypersetup{
+    pdfauthor   = {Benoit Meilhac},%
+    pdftitle    = {Projet Yuukou II},%
+    pdfsubject  = {Soutenance de stage},%
+    pdfkeywords = {soutenance, Yuukou II, service Web, Westminster},%
+    pdfcreator  = {PDFLaTeX},%
+    pdfproducer = {PDFLaTeX}%
+}
+
+\graphicspath{{images/}}
+
+\title[Projet tuteuré]{
+    Projet Yuukou II
+}
+
+\institute{
+    Département informatique\\
+    Université de Franche-Comté\\
+    Projet tuteuré\\
+    Année 2011-2012
+}
+
+\date{\today}
+
+\author{
+    Benoît MEILHAC
+}
+
+\begin{document}
+	\begin{frame}
+    	\titlepage
+		\begin{textblock*}{2cm}(0cm,-2.5cm)
+  			\includegraphics[scale=0.5]{femtoLogo.jpg}
+		\end{textblock*}
+		\begin{textblock*}{2cm}(8cm,-2.25cm)
+  			\includegraphics[scale=0.5]{westminsterLogo.jpg}
+		\end{textblock*}
+
+	\end{frame}
+
+
+
+\end{document}
