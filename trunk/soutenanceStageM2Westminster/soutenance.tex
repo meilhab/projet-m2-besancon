@@ -13,21 +13,31 @@
 
 \setbeamertemplate{navigation symbols}{}
 
-% Personnalisation du footer
-\setbeamertemplate{footline}{
-    \leavevmode%
-    \hbox{\hspace*{-0.09cm}
-    \begin{beamercolorbox}[wd=.4\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}
-        \insertshorttitle
-    \end{beamercolorbox}%
-    \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.25ex,dp=1ex,center]{section in head/foot}%
-        \usebeamerfont{section in head/foot}\insertshortdate
-    \end{beamercolorbox}%
-    \begin{beamercolorbox}[wd=.1\paperwidth,ht=2.25ex,dp=1ex,right]{section in head/foot}%
-        \insertframenumber{} / \inserttotalframenumber\hspace*{2ex}
-    \end{beamercolorbox}}%
-    \vskip0pt%
-}
+\setbeamertemplate{itemize item}[triangle]
+
+ %la barre d'info
+    \setbeamercolor*{author in head/foot}{parent=palette tertiary}
+    \setbeamercolor*{title in head/foot}{parent=palette secondary}
+    \setbeamercolor*{date in head/foot}{parent=palette primary}
+    \setbeamercolor*{page in head/foot}{parent=palette tertiary}
+    \defbeamertemplate*{footline}{infolines theme}
+    {
+       \leavevmode%
+         \hbox{%
+           %\begin{beamercolorbox}[wd=.25\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}%
+             %\usebeamerfont{author in head/foot}Une partie inutile
+             %\end{beamercolorbox}%
+             \begin{beamercolorbox}[wd=.77\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}%52
+             \usebeamerfont{title in head/foot}\insertshorttitle
+             \end{beamercolorbox}%
+             \begin{beamercolorbox}[wd=.16\paperwidth,ht=2.25ex,dp=1ex,center]{date in head/foot}%
+             \usebeamerfont{date in head/foot}\insertshortdate{}%\hspace*{2em}
+           \end{beamercolorbox}%
+           \begin{beamercolorbox}[wd=.08\paperwidth,ht=2.25ex,dp=1ex,center]{page in head/foot}
+            \insertframenumber/\inserttotalframenumber
+           \end{beamercolorbox}%
+         }%
+    }
 
 
 \hypersetup{
@@ -41,35 +51,41 @@
 
 \graphicspath{{images/}}
 
-\title[Projet tuteuré]{
+\title[Projet Yuukou II]{
     Projet Yuukou II
 }
 
 \institute{
-    Département informatique\\
-    Université de Franche-Comté\\
-    Projet tuteuré\\
-    Année 2011-2012
+	\includegraphics[scale=0.5]{femtoLogo.jpg}
+
+	\begin{center}
+		\textsc{MEILHAC Beno\^it}\\
+
+	\end{center}
+
+	Tuteur de stage : M. Thierry DELAITRE\\
+	Responsable de stage : M. Jean-Michel HUFFLEN
 }
 
-\date{\today}
+\date[11 juin 2012]{}
 
-\author{
-    Benoît MEILHAC
+\author{ 
+	Universit\'e de France-Comt\'e\\
+	D\'epartement informatique\\
 }
 
 \begin{document}
-	\begin{frame}
+
+\begin{frame}
     	\titlepage
-		\begin{textblock*}{2cm}(0cm,-2.5cm)
-  			\includegraphics[scale=0.5]{femtoLogo.jpg}
-		\end{textblock*}
-		\begin{textblock*}{2cm}(8cm,-2.25cm)
-  			\includegraphics[scale=0.5]{westminsterLogo.jpg}
-		\end{textblock*}
 
-	\end{frame}
+\end{frame}
 
+\section*{Sommaire}
 
+\begin{frame}{Sommaire}
+	\tableofcontents[hideallsubsections]
+
+\end{frame}
 
 \end{document}
