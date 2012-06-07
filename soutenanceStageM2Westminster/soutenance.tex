@@ -6,9 +6,10 @@
 \usepackage{xcolor}
 \usepackage{graphicx}
 \usepackage{textpos}
-\usepackage{url}
+\usepackage{subfig}
 
-\usetheme{Warsaw}
+%\usetheme{Warsaw}
+\usetheme[currentsection,hideothersubsections]{PaloAlto}
 %\usetheme{Antibes}
 
 \setbeamertemplate{navigation symbols}{}
@@ -51,6 +52,10 @@
 
 \graphicspath{{images/}}
 
+\logo{
+	%\includegraphics[width=1.5cm]{westminsterLogo.jpg}
+}
+
 \title[Projet Yuukou II]{
     Projet Yuukou II
 }
@@ -69,7 +74,7 @@
 
 \date[11 juin 2012]{}
 
-\author{ 
+\author[]{ 
 	Universit\'e de France-Comt\'e\\
 	D\'epartement informatique\\
 }
@@ -86,6 +91,26 @@
 \begin{frame}{Sommaire}
 	\tableofcontents[hideallsubsections]
 
+\end{frame}
+
+\include{LieuDeStage}
+
+\include{Sujet}
+
+\include{PremieresApproches}
+
+\include{ProjetYuukouII}
+
+\section{Conclusion}
+
+\begin{frame}{Conclusion}
+	\begin{block}{Conclusion}
+		\begin{itemize}
+			\item Int�gration � une �quipe
+			\item R�alisation d'un projet de A � Z
+			\item Projet termin� et fonctionnel
+		\end{itemize}
+	\end{block}
 \end{frame}
 
 \end{document}
